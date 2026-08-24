@@ -42,11 +42,17 @@ root:
 - `David_Shadle_How_I_Work_v1.md`
 - `David_Shadle_Resume_Variants_v1.md`
 
-## Open items (not blocking this phase, but will block Phase 2 design)
+## Design pass (in progress)
 
-Carried over from Content Strategy Section 8:
+Page layout and visual design for Home, How I Work, Work, and Resume are
+first-pass only, adapted from the two CSS files supplied for the previous
+WordPress theme (`style.css` = resume styles, `styles.css` = site styles) —
+palette, fonts (Raleway + Roboto Slab), and component patterns carried over,
+restructured into long-scroll pages (no tabs) per Content Strategy Section 10.
+**This will keep changing.**
 
-1. Whether Banyan screenshots (portal, dashboards) can be shown on the Work page — permission not yet confirmed.
-2. Whether the materials-discovery (Vortent) client can be named, or stays category-only like the medical device client.
-3. The `CurrentlyText` field in `SiteSettings` is a placeholder — needs real, current copy before launch.
-4. Which 2-3 `ProofPoints` are "featured on Work page" is a first-pass pick (PM Portal, Experience layer, Project brief) — confirm with David.
+## Open items
+
+1. Banyan screenshots (portal, dashboards) for the Work page — permission still pending. Work page currently shows a text-only placeholder block where a screenshot would go.
+2. The materials-discovery (Vortent) client stays unnamed for now, category-only — confirmed, will be named later.
+3. Which 2-3 `ProofPoints` are "featured on Work page" is still a first-pass pick (PM Portal, Experience layer, Project brief) — good enough to build against, revisit once screenshots land.
