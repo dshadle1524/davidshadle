@@ -15,11 +15,11 @@ VALUES ('default', 'dshadle1524@gmail.com', '425.417.2339', 'davidshadle.com', '
 -- ----------------------------------------------------------------------------
 -- CurrentlyItems: Table: CurrentlyItems. The undated 'Currently' block on Home (Section 10): a short bulleted list of what David is working on now. Update items when something changes, not on a schedule.
 -- ----------------------------------------------------------------------------
-INSERT INTO currently_items (currently_item_id, body_text, sort_order)
-VALUES ('banyan', 'Banyan Software, advising on product strategy and UX building a self-managed portal providing product management concepts, frameworks with a focus on delivering strategic articulation, roadmaps and initiative audit across a portfolio of 100+ B2B SaaS operating companies. Delivered contextual dashboards to track workshop engagement, cloud spend and technical due diligence deal tracking.', 1) ON CONFLICT (currently_item_id) DO UPDATE SET body_text = EXCLUDED.body_text, sort_order = EXCLUDED.sort_order;
+INSERT INTO currently_items (currently_item_id, title, body_text, sort_order)
+VALUES ('banyan', 'Banyan Software', 'Advising on product strategy and UX. Built a self-managed portal providing product management concepts, frameworks with a focus on delivering strategic articulation, roadmaps and initiative audits to their portfolio of 100+ B2B SaaS operating companies. Delivered contextual dashboards to track workshop engagement, cloud spend and technical due diligence deal tracking.', 1) ON CONFLICT (currently_item_id) DO UPDATE SET title = EXCLUDED.title, body_text = EXCLUDED.body_text, sort_order = EXCLUDED.sort_order;
 
-INSERT INTO currently_items (currently_item_id, body_text, sort_order)
-VALUES ('lookout-together', 'Lookout Together — a family scam-resilience service I conceived, designed and built on my own. Older adults get current, practical knowledge about how scams actually work. Their adult children get a way to help without taking over. No monitoring, no account access, no one acting on anyone''s behalf. Strategy, experience design and build, all one person.', 2) ON CONFLICT (currently_item_id) DO UPDATE SET body_text = EXCLUDED.body_text, sort_order = EXCLUDED.sort_order;
+INSERT INTO currently_items (currently_item_id, title, body_text, sort_order)
+VALUES ('lookout-together', 'Lookout Together', 'A family scam-resilience service I conceived, designed and built on my own. Older adults get current, practical knowledge about how scams actually work and how to proactively protect themselves. Their adult children get a way to help without taking over. No monitoring, no account access, no one acting on anyone''s behalf. Strategy, experience design and build, all one person.', 2) ON CONFLICT (currently_item_id) DO UPDATE SET title = EXCLUDED.title, body_text = EXCLUDED.body_text, sort_order = EXCLUDED.sort_order;
 
 -- ----------------------------------------------------------------------------
 -- BioVariants: Table: BioVariants. Five lengths plus one alternate, one spine, per David_Shadle_Bio_Set_v1.md. Voice standard applied: no em dashes, short sentences, active voice, no filler.

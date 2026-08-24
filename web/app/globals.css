@@ -335,6 +335,14 @@ a {
   left: 0;
 }
 
+.currently-title {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-deep);
+  margin-bottom: 4px;
+}
+
 /* ---- How I Work sections ---- */
 
 .hiw-section {

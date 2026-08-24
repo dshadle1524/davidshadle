@@ -49,7 +49,8 @@ CREATE VIEW vw_currently_items WITH (security_invoker = ON) AS
 SELECT
   t.currently_item_id,                                                          -- Stored identity, slug form.
   calc_currently_items_name(t.currently_item_id) AS name,                       -- Display alias.
-  t.body_text,                                                                  -- The bullet's text.
+  t.title,                                                                      -- The bullet's title/name, e.g. 'Banyan Software' or 'Lookout Together'.
+  t.body_text,                                                                  -- The bullet's description text, under the title.
   t.sort_order                                                                  -- Display order.
 FROM currently_items t;
 

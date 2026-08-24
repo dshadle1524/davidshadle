@@ -41,7 +41,10 @@ export default async function Home() {
             <span className="eyebrow">Currently</span>
             <ul className="currently-list" style={{ marginTop: 16 }}>
               {currentlyItems.map((item) => (
-                <li key={item.currently_item_id} className="body-text">{item.body_text}</li>
+                <li key={item.currently_item_id}>
+                  <p className="currently-title">{item.title}</p>
+                  <p className="body-text">{item.body_text}</p>
+                </li>
               ))}
             </ul>
           </div>

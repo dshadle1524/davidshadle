@@ -451,33 +451,51 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
         <span class="view-label">In RuleSpeak</span>
-        <p class="view-body">A currently item's <a class="ref" href="#en-f-currentlyitems-name">name</a> is the same as its currently item ID.</p>
+        <p class="view-body">A currently item's <a class="ref" href="#en-f-currentlyitems-name">name</a> is the same as its <a class="ref" href="#en-f-currentlyitems-title">title</a>.</p>
       </div>
       <div class="view elem elem-english">
         <span class="view-label">In plain words</span>
-        <p class="view-body">Currently item ID.</p>
+        <p class="view-body"><a class="ref" href="#en-f-currentlyitems-title">Title</a>.</p>
       </div>
       <div class="view elem elem-formula">
         <span class="view-label">As a formula</span>
-        <div class="view-body fx"><span class="fx-eq">= </span><span class="fx-chip">Currently Item ID</span></div>
+        <div class="view-body fx"><span class="fx-eq">= </span><a class="fx-chip" href="#en-f-currentlyitems-title">Title</a></div>
       </div>
     </div>
     <details class="prov prov-inputs elem elem-inputs" open>
       <summary>Inputs <span class="count">1</span> <span class="prov-hint">fields this rule reads</span></summary>
       <div class="prov-grid">
-        <span class="input input-static tone-raw">
-          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Currently Item ID</span><span class="input-table">Currently Item</span></span>
-          <span class="input-en muted">Stored identity, slug form.</span>
-        </span>
+        <a class="input tone-raw" href="#en-f-currentlyitems-title">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Title</span><span class="input-table">Currently Item</span></span>
+          <span class="input-en muted">The bullet's title/name, e.g. 'Banyan Software' or 'Lookout Together'.</span>
+        </a>
       </div>
     </details>
     <details class="prov prov-leaves elem elem-inputs">
       <summary>Ground truth at the leaves <span class="count">1</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
       <div class="prov-pills">
-        <span class="ref-pill tone-raw">● Currently Item ID <span class="ref-pill-tbl">Currently Item</span></span>
+        <a class="ref-pill tone-raw" href="#en-f-currentlyitems-title">● Title <span class="ref-pill-tbl">Currently Item</span></a>
       </div>
     </details>
     <p class="field-note elem elem-desc">Display alias.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-currentlyitems-title" data-entity="Currently Item" data-field="Title">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Title</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-currentlyitems-name">ƒ Name <span class="ref-pill-tbl">Currently Item</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">The bullet's title/name, e.g. 'Banyan Software' or 'Lookout Together'.</p>
     </article>
   <article class="field tone-raw" id="en-f-currentlyitems-bodytext" data-entity="Currently Item" data-field="Body Text">
     <div class="field-head">
@@ -489,7 +507,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="gt">
       <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
-    <p class="field-note elem elem-desc">The bullet's text.</p>
+    <p class="field-note elem elem-desc">The bullet's description text, under the title.</p>
     </article>
   <article class="field tone-raw" id="en-f-currentlyitems-sortorder" data-entity="Currently Item" data-field="Sort Order">
     <div class="field-head">

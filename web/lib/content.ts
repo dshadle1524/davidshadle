@@ -17,6 +17,7 @@ export interface SiteSettings {
 
 export interface CurrentlyItem {
   currently_item_id: string;
+  title: string;
   body_text: string;
   sort_order: number;
 }

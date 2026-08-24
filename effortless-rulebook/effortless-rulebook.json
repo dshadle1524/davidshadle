@@ -36,19 +36,22 @@
     "Description": "Table: CurrentlyItems. The undated 'Currently' block on Home (Section 10): a short bulleted list of what David is working on now. Update items when something changes, not on a schedule.",
     "schema": [
       { "name": "CurrentlyItemId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
-      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{CurrentlyItemId}}" },
-      { "name": "BodyText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The bullet's text." },
+      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Title}}" },
+      { "name": "Title", "datatype": "string", "type": "raw", "nullable": false, "Description": "The bullet's title/name, e.g. 'Banyan Software' or 'Lookout Together'." },
+      { "name": "BodyText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The bullet's description text, under the title." },
       { "name": "SortOrder", "datatype": "integer", "type": "raw", "nullable": false, "Description": "Display order." }
     ],
     "data": [
       {
         "CurrentlyItemId": "banyan",
-        "BodyText": "Banyan Software, advising on product strategy and UX building a self-managed portal providing product management concepts, frameworks with a focus on delivering strategic articulation, roadmaps and initiative audit across a portfolio of 100+ B2B SaaS operating companies. Delivered contextual dashboards to track workshop engagement, cloud spend and technical due diligence deal tracking.",
+        "Title": "Banyan Software",
+        "BodyText": "Advising on product strategy and UX. Built a self-managed portal providing product management concepts, frameworks with a focus on delivering strategic articulation, roadmaps and initiative audits to their portfolio of 100+ B2B SaaS operating companies. Delivered contextual dashboards to track workshop engagement, cloud spend and technical due diligence deal tracking.",
         "SortOrder": 1
       },
       {
         "CurrentlyItemId": "lookout-together",
-        "BodyText": "Lookout Together — a family scam-resilience service I conceived, designed and built on my own. Older adults get current, practical knowledge about how scams actually work. Their adult children get a way to help without taking over. No monitoring, no account access, no one acting on anyone's behalf. Strategy, experience design and build, all one person.",
+        "Title": "Lookout Together",
+        "BodyText": "A family scam-resilience service I conceived, designed and built on my own. Older adults get current, practical knowledge about how scams actually work and how to proactively protect themselves. Their adult children get a way to help without taking over. No monitoring, no account access, no one acting on anyone's behalf. Strategy, experience design and build, all one person.",
         "SortOrder": 2
       }
     ]

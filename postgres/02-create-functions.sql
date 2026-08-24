@@ -35,7 +35,7 @@ $$ LANGUAGE sql STABLE;
 
 CREATE OR REPLACE FUNCTION calc_currently_items_name(p_currently_item_id TEXT)
 RETURNS TEXT AS $$
-  SELECT ((SELECT NULLIF(currently_item_id, '') FROM currently_items WHERE currently_item_id = p_currently_item_id))::text;
+  SELECT ((SELECT NULLIF(title, '') FROM currently_items WHERE currently_item_id = p_currently_item_id))::text;
 $$ LANGUAGE sql STABLE;
 
 -- calc_bio_variants_name
