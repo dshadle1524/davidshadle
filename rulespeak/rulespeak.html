@@ -270,6 +270,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
   <h2 class="toc-title">Entities</h2>
   <ul class="toc-list">
     <li><a href="#en-t-sitesettings">Site Setting</a> <span class="toc-meta">1 rules · 0 links</span></li>
+    <li><a href="#en-t-currentlyitems">Currently Item</a> <span class="toc-meta">1 rules · 0 links</span></li>
     <li><a href="#en-t-biovariants">Bio Variant</a> <span class="toc-meta">1 rules · 0 links</span></li>
     <li><a href="#en-t-howiworksections">How I Work Section</a> <span class="toc-meta">1 rules · 0 links</span></li>
     <li><a href="#en-t-proofpoints">Proof Point</a> <span class="toc-meta">1 rules · 0 links</span></li>
@@ -420,18 +421,6 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     </div>
     <p class="field-note elem elem-desc">The medium-sized second line of the Home hero, directly under HeroHeadline. Second/third sentence of PositioningStatement.</p>
     </article>
-  <article class="field tone-raw" id="en-f-sitesettings-currentlytext" data-entity="Site Setting" data-field="Currently Text">
-    <div class="field-head">
-      <span class="field-glyph" title="Ground truth">●</span>
-      <span class="field-name">Currently Text</span>
-      <span class="pill pill-type">Ground truth</span>
-      <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
-    </div>
-    <p class="field-note elem elem-desc">The undated 'Currently' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule.</p>
-    </article>
   <article class="field tone-raw" id="en-f-sitesettings-banyantitle" data-entity="Site Setting" data-field="Banyan Title">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
@@ -443,6 +432,76 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Full Banyan title, used everywhere per Section 6: 'Technical Advisor, Product Strategy and UX'.</p>
+    </article>
+</section>
+<section class="entity" id="en-t-currentlyitems" data-entity="Currently Item">
+  <header class="entity-head">
+    <h2 class="entity-title">Currently Item</h2>
+    <p class="entity-synopsis">A currently item is identified by its <a class="ref" href="#en-f-currentlyitems-name">name</a>.</p>
+  </header>
+  <article class="field tone-calc" id="en-f-currentlyitems-name" data-entity="Currently Item" data-field="Name">
+    <div class="field-head">
+      <span class="field-glyph" title="Calculated">ƒ</span>
+      <span class="field-name">Name</span>
+      <span class="pill pill-type">Calculated</span>
+      <span class="pill pill-depth">1 hop from ground truth</span>
+      <span class="pill pill-muted">string</span>
+      <span class="pill pill-dr">DR-2</span>
+    </div>
+    <div class="narr-views">
+      <div class="view elem elem-rulespeak">
+        <span class="view-label">In RuleSpeak</span>
+        <p class="view-body">A currently item's <a class="ref" href="#en-f-currentlyitems-name">name</a> is the same as its currently item ID.</p>
+      </div>
+      <div class="view elem elem-english">
+        <span class="view-label">In plain words</span>
+        <p class="view-body">Currently item ID.</p>
+      </div>
+      <div class="view elem elem-formula">
+        <span class="view-label">As a formula</span>
+        <div class="view-body fx"><span class="fx-eq">= </span><span class="fx-chip">Currently Item ID</span></div>
+      </div>
+    </div>
+    <details class="prov prov-inputs elem elem-inputs" open>
+      <summary>Inputs <span class="count">1</span> <span class="prov-hint">fields this rule reads</span></summary>
+      <div class="prov-grid">
+        <span class="input input-static tone-raw">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Currently Item ID</span><span class="input-table">Currently Item</span></span>
+          <span class="input-en muted">Stored identity, slug form.</span>
+        </span>
+      </div>
+    </details>
+    <details class="prov prov-leaves elem elem-inputs">
+      <summary>Ground truth at the leaves <span class="count">1</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
+      <div class="prov-pills">
+        <span class="ref-pill tone-raw">● Currently Item ID <span class="ref-pill-tbl">Currently Item</span></span>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Display alias.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-currentlyitems-bodytext" data-entity="Currently Item" data-field="Body Text">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Body Text</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">The bullet's text.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-currentlyitems-sortorder" data-entity="Currently Item" data-field="Sort Order">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Sort Order</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">integer</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Display order.</p>
     </article>
 </section>
 <section class="entity" id="en-t-biovariants" data-entity="Bio Variant">
@@ -457,7 +516,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-type">Calculated</span>
       <span class="pill pill-depth">1 hop from ground truth</span>
       <span class="pill pill-muted">string</span>
-      <span class="pill pill-dr">DR-2</span>
+      <span class="pill pill-dr">DR-3</span>
     </div>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
@@ -557,7 +616,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-type">Calculated</span>
       <span class="pill pill-depth">1 hop from ground truth</span>
       <span class="pill pill-muted">string</span>
-      <span class="pill pill-dr">DR-3</span>
+      <span class="pill pill-dr">DR-4</span>
     </div>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
@@ -657,7 +716,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-type">Calculated</span>
       <span class="pill pill-depth">1 hop from ground truth</span>
       <span class="pill pill-muted">string</span>
-      <span class="pill pill-dr">DR-4</span>
+      <span class="pill pill-dr">DR-5</span>
     </div>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
@@ -817,7 +876,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-type">Calculated</span>
       <span class="pill pill-depth">1 hop from ground truth</span>
       <span class="pill pill-muted">string</span>
-      <span class="pill pill-dr">DR-5</span>
+      <span class="pill pill-dr">DR-6</span>
     </div>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
@@ -1036,7 +1095,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-type">Calculated</span>
       <span class="pill pill-depth">1 hop from ground truth</span>
       <span class="pill pill-muted">string</span>
-      <span class="pill pill-dr">DR-6</span>
+      <span class="pill pill-dr">DR-7</span>
     </div>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
@@ -1136,7 +1195,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-type">Calculated</span>
       <span class="pill pill-depth">1 hop from ground truth</span>
       <span class="pill pill-muted">string</span>
-      <span class="pill pill-dr">DR-7</span>
+      <span class="pill pill-dr">DR-8</span>
     </div>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
@@ -1224,7 +1283,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-type">Calculated</span>
       <span class="pill pill-depth">1 hop from ground truth</span>
       <span class="pill pill-muted">string</span>
-      <span class="pill pill-dr">DR-8</span>
+      <span class="pill pill-dr">DR-9</span>
     </div>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">

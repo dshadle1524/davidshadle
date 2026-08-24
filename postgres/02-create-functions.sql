@@ -28,6 +28,16 @@ RETURNS TEXT AS $$
   SELECT ((SELECT NULLIF(site_setting_id, '') FROM site_settings WHERE site_setting_id = p_site_setting_id))::text;
 $$ LANGUAGE sql STABLE;
 
+-- calc_currently_items_name
+-- Field: CurrentlyItems.Name
+-- Type: calculated | DataType: string | Returns: TEXT
+
+
+CREATE OR REPLACE FUNCTION calc_currently_items_name(p_currently_item_id TEXT)
+RETURNS TEXT AS $$
+  SELECT ((SELECT NULLIF(currently_item_id, '') FROM currently_items WHERE currently_item_id = p_currently_item_id))::text;
+$$ LANGUAGE sql STABLE;
+
 -- calc_bio_variants_name
 -- Field: BioVariants.Name
 -- Type: calculated | DataType: string | Returns: TEXT

@@ -12,8 +12,13 @@ export interface SiteSettings {
   positioning_statement: string;
   hero_headline: string;
   hero_subheadline: string;
-  currently_text: string | null;
   banyan_title: string;
+}
+
+export interface CurrentlyItem {
+  currently_item_id: string;
+  body_text: string;
+  sort_order: number;
 }
 
 export interface BioVariant {
@@ -85,6 +90,13 @@ export interface EducationEntry {
 export async function getSiteSettings(): Promise<SiteSettings> {
   const { rows } = await pool.query("SELECT * FROM vw_site_settings LIMIT 1");
   return rows[0];
+}
+
+export async function getCurrentlyItems(): Promise<CurrentlyItem[]> {
+  const { rows } = await pool.query(
+    "SELECT * FROM vw_currently_items ORDER BY sort_order",
+  );
+  return rows;
 }
 
 export async function getBioVariant(id: string): Promise<BioVariant> {

@@ -5,6 +5,7 @@ import { pool } from "@/lib/db";
 // the generated vw_* views. Not a final API surface.
 const VIEWS = [
   "vw_site_settings",
+  "vw_currently_items",
   "vw_bio_variants",
   "vw_how_i_work_sections",
   "vw_proof_points",

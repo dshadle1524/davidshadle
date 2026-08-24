@@ -21,8 +21,11 @@ _Rulebook for davidshadle.com v4: bio variants, method statement, proof/work ent
 | Positioning Statement | A defined attribute. | _The core positioning paragraph everything else derives from (Content Strategy Section 2)._ |
 | Hero Headline | A defined attribute. | _The large opening line of the Home hero, first person. First sentence of PositioningStatement, curated separately so the hero can style it distinctly from HeroSubheadline._ |
 | Hero Subheadline | A defined attribute. | _The medium-sized second line of the Home hero, directly under HeroHeadline. Second/third sentence of PositioningStatement._ |
-| Currently Text | A defined attribute. | _The undated 'Currently' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule._ |
 | Banyan Title | A defined attribute. | _Full Banyan title, used everywhere per Section 6: 'Technical Advisor, Product Strategy and UX'._ |
+| **Currently Item** | A currently item is identified by its name. | — |
+| Name | The same as its currently item ID. | _Display alias._ |
+| Body Text | A defined attribute. | _The bullet's text._ |
+| Sort Order | A defined attribute. | _Display order._ |
 | **Bio Variant** | A bio variant is identified by its name. | — |
 | Name | The same as its label. | _Display alias._ |
 | Label | A defined attribute. | _Human label for this bio length/context, e.g. 'Fifty words'._ |
@@ -89,6 +92,7 @@ already computes (cross-referenced as DR-N in the Definitional Rules below)._
 ### Structural Constraints (from the schema)
 
 - A site setting **must** have a contact email, a site domain, a portfolio company count, a self description line, a positioning statement, a hero headline, a hero subheadline, and a banyan title.
+- A currently item **must** have a body text and a sort order.
 - A bio variant **must** have a label, an usage context, a body text, and a sort order.
 - A how i work section **must** have a heading, a body text, and a sort order.
 - A proof point **must** have a title, a problem text, an action text, an outcome text, and a sort order, and record whether it is featured on work page and whether it is featured in resume selected work.
@@ -108,13 +112,14 @@ but clunky — a flag for an optional downstream reword pass, not a defect._
 | ID | Declarative rule |
 |----|------------------|
 | **DR-1 Name** | A site setting's name is the same as its site setting ID. |
-| **DR-2 Name** | A bio variant's name is the same as its label. |
-| **DR-3 Name** | A how i work section's name is the same as its heading. |
-| **DR-4 Name** | A proof point's name is the same as its title. |
-| **DR-5 Name** | A job entry's name is computed as the company, followed by “ - ”, followed by the job title. |
-| **DR-6 Name** | A resume variant's name is the same as its label. |
-| **DR-7 Name** | A resume list item's name is the same as its label. |
-| **DR-8 Name** | An education entry's name is computed as the institution, followed by “ - ”, followed by the degree. |
+| **DR-2 Name** | A currently item's name is the same as its currently item ID. |
+| **DR-3 Name** | A bio variant's name is the same as its label. |
+| **DR-4 Name** | A how i work section's name is the same as its heading. |
+| **DR-5 Name** | A proof point's name is the same as its title. |
+| **DR-6 Name** | A job entry's name is computed as the company, followed by “ - ”, followed by the job title. |
+| **DR-7 Name** | A resume variant's name is the same as its label. |
+| **DR-8 Name** | A resume list item's name is the same as its label. |
+| **DR-9 Name** | An education entry's name is computed as the institution, followed by “ - ”, followed by the degree. |
 
 ## 5 Traceability to Schema
 
@@ -124,6 +129,7 @@ the same logic the rulebook stores, written for a business reader._
 | Schema element | Kind | Expression |
 |----------------|------|------------|
 | **SiteSettings.Name** | formula | `SiteSettingId` |
+| **CurrentlyItems.Name** | formula | `CurrentlyItemId` |
 | **BioVariants.Name** | formula | `Label` |
 | **HowIWorkSections.Name** | formula | `Heading` |
 | **ProofPoints.Name** | formula | `Title` |

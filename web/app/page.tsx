@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { getSiteSettings, getBioVariant, getHowIWorkSections, getFeaturedWorkProofPoints } from "@/lib/content";
+import { getSiteSettings, getBioVariant, getCurrentlyItems, getHowIWorkSections, getFeaturedWorkProofPoints } from "@/lib/content";
 import { ContactSection } from "@/components/ContactSection";
 
 export default async function Home() {
-  const [settings, bio, howIWork, proofPoints] = await Promise.all([
+  const [settings, bio, currentlyItems, howIWork, proofPoints] = await Promise.all([
     getSiteSettings(),
     getBioVariant("home-body"),
+    getCurrentlyItems(),
     getHowIWorkSections(),
     getFeaturedWorkProofPoints(),
   ]);
@@ -34,13 +35,15 @@ export default async function Home() {
       </section>
 
       {/* ---- Currently ---- */}
-      {settings.currently_text && (
+      {currentlyItems.length > 0 && (
         <section className="section tinted">
           <div className="container">
             <span className="eyebrow">Currently</span>
-            <p className="body-text" style={{ marginTop: 12, maxWidth: 720 }}>
-              {settings.currently_text}
-            </p>
+            <ul className="currently-list" style={{ marginTop: 16 }}>
+              {currentlyItems.map((item) => (
+                <li key={item.currently_item_id} className="body-text">{item.body_text}</li>
+              ))}
+            </ul>
           </div>
         </section>
       )}

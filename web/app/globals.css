@@ -310,6 +310,31 @@ a {
   padding: 24px;
 }
 
+.currently-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 720px;
+}
+
+.currently-list li {
+  margin-bottom: 16px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.currently-list li:last-child {
+  margin-bottom: 0;
+}
+
+.currently-list li:before {
+  content: "•";
+  color: var(--color-deep);
+  font-weight: 600;
+  position: absolute;
+  left: 0;
+}
+
 /* ---- How I Work sections ---- */
 
 .hiw-section {
