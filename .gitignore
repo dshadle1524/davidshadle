@@ -6,3 +6,7 @@ node_modules/
 /.ssotme/**/*.zfs
 
 effortless.env
+
+# Per-run output, not source
+postgres/.applied-manifest.json
+

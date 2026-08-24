@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Wrapper: proxies `psql <url> [flags] [-f file]` to the psql binary
+# inside the davidshadle-postgres container, since no psql client is
+# installed on this host. Rewrites the host-exposed port (5732) back
+# to the container-internal port (5432), and turns `-f file` into a
+# stdin redirect since the container can't see host file paths.
+set -euo pipefail
+
+CONTAINER="davidshadle-postgres"
+args=("$@")
+url="${args[0]:-}"
+unset 'args[0]'
+args=("${args[@]}")
+
+newurl="$url"
+if [[ "$url" == postgresql://* ]]; then
+    newurl="$(echo "$url" | sed 's/:5732/:5432/')"
+fi
+
+file=""
+rest=()
+i=0
+while [ $i -lt ${#args[@]} ]; do
+    a="${args[$i]}"
+    if [ "$a" = "-f" ]; then
+        i=$((i+1))
+        file="${args[$i]}"
+    else
+        rest+=("$a")
+    fi
+    i=$((i+1))
+done
+
+if [ -n "$file" ]; then
+    docker exec -i "$CONTAINER" psql "$newurl" "${rest[@]}" < "$file"
+else
+    docker exec -i "$CONTAINER" psql "$newurl" "${rest[@]}"
+fi

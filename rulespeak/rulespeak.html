@@ -1,0 +1,1433 @@
+<!doctype html>
+<html lang="en" data-lang="en" class="show-rulespeak show-desc show-inputs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>David Shadle Website v4 — RuleSpeak</title>
+<style>
+
+:root{
+  --raw:#003a70; --calc:#5a3aa0; --agg:#0a7b78; --rel:#666; --lookup:#9a6708;
+  --raw-bg:#eaf0f8; --calc-bg:#f1ebfb; --agg-bg:#e5f4f3; --rel-bg:#f0f0f0; --lookup-bg:#fbf2dd;
+  --ink:#1a1a22; --muted:#6b6b78; --line:#e3e3ea; --bg:#fafafc; --card:#fff;
+  --bar-h:48px;                 /* sticky topbar height — anchors clear it */
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);background:var(--bg);}
+a{color:var(--calc);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font:0.85em ui-monospace,SFMono-Regular,Menlo,monospace;background:#f3f3f7;padding:1px 5px;border-radius:4px}
+
+/* ── One language visible at a time; <html data-lang> picks it (rules per
+      language are appended at render time). ─────────────────────────────── */
+.lang-doc{display:none}
+
+/* ── Element visibility: each doc element shows only when <html> carries its flag. */
+.elem{display:none}
+html.show-rulespeak .elem-rulespeak{display:block}
+html.show-english   .elem-english{display:block}
+html.show-formula   .elem-formula{display:block}
+html.show-desc      .elem-desc{display:block}
+html.show-inputs    .elem-inputs{display:block}
+html.show-consumers .elem-consumers{display:block}
+
+/* ── Sticky top bar — brand · breadcrumb · language · gear ───────────────── */
+.topbar{position:sticky;top:0;z-index:40;height:var(--bar-h);
+  background:rgba(255,255,255,.92);border-bottom:1px solid var(--line);
+  backdrop-filter:saturate(1.1) blur(8px)}
+.topbar-inner{max-width:960px;margin:0 auto;padding:0 24px;height:var(--bar-h);
+  display:flex;align-items:center;gap:12px}
+.topbar-brand{font-weight:800;font-size:15px;color:var(--ink);white-space:nowrap;flex:none}
+.topbar-brand:hover{text-decoration:none}
+.topbar-tag{font-size:11px;font-weight:700;color:var(--calc);background:var(--calc-bg);
+  padding:1px 7px;border-radius:999px;margin-left:4px;vertical-align:middle}
+.crumb{flex:1;min-width:0;display:flex;align-items:center;gap:7px;
+  font-size:13px;color:var(--muted);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.crumb-entity{font-weight:700;color:var(--ink)}
+.crumb-sep{color:var(--line)}
+.crumb-field{color:var(--calc);font-weight:600;overflow:hidden;text-overflow:ellipsis}
+.lang-select{flex:none;height:32px;border:1px solid var(--line);border-radius:9px;background:#fff;
+  color:var(--ink);font:600 13px/1 inherit;padding:0 8px;cursor:pointer;max-width:150px}
+.lang-select:hover{border-color:var(--calc)}
+.gear{flex:none;width:34px;height:34px;border-radius:9px;border:1px solid var(--line);
+  background:#fff;cursor:pointer;font-size:17px;line-height:1;color:var(--muted);
+  display:inline-flex;align-items:center;justify-content:center;transition:all .12s}
+.gear:hover{color:var(--ink);border-color:var(--calc);box-shadow:0 1px 4px rgba(90,58,160,.15)}
+.gear[aria-expanded='true']{background:var(--calc);color:#fff;border-color:var(--calc)}
+
+/* ── Gear popup ──────────────────────────────────────────────────────────── */
+.gear-pop{position:absolute;top:calc(var(--bar-h) + 6px);right:24px;z-index:50;width:290px;
+  background:#fff;border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 10px 32px rgba(20,20,40,.18);padding:12px}
+.gear-pop[hidden]{display:none}
+.gear-pop-title{margin:2px 4px 8px;font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--muted)}
+.gear-opt{display:grid;grid-template-columns:auto 1fr;column-gap:9px;align-items:baseline;
+  padding:7px 6px;border-radius:8px;cursor:pointer}
+.gear-opt:hover{background:var(--calc-bg)}
+.gear-opt input{grid-row:1 / span 2;align-self:center;width:16px;height:16px;accent-color:var(--calc);cursor:pointer}
+.gear-opt-label{font-weight:600;font-size:14px;color:var(--ink)}
+.gear-opt-hint{grid-column:2;font-size:12px;color:var(--muted);line-height:1.35}
+.gear-reset{margin:8px 4px 2px;border:0;background:transparent;color:var(--calc);
+  font:600 12px/1 inherit;cursor:pointer;padding:4px}
+.gear-reset:hover{text-decoration:underline}
+.gear-inline{border:1px solid var(--line);background:#fff;border-radius:7px;padding:1px 7px;
+  font:600 12px/1 inherit;color:var(--calc);cursor:pointer}
+.gear-inline:hover{border-color:var(--calc)}
+
+.doc-header{background:linear-gradient(180deg,#fff,#f5f4fb);border-bottom:1px solid var(--line)}
+.doc-header-inner{max-width:960px;margin:0 auto;padding:18px 24px}
+.doc-title{margin:0;font-size:24px;font-weight:800}
+.doc-title-sub{font-size:13px;font-weight:600;color:var(--calc);background:var(--calc-bg);
+  padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:6px}
+.doc-lede{margin:6px 0 0;font-style:italic;color:var(--muted)}
+.doc-note{margin:8px 0 12px;color:var(--muted);font-size:13px;max-width:70ch}
+.narr-hint{margin:8px 0 0;font-size:12px;color:var(--muted);max-width:78ch}
+
+.toc{max-width:960px;margin:22px auto 0;padding:0 24px;scroll-margin-top:calc(var(--bar-h) + 12px)}
+.toc-title{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
+.toc-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px}
+.toc-list a{font-weight:600}
+.toc-meta{font-size:12px;color:var(--muted);margin-left:6px}
+
+.entity{max-width:960px;margin:34px auto 0;padding:0 24px;scroll-margin-top:calc(var(--bar-h) + 14px)}
+.entity-head{border-bottom:2px solid var(--line);padding-bottom:8px;margin-bottom:14px}
+.entity-title{margin:0;font-size:21px;font-weight:800}
+.entity-synopsis{margin:4px 0 0;color:var(--muted);max-width:74ch}
+
+.field{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--rel);
+  border-radius:10px;padding:14px 16px;margin:0 0 12px;scroll-margin-top:calc(var(--bar-h) + 14px)}
+.field.tone-raw{border-left-color:var(--raw)} .field.tone-calc{border-left-color:var(--calc)}
+.field.tone-agg{border-left-color:var(--agg)} .field.tone-lookup{border-left-color:var(--lookup)}
+.field.tone-rel{border-left-color:var(--rel)}
+.field-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.field-glyph{width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;
+  border-radius:6px;font-weight:700;color:#fff;font-size:13px}
+.tone-raw .field-glyph{background:var(--raw)} .tone-calc .field-glyph{background:var(--calc)}
+.tone-agg .field-glyph{background:var(--agg)} .tone-lookup .field-glyph{background:var(--lookup)}
+.tone-rel .field-glyph{background:var(--rel)}
+.field-name{font-weight:700;font-size:16px}
+.pill{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#f0f0f5;color:var(--muted)}
+.pill-type{background:var(--calc-bg);color:var(--calc)}
+.tone-raw .pill-type{background:var(--raw-bg);color:var(--raw)}
+.tone-agg .pill-type{background:var(--agg-bg);color:var(--agg)}
+.tone-lookup .pill-type{background:var(--lookup-bg);color:var(--lookup)}
+.tone-rel .pill-type{background:var(--rel-bg);color:var(--rel)}
+.pill-dr{background:#eee;color:#555;font-variant-numeric:tabular-nums}
+
+.narr-views{margin-top:10px;display:flex;flex-direction:column;gap:10px}
+.narr-views:empty{margin-top:0}
+.view-label{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--muted);margin-bottom:4px}
+.view-body{margin:0}
+.mech{color:#9a6708;background:var(--lookup-bg);padding:1px 6px;border-radius:6px;
+  font-weight:600;text-transform:none;letter-spacing:0}
+.fx{font:0.92em ui-monospace,SFMono-Regular,Menlo,monospace;background:#f7f7fb;border:1px solid var(--line);
+  border-radius:8px;padding:8px 10px;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+.fx-eq{color:var(--muted)}
+.fx-chip{background:var(--calc-bg);color:var(--calc);padding:1px 6px;border-radius:5px;font-weight:600}
+.ref{border-bottom:1px dashed var(--calc);font-weight:600}
+
+.rt-headline{margin:0 0 4px}
+.rt-priority{margin:4px 0;padding-left:22px}
+.rt-priority>li{margin:2px 0}
+.rt-value{font-weight:700;color:var(--calc)}
+.rt-otherwise{color:var(--muted);font-style:italic}
+.rt-group-label{font-weight:600}
+.rt-group{margin:2px 0 6px;padding-left:20px}
+
+.gt{margin-top:8px}
+.gt-body{margin:0;color:var(--muted)}
+.gt-reverse{margin-top:6px}
+
+.prov{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}
+.prov>summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--ink);list-style:none}
+.prov>summary::-webkit-details-marker{display:none}
+.prov>summary::before{content:'▸';display:inline-block;margin-right:6px;color:var(--muted);transition:transform .1s}
+.prov[open]>summary::before{transform:rotate(90deg)}
+.count{font-size:11px;font-weight:700;background:#eee;color:#555;padding:1px 7px;border-radius:999px;margin-left:4px}
+.count-muted{background:#f5f5f5;color:#999}
+.prov-hint{font-size:12px;font-weight:400;color:var(--muted);margin-left:6px}
+.prov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-top:8px}
+.prov-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.input{display:block;border:1px solid var(--line);border-left:3px solid var(--rel);border-radius:8px;
+  padding:8px 10px;background:#fcfcfe}
+.input.tone-raw{border-left-color:var(--raw)} .input.tone-calc{border-left-color:var(--calc)}
+.input.tone-agg{border-left-color:var(--agg)} .input.tone-lookup{border-left-color:var(--lookup)}
+.input.tone-rel{border-left-color:var(--rel)}
+.input:hover{background:#f4f3fb;text-decoration:none}
+.input-static{cursor:default}
+span.input-static:hover{background:#fcfcfe}
+.input-head{display:flex;align-items:center;gap:6px}
+.input-glyph{font-size:12px;color:var(--muted)}
+.input-name{font-weight:700;color:var(--ink)}
+.input-table{font-size:11px;color:var(--muted);margin-left:auto}
+.input-en{display:block;margin-top:3px;font-size:13px;color:var(--muted)}
+.ref-pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;
+  border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:#fff;color:var(--ink)}
+.ref-pill.tone-raw{border-color:var(--raw);color:var(--raw)} .ref-pill.tone-calc{border-color:var(--calc);color:var(--calc)}
+.ref-pill.tone-agg{border-color:var(--agg);color:var(--agg)} .ref-pill.tone-lookup{border-color:var(--lookup);color:var(--lookup)}
+.ref-pill.faded{opacity:.6}
+.ref-pill-tbl{font-weight:400;color:var(--muted)}
+
+.field-note{margin:8px 0 0;font-size:13px;font-style:italic;color:var(--muted);
+  border-left:2px solid var(--line);padding-left:10px}
+
+.doc-footer{max-width:960px;margin:40px auto;padding:18px 24px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:13px}
+.doc-footer-legend{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px}
+.chip-raw{background:var(--raw-bg);color:var(--raw)} .chip-calc{background:var(--calc-bg);color:var(--calc)}
+.chip-agg{background:var(--agg-bg);color:var(--agg)} .chip-lookup{background:var(--lookup-bg);color:var(--lookup)}
+.chip-rel{background:var(--rel-bg);color:var(--rel)}
+:target{animation:flash 1.2s ease}
+@keyframes flash{0%{background:var(--calc-bg)}100%{background:var(--card)}}
+
+html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
+</style>
+<script>
+
+(function(){
+  var LANGS=['en'];
+  var DEFAULT_LANG='en';
+  var ELEMS=['rulespeak','english','formula','desc','inputs','consumers'];
+  var root=document.documentElement;
+
+  var lang=null;
+  try{ lang=new URLSearchParams(location.search).get('lang'); }catch(e){}
+  if(!lang){ try{ lang=localStorage.getItem('rulespeak.lang'); }catch(e){} }
+  if(LANGS.indexOf(lang)<0) lang=DEFAULT_LANG;
+  root.setAttribute('data-lang',lang);
+  root.setAttribute('lang',lang);
+
+  ELEMS.forEach(function(k){
+    var v=null; try{v=localStorage.getItem('rulespeak.show.'+k);}catch(e){}
+    if(v==='1') root.classList.add('show-'+k);
+    else if(v==='0') root.classList.remove('show-'+k);
+  });
+})();
+
+</script>
+</head>
+<body>
+<div class="lang-doc" data-lang="en" lang="en">
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="topbar-brand" href="#en-top">📘 David Shadle Website v4 <span class="topbar-tag">RuleSpeak</span></a>
+    <nav class="crumb" aria-label="You are reading">
+      <span class="crumb-entity"></span>
+      <span class="crumb-sep" hidden>›</span>
+      <span class="crumb-field"></span>
+    </nav>
+    <button type="button" class="gear" aria-haspopup="dialog" aria-expanded="false" title="Documentation options" aria-label="Documentation options">⚙︎</button>
+  </div>
+  <div class="gear-pop" role="dialog" aria-label="Documentation options" hidden>
+    <p class="gear-pop-title">Show in this document</p>
+    <label class="gear-opt" title="The declarative business rule (only if / must / priority)">
+      <input type="checkbox" data-elem="rulespeak" checked>
+      <span class="gear-opt-label">RuleSpeak</span>
+      <span class="gear-opt-hint">The declarative business rule (only if / must / priority)</span>
+    </label>
+    <label class="gear-opt" title="The formula read aloud as a plain sentence">
+      <input type="checkbox" data-elem="english">
+      <span class="gear-opt-label">Plain reading</span>
+      <span class="gear-opt-hint">The formula read aloud as a plain sentence</span>
+    </label>
+    <label class="gear-opt" title="The raw =expression, with clickable field chips">
+      <input type="checkbox" data-elem="formula">
+      <span class="gear-opt-label">Formulas</span>
+      <span class="gear-opt-hint">The raw =expression, with clickable field chips</span>
+    </label>
+    <label class="gear-opt" title="The author's narrative comment on a field, when present">
+      <input type="checkbox" data-elem="desc" checked>
+      <span class="gear-opt-label">Description</span>
+      <span class="gear-opt-hint">The author's narrative comment on a field, when present</span>
+    </label>
+    <label class="gear-opt" title="The fields each rule reads (its DAG inputs / upstream)">
+      <input type="checkbox" data-elem="inputs" checked>
+      <span class="gear-opt-label">Links to inputs</span>
+      <span class="gear-opt-hint">The fields each rule reads (its DAG inputs / upstream)</span>
+    </label>
+    <label class="gear-opt" title="The rules that read this one (its DAG consumers / downstream)">
+      <input type="checkbox" data-elem="consumers">
+      <span class="gear-opt-label">Links to consumers</span>
+      <span class="gear-opt-hint">The rules that read this one (its DAG consumers / downstream)</span>
+    </label>
+    <button type="button" class="gear-reset">Reset to defaults</button>
+  </div>
+</div>
+<header class="doc-header" id="en-top">
+  <div class="doc-header-inner">
+    <h1 class="doc-title">📘 David Shadle Website v4 <span class="doc-title-sub">RuleSpeak</span></h1>
+    <p class="doc-lede">Rulebook for davidshadle.com v4: bio variants, method statement, proof/work entries, resume content, and site settings. Content and navigation as data, per the PM Portal discipline referenced in David_Shadle_Content_Strategy_v1.md.</p>
+    <p class="doc-note">Declarative business rules rendered from the rulebook — the single source of truth. Every statement below is the plain-language reading of a formula; nothing here is hand-authored prose.</p>
+    <p class="narr-hint">Use the <button type="button" class="gear-inline gear-open-inline">⚙︎ options</button> in the top-right corner to turn each part of the documentation on or off — RuleSpeak, the literal reading, the raw formula, the author's description, and the links to a rule's inputs and consumers. Your choices are remembered.</p>
+  </div>
+</header>
+<nav class="toc">
+  <h2 class="toc-title">Entities</h2>
+  <ul class="toc-list">
+    <li><a href="#en-t-sitesettings">Site Setting</a> <span class="toc-meta">1 rules · 0 links</span></li>
+    <li><a href="#en-t-biovariants">Bio Variant</a> <span class="toc-meta">1 rules · 0 links</span></li>
+    <li><a href="#en-t-howiworksections">How I Work Section</a> <span class="toc-meta">1 rules · 0 links</span></li>
+    <li><a href="#en-t-proofpoints">Proof Point</a> <span class="toc-meta">1 rules · 0 links</span></li>
+    <li><a href="#en-t-jobentries">Job Entry</a> <span class="toc-meta">1 rules · 0 links</span></li>
+    <li><a href="#en-t-resumevariants">Resume Variant</a> <span class="toc-meta">1 rules · 0 links</span></li>
+    <li><a href="#en-t-resumelistitems">Resume List Item</a> <span class="toc-meta">1 rules · 0 links</span></li>
+    <li><a href="#en-t-educationentries">Education Entry</a> <span class="toc-meta">1 rules · 0 links</span></li>
+  </ul>
+</nav>
+<section class="entity" id="en-t-sitesettings" data-entity="Site Setting">
+  <header class="entity-head">
+    <h2 class="entity-title">Site Setting</h2>
+    <p class="entity-synopsis">Singleton table of site-wide facts: contact info, positioning statement, and the undated 'Currently' block. One row.</p>
+  </header>
+  <article class="field tone-calc" id="en-f-sitesettings-name" data-entity="Site Setting" data-field="Name">
+    <div class="field-head">
+      <span class="field-glyph" title="Calculated">ƒ</span>
+      <span class="field-name">Name</span>
+      <span class="pill pill-type">Calculated</span>
+      <span class="pill pill-depth">1 hop from ground truth</span>
+      <span class="pill pill-muted">string</span>
+      <span class="pill pill-dr">DR-1</span>
+    </div>
+    <div class="narr-views">
+      <div class="view elem elem-rulespeak">
+        <span class="view-label">In RuleSpeak</span>
+        <p class="view-body">A site setting's <a class="ref" href="#en-f-sitesettings-name">name</a> is the same as its site setting ID.</p>
+      </div>
+      <div class="view elem elem-english">
+        <span class="view-label">In plain words</span>
+        <p class="view-body">Site setting ID.</p>
+      </div>
+      <div class="view elem elem-formula">
+        <span class="view-label">As a formula</span>
+        <div class="view-body fx"><span class="fx-eq">= </span><span class="fx-chip">Site Setting ID</span></div>
+      </div>
+    </div>
+    <details class="prov prov-inputs elem elem-inputs" open>
+      <summary>Inputs <span class="count">1</span> <span class="prov-hint">fields this rule reads</span></summary>
+      <div class="prov-grid">
+        <span class="input input-static tone-raw">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Site Setting ID</span><span class="input-table">Site Setting</span></span>
+          <span class="input-en muted">Stored identity of the singleton settings row.</span>
+        </span>
+      </div>
+    </details>
+    <details class="prov prov-leaves elem elem-inputs">
+      <summary>Ground truth at the leaves <span class="count">1</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
+      <div class="prov-pills">
+        <span class="ref-pill tone-raw">● Site Setting ID <span class="ref-pill-tbl">Site Setting</span></span>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Display alias.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-sitesettings-contactemail" data-entity="Site Setting" data-field="Contact Email">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Contact Email</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Primary contact email, shown in the Contact section on Home and Work.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-sitesettings-contactphone" data-entity="Site Setting" data-field="Contact Phone">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Contact Phone</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Contact phone number, as it appears on the resume header.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-sitesettings-sitedomain" data-entity="Site Setting" data-field="Site Domain">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Site Domain</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Canonical site domain.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-sitesettings-portfoliocompanycount" data-entity="Site Setting" data-field="Portfolio Company Count">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Portfolio Company Count</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Standardized portfolio count string, per Content Strategy Section 6 ('100+' everywhere, never 107 or 111).</p>
+    </article>
+  <article class="field tone-raw" id="en-f-sitesettings-selfdescriptionline" data-entity="Site Setting" data-field="Self Description Line">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Self Description Line</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">The 'full stack product practitioner' anchor phrase. Per Section 2: say it once, never next to a list.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-sitesettings-positioningstatement" data-entity="Site Setting" data-field="Positioning Statement">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Positioning Statement</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">The core positioning paragraph everything else derives from (Content Strategy Section 2).</p>
+    </article>
+  <article class="field tone-raw" id="en-f-sitesettings-currentlytext" data-entity="Site Setting" data-field="Currently Text">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Currently Text</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">PLACEHOLDER, not yet approved copy. The undated 'Currently' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule. Confirm real wording with David before shipping.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-sitesettings-banyantitle" data-entity="Site Setting" data-field="Banyan Title">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Banyan Title</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Full Banyan title, used everywhere per Section 6: 'Technical Advisor, Product Strategy and UX'.</p>
+    </article>
+</section>
+<section class="entity" id="en-t-biovariants" data-entity="Bio Variant">
+  <header class="entity-head">
+    <h2 class="entity-title">Bio Variant</h2>
+    <p class="entity-synopsis">A bio variant is identified by its <a class="ref" href="#en-f-biovariants-name">name</a>.</p>
+  </header>
+  <article class="field tone-calc" id="en-f-biovariants-name" data-entity="Bio Variant" data-field="Name">
+    <div class="field-head">
+      <span class="field-glyph" title="Calculated">ƒ</span>
+      <span class="field-name">Name</span>
+      <span class="pill pill-type">Calculated</span>
+      <span class="pill pill-depth">1 hop from ground truth</span>
+      <span class="pill pill-muted">string</span>
+      <span class="pill pill-dr">DR-2</span>
+    </div>
+    <div class="narr-views">
+      <div class="view elem elem-rulespeak">
+        <span class="view-label">In RuleSpeak</span>
+        <p class="view-body">A bio variant's <a class="ref" href="#en-f-biovariants-name">name</a> is the same as its <a class="ref" href="#en-f-biovariants-label">label</a>.</p>
+      </div>
+      <div class="view elem elem-english">
+        <span class="view-label">In plain words</span>
+        <p class="view-body"><a class="ref" href="#en-f-biovariants-label">Label</a>.</p>
+      </div>
+      <div class="view elem elem-formula">
+        <span class="view-label">As a formula</span>
+        <div class="view-body fx"><span class="fx-eq">= </span><a class="fx-chip" href="#en-f-biovariants-label">Label</a></div>
+      </div>
+    </div>
+    <details class="prov prov-inputs elem elem-inputs" open>
+      <summary>Inputs <span class="count">1</span> <span class="prov-hint">fields this rule reads</span></summary>
+      <div class="prov-grid">
+        <a class="input tone-raw" href="#en-f-biovariants-label">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Label</span><span class="input-table">Bio Variant</span></span>
+          <span class="input-en muted">Human label for this bio length/context, e.g. 'Fifty words'.</span>
+        </a>
+      </div>
+    </details>
+    <details class="prov prov-leaves elem elem-inputs">
+      <summary>Ground truth at the leaves <span class="count">1</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-raw" href="#en-f-biovariants-label">● Label <span class="ref-pill-tbl">Bio Variant</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Display alias.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-biovariants-label" data-entity="Bio Variant" data-field="Label">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Label</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-biovariants-name">ƒ Name <span class="ref-pill-tbl">Bio Variant</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Human label for this bio length/context, e.g. 'Fifty words'.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-biovariants-usagecontext" data-entity="Bio Variant" data-field="Usage Context">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Usage Context</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Where this variant gets used, e.g. 'Directory listings, conference programs, deck footers, introductions.'</p>
+    </article>
+  <article class="field tone-raw" id="en-f-biovariants-bodytext" data-entity="Bio Variant" data-field="Body Text">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Body Text</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">The bio copy itself. Paragraph breaks encoded as \n\n.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-biovariants-sortorder" data-entity="Bio Variant" data-field="Sort Order">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Sort Order</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">integer</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Display order, shortest to longest.</p>
+    </article>
+</section>
+<section class="entity" id="en-t-howiworksections" data-entity="How I Work Section">
+  <header class="entity-head">
+    <h2 class="entity-title">How I Work Section</h2>
+    <p class="entity-synopsis">A how i work section is identified by its <a class="ref" href="#en-f-howiworksections-name">name</a>.</p>
+  </header>
+  <article class="field tone-calc" id="en-f-howiworksections-name" data-entity="How I Work Section" data-field="Name">
+    <div class="field-head">
+      <span class="field-glyph" title="Calculated">ƒ</span>
+      <span class="field-name">Name</span>
+      <span class="pill pill-type">Calculated</span>
+      <span class="pill pill-depth">1 hop from ground truth</span>
+      <span class="pill pill-muted">string</span>
+      <span class="pill pill-dr">DR-3</span>
+    </div>
+    <div class="narr-views">
+      <div class="view elem elem-rulespeak">
+        <span class="view-label">In RuleSpeak</span>
+        <p class="view-body">A how i work section's <a class="ref" href="#en-f-howiworksections-name">name</a> is the same as its <a class="ref" href="#en-f-howiworksections-heading">heading</a>.</p>
+      </div>
+      <div class="view elem elem-english">
+        <span class="view-label">In plain words</span>
+        <p class="view-body"><a class="ref" href="#en-f-howiworksections-heading">Heading</a>.</p>
+      </div>
+      <div class="view elem elem-formula">
+        <span class="view-label">As a formula</span>
+        <div class="view-body fx"><span class="fx-eq">= </span><a class="fx-chip" href="#en-f-howiworksections-heading">Heading</a></div>
+      </div>
+    </div>
+    <details class="prov prov-inputs elem elem-inputs" open>
+      <summary>Inputs <span class="count">1</span> <span class="prov-hint">fields this rule reads</span></summary>
+      <div class="prov-grid">
+        <a class="input tone-raw" href="#en-f-howiworksections-heading">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Heading</span><span class="input-table">How I Work Section</span></span>
+          <span class="input-en muted">Section heading as it appears on the page.</span>
+        </a>
+      </div>
+    </details>
+    <details class="prov prov-leaves elem elem-inputs">
+      <summary>Ground truth at the leaves <span class="count">1</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-raw" href="#en-f-howiworksections-heading">● Heading <span class="ref-pill-tbl">How I Work Section</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Display alias.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-howiworksections-heading" data-entity="How I Work Section" data-field="Heading">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Heading</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-howiworksections-name">ƒ Name <span class="ref-pill-tbl">How I Work Section</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Section heading as it appears on the page.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-howiworksections-bodytext" data-entity="How I Work Section" data-field="Body Text">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Body Text</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Full-page body copy for this section. Paragraph breaks encoded as \n\n.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-howiworksections-shortbodytext" data-entity="How I Work Section" data-field="Short Body Text">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Short Body Text</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Condensed ~1-paragraph version, used if How I Work becomes a Home section instead of its own page. Null where the short version drops the section entirely.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-howiworksections-sortorder" data-entity="How I Work Section" data-field="Sort Order">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Sort Order</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">integer</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Display order on the page.</p>
+    </article>
+</section>
+<section class="entity" id="en-t-proofpoints" data-entity="Proof Point">
+  <header class="entity-head">
+    <h2 class="entity-title">Proof Point</h2>
+    <p class="entity-synopsis">A proof point is identified by its <a class="ref" href="#en-f-proofpoints-name">name</a>.</p>
+  </header>
+  <article class="field tone-calc" id="en-f-proofpoints-name" data-entity="Proof Point" data-field="Name">
+    <div class="field-head">
+      <span class="field-glyph" title="Calculated">ƒ</span>
+      <span class="field-name">Name</span>
+      <span class="pill pill-type">Calculated</span>
+      <span class="pill pill-depth">1 hop from ground truth</span>
+      <span class="pill pill-muted">string</span>
+      <span class="pill pill-dr">DR-4</span>
+    </div>
+    <div class="narr-views">
+      <div class="view elem elem-rulespeak">
+        <span class="view-label">In RuleSpeak</span>
+        <p class="view-body">A proof point's <a class="ref" href="#en-f-proofpoints-name">name</a> is the same as its <a class="ref" href="#en-f-proofpoints-title">title</a>.</p>
+      </div>
+      <div class="view elem elem-english">
+        <span class="view-label">In plain words</span>
+        <p class="view-body"><a class="ref" href="#en-f-proofpoints-title">Title</a>.</p>
+      </div>
+      <div class="view elem elem-formula">
+        <span class="view-label">As a formula</span>
+        <div class="view-body fx"><span class="fx-eq">= </span><a class="fx-chip" href="#en-f-proofpoints-title">Title</a></div>
+      </div>
+    </div>
+    <details class="prov prov-inputs elem elem-inputs" open>
+      <summary>Inputs <span class="count">1</span> <span class="prov-hint">fields this rule reads</span></summary>
+      <div class="prov-grid">
+        <a class="input tone-raw" href="#en-f-proofpoints-title">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Title</span><span class="input-table">Proof Point</span></span>
+          <span class="input-en muted">Short title for this proof point.</span>
+        </a>
+      </div>
+    </details>
+    <details class="prov prov-leaves elem elem-inputs">
+      <summary>Ground truth at the leaves <span class="count">1</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-raw" href="#en-f-proofpoints-title">● Title <span class="ref-pill-tbl">Proof Point</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Display alias.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-proofpoints-title" data-entity="Proof Point" data-field="Title">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Title</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-proofpoints-name">ƒ Name <span class="ref-pill-tbl">Proof Point</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Short title for this proof point.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-proofpoints-problemtext" data-entity="Proof Point" data-field="Problem Text">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Problem Text</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">The problem, as stated in the proof inventory.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-proofpoints-actiontext" data-entity="Proof Point" data-field="Action Text">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Action Text</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">The action taken.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-proofpoints-outcometext" data-entity="Proof Point" data-field="Outcome Text">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Outcome Text</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">The outcome.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-proofpoints-attributionnote" data-entity="Proof Point" data-field="Attribution Note">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Attribution Note</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Precise attribution language required when describing this work (e.g. 'advised on and implemented,' not 'owned'). See Content Strategy Section 6.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-proofpoints-registernote" data-entity="Proof Point" data-field="Register Note">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Register Note</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Internal guidance on tone/register for this proof point. Not published copy - for whoever writes site/resume text from this row.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-proofpoints-featuredonworkpage" data-entity="Proof Point" data-field="Featured on Work Page">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Featured on Work Page</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">boolean</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Whether this proof point is one of the 2-3 engagements shown on the Work page (Section 10). First-pass selection - confirm with David before Phase 2.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-proofpoints-featuredinresumeselectedwork" data-entity="Proof Point" data-field="Featured in Resume Selected Work">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Featured in Resume Selected Work</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">boolean</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Whether this proof point appears in the resume's 'Selected work, 2024 to 2026' block (Variant A).</p>
+    </article>
+  <article class="field tone-raw" id="en-f-proofpoints-sortorder" data-entity="Proof Point" data-field="Sort Order">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Sort Order</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">integer</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Order matching Content Strategy Section 4 numbering.</p>
+    </article>
+</section>
+<section class="entity" id="en-t-jobentries" data-entity="Job Entry">
+  <header class="entity-head">
+    <h2 class="entity-title">Job Entry</h2>
+    <p class="entity-synopsis">A job entry is identified by its <a class="ref" href="#en-f-jobentries-name">name</a>.</p>
+  </header>
+  <article class="field tone-calc" id="en-f-jobentries-name" data-entity="Job Entry" data-field="Name">
+    <div class="field-head">
+      <span class="field-glyph" title="Calculated">ƒ</span>
+      <span class="field-name">Name</span>
+      <span class="pill pill-type">Calculated</span>
+      <span class="pill pill-depth">1 hop from ground truth</span>
+      <span class="pill pill-muted">string</span>
+      <span class="pill pill-dr">DR-5</span>
+    </div>
+    <div class="narr-views">
+      <div class="view elem elem-rulespeak">
+        <span class="view-label">In RuleSpeak</span>
+        <p class="view-body">A job entry's <a class="ref" href="#en-f-jobentries-name">name</a> is computed as the <a class="ref" href="#en-f-jobentries-company">company</a>, followed by “ - ”, followed by the <a class="ref" href="#en-f-jobentries-jobtitle">job title</a>.</p>
+      </div>
+      <div class="view elem elem-english">
+        <span class="view-label">In plain words</span>
+        <p class="view-body">(<a class="ref" href="#en-f-jobentries-company">company</a> joined with &quot; - &quot;) joined with <a class="ref" href="#en-f-jobentries-jobtitle">job title</a>.</p>
+      </div>
+      <div class="view elem elem-formula">
+        <span class="view-label">As a formula</span>
+        <div class="view-body fx"><span class="fx-eq">= </span><a class="fx-chip" href="#en-f-jobentries-company">Company</a> &amp; &quot; - &quot; &amp; <a class="fx-chip" href="#en-f-jobentries-jobtitle">Job Title</a></div>
+      </div>
+    </div>
+    <details class="prov prov-inputs elem elem-inputs" open>
+      <summary>Inputs <span class="count">2</span> <span class="prov-hint">fields this rule reads</span></summary>
+      <div class="prov-grid">
+        <a class="input tone-raw" href="#en-f-jobentries-company">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Company</span><span class="input-table">Job Entry</span></span>
+          <span class="input-en muted">Employer or entity name.</span>
+        </a>
+        <a class="input tone-raw" href="#en-f-jobentries-jobtitle">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Job Title</span><span class="input-table">Job Entry</span></span>
+          <span class="input-en muted">Title held. Null on the single synthetic 'earlier roles' compressed row.</span>
+        </a>
+      </div>
+    </details>
+    <details class="prov prov-leaves elem elem-inputs">
+      <summary>Ground truth at the leaves <span class="count">2</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-raw" href="#en-f-jobentries-company">● Company <span class="ref-pill-tbl">Job Entry</span></a>
+        <a class="ref-pill tone-raw" href="#en-f-jobentries-jobtitle">● Job Title <span class="ref-pill-tbl">Job Entry</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Display alias.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-jobentries-company" data-entity="Job Entry" data-field="Company">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Company</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-jobentries-name">ƒ Name <span class="ref-pill-tbl">Job Entry</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Employer or entity name.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-jobentries-jobtitle" data-entity="Job Entry" data-field="Job Title">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Job Title</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-jobentries-name">ƒ Name <span class="ref-pill-tbl">Job Entry</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Title held. Null on the single synthetic 'earlier roles' compressed row.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-jobentries-startdate" data-entity="Job Entry" data-field="Start Date">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Start Date</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Start, YYYY-MM.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-jobentries-enddate" data-entity="Job Entry" data-field="End Date">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">End Date</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">End, YYYY-MM. Null if current.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-jobentries-iscurrent" data-entity="Job Entry" data-field="Is Current">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Is Current</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">boolean</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">True if this role is ongoing.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-jobentries-displaygroupkey" data-entity="Job Entry" data-field="Display Group Key">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Display Group Key</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Rows sharing this key render as one entry in Variant A (which uses the coarser grouping). Null where no grouping applies.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-jobentries-summarytextvarianta" data-entity="Job Entry" data-field="Summary Text Variant a">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Summary Text Variant a</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Prose summary as it appears in Resume Variant A. On a grouped pair, only the earliest row in the group carries the merged text; the later row is null and the app renders the group using the earliest row's text with the group's full date range.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-jobentries-summarytextvariantb" data-entity="Job Entry" data-field="Summary Text Variant B">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Summary Text Variant B</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Bullet-point summary as it appears in Resume Variant B, bullets joined with \n.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-jobentries-compressedline" data-entity="Job Entry" data-field="Compressed Line">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Compressed Line</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">One-line compressed text, used only on the synthetic 'earlier roles' row for Variant A's single-line pre-2019 summary.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-jobentries-includeinvarianta" data-entity="Job Entry" data-field="Include in Variant a">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Include in Variant a</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">boolean</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Whether this row is shown (individually or as part of a group) on Resume Variant A.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-jobentries-includeinvariantb" data-entity="Job Entry" data-field="Include in Variant B">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Include in Variant B</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">boolean</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Whether this row is shown on Resume Variant B.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-jobentries-ispre2019" data-entity="Job Entry" data-field="Is Pre2019">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Is Pre2019</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">boolean</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">True for roles before 2019, compressed in Variant A per Content Strategy Section 7.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-jobentries-sortorder" data-entity="Job Entry" data-field="Sort Order">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Sort Order</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">integer</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Reverse chronological display order.</p>
+    </article>
+</section>
+<section class="entity" id="en-t-resumevariants" data-entity="Resume Variant">
+  <header class="entity-head">
+    <h2 class="entity-title">Resume Variant</h2>
+    <p class="entity-synopsis">A resume variant is identified by its <a class="ref" href="#en-f-resumevariants-name">name</a>.</p>
+  </header>
+  <article class="field tone-calc" id="en-f-resumevariants-name" data-entity="Resume Variant" data-field="Name">
+    <div class="field-head">
+      <span class="field-glyph" title="Calculated">ƒ</span>
+      <span class="field-name">Name</span>
+      <span class="pill pill-type">Calculated</span>
+      <span class="pill pill-depth">1 hop from ground truth</span>
+      <span class="pill pill-muted">string</span>
+      <span class="pill pill-dr">DR-6</span>
+    </div>
+    <div class="narr-views">
+      <div class="view elem elem-rulespeak">
+        <span class="view-label">In RuleSpeak</span>
+        <p class="view-body">A resume variant's <a class="ref" href="#en-f-resumevariants-name">name</a> is the same as its <a class="ref" href="#en-f-resumevariants-label">label</a>.</p>
+      </div>
+      <div class="view elem elem-english">
+        <span class="view-label">In plain words</span>
+        <p class="view-body"><a class="ref" href="#en-f-resumevariants-label">Label</a>.</p>
+      </div>
+      <div class="view elem elem-formula">
+        <span class="view-label">As a formula</span>
+        <div class="view-body fx"><span class="fx-eq">= </span><a class="fx-chip" href="#en-f-resumevariants-label">Label</a></div>
+      </div>
+    </div>
+    <details class="prov prov-inputs elem elem-inputs" open>
+      <summary>Inputs <span class="count">1</span> <span class="prov-hint">fields this rule reads</span></summary>
+      <div class="prov-grid">
+        <a class="input tone-raw" href="#en-f-resumevariants-label">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Label</span><span class="input-table">Resume Variant</span></span>
+          <span class="input-en muted">Variant label.</span>
+        </a>
+      </div>
+    </details>
+    <details class="prov prov-leaves elem elem-inputs">
+      <summary>Ground truth at the leaves <span class="count">1</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-raw" href="#en-f-resumevariants-label">● Label <span class="ref-pill-tbl">Resume Variant</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Display alias.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-resumevariants-label" data-entity="Resume Variant" data-field="Label">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Label</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-resumevariants-name">ƒ Name <span class="ref-pill-tbl">Resume Variant</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Variant label.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-resumevariants-audiencedescription" data-entity="Resume Variant" data-field="Audience Description">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Audience Description</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Who this variant targets and how it is distributed.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-resumevariants-summarytext" data-entity="Resume Variant" data-field="Summary Text">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Summary Text</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">The opening capability statement ('What I do' / 'Summary'). Paragraph breaks encoded as \n\n.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-resumevariants-publishedonsite" data-entity="Resume Variant" data-field="Published on Site">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Published on Site</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">boolean</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Whether this variant is served from the public site (Section 10: only Variant A).</p>
+    </article>
+</section>
+<section class="entity" id="en-t-resumelistitems" data-entity="Resume List Item">
+  <header class="entity-head">
+    <h2 class="entity-title">Resume List Item</h2>
+    <p class="entity-synopsis">A resume list item is identified by its <a class="ref" href="#en-f-resumelistitems-name">name</a>.</p>
+  </header>
+  <article class="field tone-calc" id="en-f-resumelistitems-name" data-entity="Resume List Item" data-field="Name">
+    <div class="field-head">
+      <span class="field-glyph" title="Calculated">ƒ</span>
+      <span class="field-name">Name</span>
+      <span class="pill pill-type">Calculated</span>
+      <span class="pill pill-depth">1 hop from ground truth</span>
+      <span class="pill pill-muted">string</span>
+      <span class="pill pill-dr">DR-7</span>
+    </div>
+    <div class="narr-views">
+      <div class="view elem elem-rulespeak">
+        <span class="view-label">In RuleSpeak</span>
+        <p class="view-body">A resume list item's <a class="ref" href="#en-f-resumelistitems-name">name</a> is the same as its <a class="ref" href="#en-f-resumelistitems-label">label</a>.</p>
+      </div>
+      <div class="view elem elem-english">
+        <span class="view-label">In plain words</span>
+        <p class="view-body"><a class="ref" href="#en-f-resumelistitems-label">Label</a>.</p>
+      </div>
+      <div class="view elem elem-formula">
+        <span class="view-label">As a formula</span>
+        <div class="view-body fx"><span class="fx-eq">= </span><a class="fx-chip" href="#en-f-resumelistitems-label">Label</a></div>
+      </div>
+    </div>
+    <details class="prov prov-inputs elem elem-inputs" open>
+      <summary>Inputs <span class="count">1</span> <span class="prov-hint">fields this rule reads</span></summary>
+      <div class="prov-grid">
+        <a class="input tone-raw" href="#en-f-resumelistitems-label">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Label</span><span class="input-table">Resume List Item</span></span>
+          <span class="input-en muted">The item text as it appears on the resume.</span>
+        </a>
+      </div>
+    </details>
+    <details class="prov prov-leaves elem elem-inputs">
+      <summary>Ground truth at the leaves <span class="count">1</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-raw" href="#en-f-resumelistitems-label">● Label <span class="ref-pill-tbl">Resume List Item</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Display alias.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-resumelistitems-category" data-entity="Resume List Item" data-field="Category">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Category</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">'Methods' or 'Technical'.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-resumelistitems-label" data-entity="Resume List Item" data-field="Label">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Label</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-resumelistitems-name">ƒ Name <span class="ref-pill-tbl">Resume List Item</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">The item text as it appears on the resume.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-resumelistitems-sortorder" data-entity="Resume List Item" data-field="Sort Order">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Sort Order</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">integer</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Display order within its category.</p>
+    </article>
+</section>
+<section class="entity" id="en-t-educationentries" data-entity="Education Entry">
+  <header class="entity-head">
+    <h2 class="entity-title">Education Entry</h2>
+    <p class="entity-synopsis">An education entry is identified by its <a class="ref" href="#en-f-educationentries-name">name</a>.</p>
+  </header>
+  <article class="field tone-calc" id="en-f-educationentries-name" data-entity="Education Entry" data-field="Name">
+    <div class="field-head">
+      <span class="field-glyph" title="Calculated">ƒ</span>
+      <span class="field-name">Name</span>
+      <span class="pill pill-type">Calculated</span>
+      <span class="pill pill-depth">1 hop from ground truth</span>
+      <span class="pill pill-muted">string</span>
+      <span class="pill pill-dr">DR-8</span>
+    </div>
+    <div class="narr-views">
+      <div class="view elem elem-rulespeak">
+        <span class="view-label">In RuleSpeak</span>
+        <p class="view-body">An education entry's <a class="ref" href="#en-f-educationentries-name">name</a> is computed as the <a class="ref" href="#en-f-educationentries-institution">institution</a>, followed by “ - ”, followed by the <a class="ref" href="#en-f-educationentries-degree">degree</a>.</p>
+      </div>
+      <div class="view elem elem-english">
+        <span class="view-label">In plain words</span>
+        <p class="view-body">(<a class="ref" href="#en-f-educationentries-institution">institution</a> joined with &quot; - &quot;) joined with <a class="ref" href="#en-f-educationentries-degree">degree</a>.</p>
+      </div>
+      <div class="view elem elem-formula">
+        <span class="view-label">As a formula</span>
+        <div class="view-body fx"><span class="fx-eq">= </span><a class="fx-chip" href="#en-f-educationentries-institution">Institution</a> &amp; &quot; - &quot; &amp; <a class="fx-chip" href="#en-f-educationentries-degree">Degree</a></div>
+      </div>
+    </div>
+    <details class="prov prov-inputs elem elem-inputs" open>
+      <summary>Inputs <span class="count">2</span> <span class="prov-hint">fields this rule reads</span></summary>
+      <div class="prov-grid">
+        <a class="input tone-raw" href="#en-f-educationentries-institution">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Institution</span><span class="input-table">Education Entry</span></span>
+          <span class="input-en muted">School name.</span>
+        </a>
+        <a class="input tone-raw" href="#en-f-educationentries-degree">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Degree</span><span class="input-table">Education Entry</span></span>
+          <span class="input-en muted">Degree earned.</span>
+        </a>
+      </div>
+    </details>
+    <details class="prov prov-leaves elem elem-inputs">
+      <summary>Ground truth at the leaves <span class="count">2</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-raw" href="#en-f-educationentries-institution">● Institution <span class="ref-pill-tbl">Education Entry</span></a>
+        <a class="ref-pill tone-raw" href="#en-f-educationentries-degree">● Degree <span class="ref-pill-tbl">Education Entry</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Display alias.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-educationentries-institution" data-entity="Education Entry" data-field="Institution">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Institution</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-educationentries-name">ƒ Name <span class="ref-pill-tbl">Education Entry</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">School name.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-educationentries-degree" data-entity="Education Entry" data-field="Degree">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Degree</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-educationentries-name">ƒ Name <span class="ref-pill-tbl">Education Entry</span></a>
+      </div>
+    </details>
+    <p class="field-note elem elem-desc">Degree earned.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-educationentries-fieldofstudy" data-entity="Education Entry" data-field="Field of Study">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Field of Study</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Major/field.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-educationentries-gradyear" data-entity="Education Entry" data-field="Grad Year">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Grad Year</span>
+      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-muted">integer</span>
+    </div>
+    <div class="gt">
+      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
+    </div>
+    <p class="field-note elem elem-desc">Graduation year.</p>
+    </article>
+</section>
+<footer class="doc-footer">
+  <p>Rendered from the rulebook by the shared <b>RuleSpeak</b> engine (<code>rulebook-rulespeak-core</code>). The same engine narrates the React Explainer DAG, so every narration mode reads identically across both.</p>
+  <p class="doc-footer-legend"><span class="chip chip-raw">● Ground truth</span> <span class="chip chip-calc">ƒ Calculated</span> <span class="chip chip-agg">Σ Aggregation</span> <span class="chip chip-lookup">↗ Lookup</span> <span class="chip chip-rel">⇢ Relationship</span></p>
+</footer>
+</div>
+<script>
+
+(function(){
+  var LANGS=['en'];
+  var ELEMS=['rulespeak','english','formula','desc','inputs','consumers'];
+  var DEFAULTS={'rulespeak':true,'english':false,'formula':false,'desc':true,'inputs':true,'consumers':false};
+  var root=document.documentElement;
+
+  // ── Language switching. All .lang-select controls stay in sync; the choice
+  //    persists in localStorage and the URL (?lang=…) so links carry it.
+  var selects=Array.prototype.slice.call(document.querySelectorAll('.lang-select'));
+  function currentLang(){ return root.getAttribute('data-lang')||'en'; }
+  function setLang(code,fromHash){
+    if(LANGS.indexOf(code)<0) return;
+    root.setAttribute('data-lang',code);
+    root.setAttribute('lang',code);
+    try{localStorage.setItem('rulespeak.lang',code);}catch(e){}
+    try{
+      var u=new URL(location.href);
+      u.searchParams.set('lang',code);
+      history.replaceState(null,'',u.toString());
+    }catch(e){}
+    selects.forEach(function(s){ s.value=code; });
+    if(!fromHash) rebindSpy();
+  }
+  selects.forEach(function(s){
+    s.addEventListener('change',function(){
+      var was=currentLang();
+      var code=s.value;
+      // Carry the reader to the SAME field in the new language when the hash
+      // points somewhere: swap the language prefix on the anchor.
+      var h=location.hash||'';
+      setLang(code);
+      var m=h.match(/^#([a-z]{2})-(.+)$/);
+      if(m && m[1]===was){
+        var target=document.getElementById(code+'-'+m[2]);
+        if(target){ location.hash='#'+code+'-'+m[2]; }
+      }
+    });
+  });
+
+  // ── Legacy-hash shim: pre-language anchors (#f-…, #t-…, #top) map onto the
+  //    active language's scoped ids so old deep links keep working.
+  (function(){
+    var h=location.hash||'';
+    var m=h.match(/^#((?:f|t)-.+|top)$/);
+    if(m){
+      var scoped=document.getElementById(currentLang()+'-'+m[1]);
+      if(scoped) location.replace('#'+currentLang()+'-'+m[1]);
+    }
+  })();
+
+  // ── Per-element visibility, persisted. Checkboxes exist once per language doc;
+  //    drive them all from the shared <html> classes.
+  var boxes=Array.prototype.slice.call(document.querySelectorAll('.gear-opt input[data-elem]'));
+  function isOn(k){ return root.classList.contains('show-'+k); }
+  function setElem(k,on){
+    root.classList.toggle('show-'+k,on);
+    try{localStorage.setItem('rulespeak.show.'+k,on?'1':'0');}catch(e){}
+    boxes.forEach(function(b){ if(b.getAttribute('data-elem')===k) b.checked=on; });
+  }
+  boxes.forEach(function(b){
+    var k=b.getAttribute('data-elem');
+    b.checked=isOn(k);
+    b.addEventListener('change',function(){ setElem(k,b.checked); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.gear-reset'),function(reset){
+    reset.addEventListener('click',function(){ ELEMS.forEach(function(k){ setElem(k,!!DEFAULTS[k]); }); });
+  });
+
+  // ── Gear popups: each language doc has its own button + popup pair.
+  Array.prototype.forEach.call(document.querySelectorAll('.lang-doc'),function(doc){
+    var gear=doc.querySelector('.gear');
+    var pop=doc.querySelector('.gear-pop');
+    if(!gear||!pop) return;
+    function openPop(o){ pop.hidden=!o; gear.setAttribute('aria-expanded',o?'true':'false'); }
+    gear.addEventListener('click',function(e){ e.stopPropagation(); openPop(pop.hidden); });
+    Array.prototype.forEach.call(doc.querySelectorAll('.gear-open-inline'),function(inline){
+      inline.addEventListener('click',function(e){ e.stopPropagation(); openPop(true); });
+    });
+    document.addEventListener('click',function(e){
+      if(!pop.hidden && !pop.contains(e.target) && e.target!==gear) openPop(false);
+    });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') openPop(false); });
+  });
+
+  // ── Scroll-spy breadcrumb, scoped to the ACTIVE language document.
+  var fields=[],entities=[],cE=null,cF=null,cSep=null;
+  function rebindSpy(){
+    var doc=document.querySelector('.lang-doc[data-lang="'+currentLang()+'"]');
+    if(!doc) return;
+    cE=doc.querySelector('.crumb-entity');
+    cF=doc.querySelector('.crumb-field');
+    cSep=doc.querySelector('.crumb-sep');
+    fields=Array.prototype.slice.call(doc.querySelectorAll('.field[data-field]'));
+    entities=Array.prototype.slice.call(doc.querySelectorAll('.entity[data-entity]'));
+    update();
+  }
+  function setCrumb(entity,field){
+    if(!cE) return;
+    cE.textContent=entity||'';
+    if(field){ cF.textContent=field; cSep.hidden=false; }
+    else { cF.textContent=''; cSep.hidden=true; }
+  }
+  var barH=parseInt(getComputedStyle(root).getPropertyValue('--bar-h'),10)||48;
+  function update(){
+    var line=barH+18, curF=null, curE=null;
+    for(var i=0;i<fields.length;i++){ if(fields[i].getBoundingClientRect().top<=line) curF=fields[i]; else break; }
+    for(var j=0;j<entities.length;j++){ if(entities[j].getBoundingClientRect().top<=line) curE=entities[j]; else break; }
+    if(curF){
+      var fEnt=curF.getAttribute('data-entity');
+      var eName=curE?curE.getAttribute('data-entity'):fEnt;
+      if(eName!==fEnt) setCrumb(eName,null);
+      else setCrumb(fEnt,curF.getAttribute('data-field'));
+    } else if(curE){ setCrumb(curE.getAttribute('data-entity'),null); }
+    else { setCrumb('',null); }
+  }
+  var ticking=false;
+  function onScroll(){ if(!ticking){ ticking=true; requestAnimationFrame(function(){ update(); ticking=false; }); } }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll,{passive:true});
+  rebindSpy();
+})();
+
+</script>
+</body>
+</html>

@@ -1,5 +1,625 @@
-{"project":
-  {
-    "name":"David"
+{
+  "$schema": "https://example.com/cmcc-schema/v1",
+  "Name": "David Shadle Website v4",
+  "Description": "Rulebook for davidshadle.com v4: bio variants, method statement, proof/work entries, resume content, and site settings. Content and navigation as data, per the PM Portal discipline referenced in David_Shadle_Content_Strategy_v1.md.",
+  "SiteSettings": {
+    "Description": "Singleton table of site-wide facts: contact info, positioning statement, and the undated 'Currently' block. One row.",
+    "schema": [
+      { "name": "SiteSettingId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity of the singleton settings row." },
+      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{SiteSettingId}}" },
+      { "name": "ContactEmail", "datatype": "string", "type": "raw", "nullable": false, "Description": "Primary contact email, shown in the Contact section on Home and Work." },
+      { "name": "ContactPhone", "datatype": "string", "type": "raw", "nullable": true, "Description": "Contact phone number, as it appears on the resume header." },
+      { "name": "SiteDomain", "datatype": "string", "type": "raw", "nullable": false, "Description": "Canonical site domain." },
+      { "name": "PortfolioCompanyCount", "datatype": "string", "type": "raw", "nullable": false, "Description": "Standardized portfolio count string, per Content Strategy Section 6 ('100+' everywhere, never 107 or 111)." },
+      { "name": "SelfDescriptionLine", "datatype": "string", "type": "raw", "nullable": false, "Description": "The 'full stack product practitioner' anchor phrase. Per Section 2: say it once, never next to a list." },
+      { "name": "PositioningStatement", "datatype": "string", "type": "raw", "nullable": false, "Description": "The core positioning paragraph everything else derives from (Content Strategy Section 2)." },
+      { "name": "CurrentlyText", "datatype": "string", "type": "raw", "nullable": true, "Description": "PLACEHOLDER, not yet approved copy. The undated 'Currently' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule. Confirm real wording with David before shipping." },
+      { "name": "BanyanTitle", "datatype": "string", "type": "raw", "nullable": false, "Description": "Full Banyan title, used everywhere per Section 6: 'Technical Advisor, Product Strategy and UX'." }
+    ],
+    "data": [
+      {
+        "SiteSettingId": "default",
+        "ContactEmail": "dshadle1524@gmail.com",
+        "ContactPhone": "425.417.2339",
+        "SiteDomain": "davidshadle.com",
+        "PortfolioCompanyCount": "100+",
+        "SelfDescriptionLine": "A full stack product practitioner. Not just capable of wearing several hats at once, but confident delivering the outcome in each one.",
+        "PositioningStatement": "I build the systems that turn strategy into working software. Most advisors stop at the recommendation. I keep going, through the model, the interface, and the handoff, so the thing that gets agreed on is the thing that gets shipped. I work from a rulebook: the rules of a domain written down once in plain language, with the technical pieces derived from that rather than maintained by hand. It is a discipline, not a product. It is what lets me carry a project through delivery instead of stopping at design and project management.",
+        "CurrentlyText": "PLACEHOLDER - confirm wording: Advising on product strategy and UX at Banyan Software across a portfolio of 100+ operating companies, and rebuilding davidshadle.com as the next thing to ship.",
+        "BanyanTitle": "Technical Advisor, Product Strategy and UX"
+      }
+    ]
+  },
+  "BioVariants": {
+    "Description": "Table: BioVariants. Five lengths plus one alternate, one spine, per David_Shadle_Bio_Set_v1.md. Voice standard applied: no em dashes, short sentences, active voice, no filler.",
+    "schema": [
+      { "name": "BioVariantId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
+      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Label}}" },
+      { "name": "Label", "datatype": "string", "type": "raw", "nullable": false, "Description": "Human label for this bio length/context, e.g. 'Fifty words'." },
+      { "name": "UsageContext", "datatype": "string", "type": "raw", "nullable": false, "Description": "Where this variant gets used, e.g. 'Directory listings, conference programs, deck footers, introductions.'" },
+      { "name": "BodyText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The bio copy itself. Paragraph breaks encoded as \\n\\n." },
+      { "name": "SortOrder", "datatype": "integer", "type": "raw", "nullable": false, "Description": "Display order, shortest to longest." }
+    ],
+    "data": [
+      {
+        "BioVariantId": "one-line",
+        "Label": "One line",
+        "UsageContext": "Email signature, byline, Slack profile.",
+        "BodyText": "Technical Advisor, Product Strategy and UX at Banyan Software. I build the systems that turn strategy into working software.",
+        "SortOrder": 1
+      },
+      {
+        "BioVariantId": "one-line-alt",
+        "Label": "One line (alternate)",
+        "UsageContext": "Where Banyan is not the point.",
+        "BodyText": "Product strategy, design, and the systems that ship them. Full stack product practitioner.",
+        "SortOrder": 2
+      },
+      {
+        "BioVariantId": "fifty-words",
+        "Label": "Fifty words",
+        "UsageContext": "Directory listings, conference programs, deck footers, introductions.",
+        "BodyText": "David Shadle builds the systems that turn strategy into working software. He is Technical Advisor, Product Strategy and UX at Banyan Software, working across a portfolio of more than 100 B2B SaaS operating companies, where he designed and built the product management platform the program runs on.",
+        "SortOrder": 3
+      },
+      {
+        "BioVariantId": "one-fifty-words",
+        "Label": "One hundred fifty words",
+        "UsageContext": "Website About block, proposal cover, partner introductions.",
+        "BodyText": "David Shadle builds the systems that turn strategy into working software. Most advisors stop at the recommendation. He keeps going, through the model, the interface, and the handoff.\n\nHe is Technical Advisor, Product Strategy and UX at Banyan Software, working across a portfolio of more than 100 B2B SaaS operating companies. There he designed and built the product management platform the program runs on, and advised on and implemented the experience layer across three executive reporting products covering workshop performance, portfolio operations, and technology due diligence.\n\nHe works from a rulebook. The rules of a domain get written down once, in plain language, and the technical pieces are derived from that rather than maintained by hand. It is a working discipline, not a product, and it is what lets him carry a project through delivery rather than stopping at design.\n\nTwenty five years in product strategy and design precede this, including principal roles at Microsoft and Oracle.",
+        "SortOrder": 4
+      },
+      {
+        "BioVariantId": "three-hundred-words",
+        "Label": "Three hundred words",
+        "UsageContext": "Website Home, long form introductions, anywhere the full argument is wanted.",
+        "BodyText": "David Shadle builds the systems that turn strategy into working software. Most advisors stop at the recommendation. He keeps going, through the model, the interface, and the handoff, so the thing that gets agreed on is the thing that gets shipped.\n\nHe is Technical Advisor, Product Strategy and UX at Banyan Software, working across a portfolio of more than 100 B2B SaaS operating companies, supporting operating company teams, product management, and technology due diligence.\n\nHe designed and built the product management platform the program runs on, from concept through production. He advised on and implemented the experience layer across three executive reporting products: workshop maturity and performance, portfolio operations including cloud spend and compliance, and technology due diligence covering deal management and assignment. He rebuilt the Portfolio Operations dashboard onto a database backed foundation, replacing generated exports with live data. With his program team he co-led the redesign of the AI PM Workshop from a training curriculum into an execution engagement, where companies finish with a CEO signed strategy, a prioritized roadmap, and a ledger tracing decisions back to evidence.\n\nHis approach starts with the problem. Every engagement begins with a brief that proposes no solution, reviewed by the people who live with the problem, because alignment on the problem is what makes scoping and specification worth doing. From there he works from a rulebook: the rules of a domain written down once in plain language, with the technical pieces derived from that rather than maintained by hand. It is what lets him deliver complete projects rather than stopping at design and project management.\n\nHe uses agents as a tool inside the strategy work. Given the context of a specific problem, an agent can research, pressure test a position, and assemble the evidence a decision needs, which surfaces opportunities earlier and builds alignment before execution begins. On a recent engagement with an FDA cleared medical technology company focused on breast cancer prevention, an agent he built acted as domain expert across pilot program design, distribution opportunity, and insurance carrier risk.\n\nTwenty five years in product strategy and design precede this, including principal roles at Microsoft and Oracle. Full stack product practitioner. Not just capable of wearing several hats at once, but confident delivering the outcome in each.",
+        "SortOrder": 5
+      },
+      {
+        "BioVariantId": "linkedin-about",
+        "Label": "LinkedIn About",
+        "UsageContext": "First person. Roughly two hundred words.",
+        "BodyText": "I build the systems that turn strategy into working software.\n\nMost advisors stop at the recommendation. I keep going, through the model, the interface, and the handoff, so what gets agreed on is what gets shipped.\n\nI am Technical Advisor, Product Strategy and UX at Banyan Software, working across more than 100 B2B SaaS operating companies. I designed and built the product management platform the program runs on, concept through production. I advised on and implemented the experience layer across our three executive reporting products, and rebuilt the Portfolio Operations dashboard onto live data.\n\nI start with the problem and write it down before anyone proposes a solution. From there I work from a rulebook: the rules of a domain written down once in plain language, with the technical pieces derived from that rather than maintained by hand.\n\nI use agents as a tool inside the strategy work. Given the context of a problem, an agent can research, pressure test a position, and assemble the evidence a decision needs. That surfaces opportunities earlier and builds alignment before execution starts, when alignment is cheap.\n\nIt also changed how I think. An agent does exactly what you specify, so vague thinking shows up immediately in the output. You learn to state the job, what a good result looks like, and what the rules are, before anything runs. I do that at the start of strategy work now, long before there is anything to build.\n\nTwenty five years in product strategy and design before this, including principal roles at Microsoft and Oracle.",
+        "SortOrder": 6
+      }
+    ]
+  },
+  "HowIWorkSections": {
+    "Description": "Table: HowIWorkSections. The method statement for the How I Work page, per David_Shadle_How_I_Work_v1.md. Written to be true indefinitely.",
+    "schema": [
+      { "name": "HowIWorkSectionId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
+      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Heading}}" },
+      { "name": "Heading", "datatype": "string", "type": "raw", "nullable": false, "Description": "Section heading as it appears on the page." },
+      { "name": "BodyText", "datatype": "string", "type": "raw", "nullable": false, "Description": "Full-page body copy for this section. Paragraph breaks encoded as \\n\\n." },
+      { "name": "ShortBodyText", "datatype": "string", "type": "raw", "nullable": true, "Description": "Condensed ~1-paragraph version, used if How I Work becomes a Home section instead of its own page. Null where the short version drops the section entirely." },
+      { "name": "SortOrder", "datatype": "integer", "type": "raw", "nullable": false, "Description": "Display order on the page." }
+    ],
+    "data": [
+      {
+        "HowIWorkSectionId": "problem-first",
+        "Heading": "The problem comes first, and it gets its own document",
+        "BodyText": "Designing against a problem nobody agreed on is the most expensive mistake available. It is also the easiest one to make, because solutions are more interesting to discuss than problems.\n\nSo every engagement starts with a brief that contains no screens, no architecture, and no charts. Only the problem, who has it, what it costs, and how we would know it was solved. It gets reviewed by the people who live with the problem before anything else begins.\n\nDoing this properly means real analysis, and the analysis tends to turn things up. On one engagement it surfaced that staging and production were serving two different dashboards. That was a byproduct, not the goal. The goal was an executive team aligned on the problem, which is what makes the scoping and the specification that follow worth doing.",
+        "ShortBodyText": "Every engagement starts with a brief containing no screens, no architecture, and no charts. Designing against a problem nobody agreed on is the most expensive mistake available.",
+        "SortOrder": 1
+      },
+      {
+        "HowIWorkSectionId": "model-written-once",
+        "Heading": "The model gets written down once",
+        "BodyText": "Most drift starts small. A chart computes its own version of a metric. The documentation describes last quarter's schema. Two teams use the same word for different things. Nobody decides to let a system fall out of sync. It happens between decisions.\n\nSo I work from a rulebook. The rules of a domain get written down once, in plain language the person who owns the business meaning can read, and the technical pieces are derived from that rather than maintained by hand. Consistency comes from derivation rather than discipline.\n\nWhat matters here is not the method but what it changed. My responsibility used to end at design and project management, with development handed to someone else. Working this way, I can carry a project from concept through delivery.",
+        "ShortBodyText": "I work from a rulebook. The rules of a domain get written down in plain language, and the technical pieces are derived from that rather than maintained by hand. Consistency comes from derivation rather than discipline. It is what lets me carry a project through delivery rather than stopping at design.",
+        "SortOrder": 2
+      },
+      {
+        "HowIWorkSectionId": "no-business-calc-in-interface",
+        "Heading": "The interface performs no business calculation",
+        "BodyText": "Every number on screen traces back to a declared field. A chart that computes its own version of a metric is a defect, not a shortcut.\n\nThis sounds like an engineering rule. It is really a trust rule. The moment two surfaces can disagree about the same number, every surface becomes a thing to verify rather than a thing to use.",
+        "ShortBodyText": "Every number traces back to a declared field. A chart that computes its own version of a metric is a defect.",
+        "SortOrder": 3
+      },
+      {
+        "HowIWorkSectionId": "prototype-as-alignment",
+        "Heading": "It is faster to argue with a wrong sketch than a blank page",
+        "BodyText": "I build working prototypes early, with real structure and real copy, specifically so people can tell me what is wrong. A prototype is an alignment device, not a deliverable. It exists to be knocked down.\n\nOpen questions belong in the room, visible, not resolved quietly and presented as settled. If a review tells me the problem statement was materially wrong, that is the process working, not failing.",
+        "ShortBodyText": "It is faster to argue with a wrong sketch than a blank page, so I build early and put open questions in the room rather than resolving them quietly.",
+        "SortOrder": 4
+      },
+      {
+        "HowIWorkSectionId": "named-stages",
+        "Heading": "The stages are named, and each one is done when its artifact exists",
+        "BodyText": "A stage is complete when its artifact exists and its exit criteria are met. Not when the conversation feels finished.\n\n1. Problem brief. The problem, agreed, with no solution in it.\n2. Experience design. What it feels like to use, before what it costs to build.\n3. Rulebook. The domain written down once, confirmed by the person who owns the meaning.\n4. Scope and specification. Every component tied back to something named in the rulebook.\n5. Build. Derived where it can be, written where it cannot.\n6. Validate and hand off. Tested against the rulebook, handed to a team that owns it.\n\nNot every engagement runs all six. Every engagement runs them in this order.",
+        "ShortBodyText": null,
+        "SortOrder": 5
+      },
+      {
+        "HowIWorkSectionId": "ownership-and-handoff",
+        "Heading": "I own the decisions. The team owns the work.",
+        "BodyText": "I work between executives, operating partners, and delivery teams, and I take ownership of the calls I make. If I set a direction and it turns out to be wrong, that is mine to say and mine to help fix. Putting open questions in the room is not hedging. It is how you get to a decision you can stand behind.\n\nHanding the work back is not stepping away from it. The measure of whether the work was any good is whether it still runs after I am gone. So it gets written in language the people who own it can read, and what gets handed over is whatever that team needs to carry it forward. That is a judgment call each time, not a package.",
+        "ShortBodyText": "I stand behind the calls I make, and if one is wrong that is mine to say and mine to help fix. Handing the work back is not stepping away. The measure of whether it was any good is whether it still runs after I am gone.",
+        "SortOrder": 6
+      },
+      {
+        "HowIWorkSectionId": "where-ai-fits",
+        "Heading": "Where AI fits",
+        "BodyText": "I use agents as a tool inside the strategy work, not as an end in themselves.\n\nGiven the context of a specific engagement, an agent can do real research, pressure test a position, and assemble the evidence a decision actually needs. That gets me to the problem faster. It surfaces opportunities I would not have found working alone. And it puts something concrete in front of stakeholders early enough to build alignment on the strategy before execution starts, which is when alignment is cheap.\n\nThey also changed how I think, which matters more. An agent does exactly what you specify, so vague thinking shows up immediately in the output. You learn to state the job, what a good result looks like, and what the rules are, before anything runs. I do that at the start of strategy work now, long before there is anything to build.",
+        "ShortBodyText": "Given the context of an engagement, an agent can research, pressure test a position, and assemble evidence. That gets me to the problem faster and builds alignment before execution starts, when alignment is cheap.",
+        "SortOrder": 7
+      }
+    ]
+  },
+  "ProofPoints": {
+    "Description": "Table: ProofPoints. The proof inventory from Content Strategy Section 4. Raw material for the Work page and the resume's Selected Work block. Nothing goes into a bio, resume, or Work page entry that is not traceable to a row here.",
+    "schema": [
+      { "name": "ProofPointId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form, matches Content Strategy subsection (e.g. 'pm-portal' for 4.2)." },
+      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Title}}" },
+      { "name": "Title", "datatype": "string", "type": "raw", "nullable": false, "Description": "Short title for this proof point." },
+      { "name": "ProblemText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The problem, as stated in the proof inventory." },
+      { "name": "ActionText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The action taken." },
+      { "name": "OutcomeText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The outcome." },
+      { "name": "AttributionNote", "datatype": "string", "type": "raw", "nullable": true, "Description": "Precise attribution language required when describing this work (e.g. 'advised on and implemented,' not 'owned'). See Content Strategy Section 6." },
+      { "name": "RegisterNote", "datatype": "string", "type": "raw", "nullable": true, "Description": "Internal guidance on tone/register for this proof point. Not published copy - for whoever writes site/resume text from this row." },
+      { "name": "FeaturedOnWorkPage", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "Whether this proof point is one of the 2-3 engagements shown on the Work page (Section 10). First-pass selection - confirm with David before Phase 2." },
+      { "name": "FeaturedInResumeSelectedWork", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "Whether this proof point appears in the resume's 'Selected work, 2024 to 2026' block (Variant A)." },
+      { "name": "SortOrder", "datatype": "integer", "type": "raw", "nullable": false, "Description": "Order matching Content Strategy Section 4 numbering." }
+    ],
+    "data": [
+      {
+        "ProofPointId": "rulebook-approach",
+        "Title": "The rulebook approach (the through line)",
+        "ProblemText": "Most drift starts small. A chart computes its own version of a metric. The documentation describes last quarter's schema. Two teams use the same word for different things. Nobody decides to let a system fall out of sync, it happens between decisions.",
+        "ActionText": "Works from a rulebook. The rules of a domain get written down once, in plain language the person who owns the business meaning can read, and the technical pieces are derived from that rather than maintained by hand.",
+        "OutcomeText": "It made him materially more productive. Previously the responsibility ended at design and project management, with development handed to someone else. Working this way, a project can be carried from concept through delivery by one person. That is the claim. Not that the method is novel.",
+        "AttributionNote": "His working method, not his invention. Described, never sold.",
+        "RegisterNote": "Describe, do not sell. Two or three sentences max, never a section. Never name transpilers, toolchains, or vendors. Safe line, use sparingly and never more than once per document: 'Consistency comes from derivation rather than discipline.'",
+        "FeaturedOnWorkPage": false,
+        "FeaturedInResumeSelectedWork": false,
+        "SortOrder": 1
+      },
+      {
+        "ProofPointId": "pm-portal",
+        "Title": "Product management platform, concept through production",
+        "ProblemText": "A program serving more than 100 operating companies had no home. Content, coaching, assessment, and deliverables were scattered.",
+        "ActionText": "Designed and built the platform end to end: personas and access model, corporate SSO, frontend, API, PostgreSQL, content and artifact layer, and containerized infrastructure with automated deployment. Content and navigation are data rather than code, so the product and its specification cannot drift apart.",
+        "OutcomeText": "Live in production, serving PMs, operating partners, delivery coordinators, and program leads.",
+        "AttributionNote": "Sole responsibility, concept through production. Language to use: 'Designed and built end to end.'",
+        "RegisterNote": "The single strongest artifact in the record. Sole responsibility, concept to production.",
+        "FeaturedOnWorkPage": true,
+        "FeaturedInResumeSelectedWork": true,
+        "SortOrder": 2
+      },
+      {
+        "ProofPointId": "training-program-rebuild",
+        "Title": "Training curriculum rebuilt as an execution engagement",
+        "ProblemText": "Inherited a module based program. Companies completed a course and went back to work unchanged.",
+        "ActionText": "Co-led the redesign with the program team: replaced the module sequence with a concept library surfaced at the point of need, removed hard gates in favor of facilitator judgment, capped CEO time at three to four hours.",
+        "OutcomeText": "Companies now finish with four artifacts they own, including a CEO signed strategy, a prioritized and capacity validated roadmap, a customer facing roadmap, and a ledger tracing every decision back to evidence.",
+        "AttributionNote": "Co-led with the program team. Language to use: 'Co-led the redesign.'",
+        "RegisterNote": "Line worth keeping: 'You don't take the program and then go build your roadmap. You build your roadmap in the program.'",
+        "FeaturedOnWorkPage": false,
+        "FeaturedInResumeSelectedWork": true,
+        "SortOrder": 3
+      },
+      {
+        "ProofPointId": "experience-layer-three-products",
+        "Title": "Experience layer across three executive reporting products",
+        "ProblemText": "Three audiences needed three different questions answered from the same portfolio: workshop maturity, participation and performance; portfolio operations covering cloud spend, escrow and compliance; and technology due diligence covering deal management, time tracking and assignment. Portfolio Operations was also fed by generated exports, so the numbers described a moment already past.",
+        "ActionText": "Advised on and implemented the experience layer across all three, including interaction design, information architecture, and how the underlying data comes together. Rebuilt the Portfolio Operations dashboard onto a database backed foundation, replacing generated exports with live data and improving performance.",
+        "OutcomeText": "Three products, each built for its own audience and its own question, with Portfolio Operations now reporting current state rather than the last export.",
+        "AttributionNote": "Precisely: 'Advised on and implemented the experience layer.' Not owned. Did not own the estate, the data platform, or the engineering. The Portfolio Operations rebuild onto live data is his outright. Do not say 'five reporting surfaces' - there are three products.",
+        "RegisterNote": "The three products: PM Workshop (operating partners, program leads, participants), Portfolio Operations (finance and executive), Technical Due Diligence (corporate development and diligence teams).",
+        "FeaturedOnWorkPage": true,
+        "FeaturedInResumeSelectedWork": true,
+        "SortOrder": 4
+      },
+      {
+        "ProofPointId": "diligence-project-brief",
+        "Title": "A project brief that aligned executives and surfaced a process breakdown",
+        "ProblemText": "The diligence reporting product needed rebuilding, and there was no agreed statement of what was actually wrong with it or what the rebuild was for.",
+        "ActionText": "Wrote a project brief for executive review. It identified the opportunities, named the current gaps, and stated the problem without proposing a solution. Alignment on the brief is what leads to scoping, and scoping leads to a spec for execution.",
+        "OutcomeText": "An executive team aligned on the problem before anyone designed against it. The analysis behind the brief also surfaced a non-trivial breakdown in process: staging and production were serving two different dashboards.",
+        "AttributionNote": null,
+        "RegisterNote": "The staging/production finding was a byproduct of doing the analysis properly, not a detective story. Overselling it turns a sound process into a boast. The value is the sequence: brief, alignment, scope, spec, execution.",
+        "FeaturedOnWorkPage": true,
+        "FeaturedInResumeSelectedWork": true,
+        "SortOrder": 5
+      },
+      {
+        "ProofPointId": "ai-coach-scale",
+        "Title": "AI agents that scale one expert across a portfolio",
+        "ProblemText": "Expert product coaching cannot sit inside a hundred companies at once. An AI coach can, but only if it teaches the same program the rest of the engagement runs on.",
+        "ActionText": "Advisory. Defined how the AI coach had to align to the program, what it was accountable for teaching, and how it fits the participant's path through the portal. Set the boundary between what the coach handles and what the platform handles.",
+        "OutcomeText": "An on demand coach that reinforces the program instead of competing with it, reached through the portal at the point in the journey where the participant needs it.",
+        "AttributionNote": "Advisory only. The coach, skills toolkit, and maturity model were built by others. Contribution is program alignment and integration design. Must not imply authorship of the agents themselves.",
+        "RegisterNote": "Demonstrates knowing what an AI product is accountable for, and where it stops. That judgment is the scarce part.",
+        "FeaturedOnWorkPage": false,
+        "FeaturedInResumeSelectedWork": false,
+        "SortOrder": 6
+      },
+      {
+        "ProofPointId": "agents-in-strategy-work",
+        "Title": "Agents used to sharpen strategy before execution",
+        "ProblemText": "Strategy work is limited by how much context one person can absorb and how much evidence they can assemble before a decision has to be made, which usually produces a position argued from partial information or alignment attempted after execution has already started.",
+        "ActionText": "Uses agents as a tool inside the engagement to research the context, pressure test a position, and assemble evidence, so problems and opportunities are identified accurately and alignment is built before execution starts. Worked example: for an FDA cleared medical technology company focused on breast cancer prevention, built an agent that acted as domain expert across the engagement, supporting strategic pilot program design at multi-tiered facilities, distribution opportunity identification, and early flagging of insurance carrier friction.",
+        "OutcomeText": "Better problem identification, opportunities surfaced that would not have come up otherwise, and concrete evidence in front of stakeholders early enough for alignment to be cheap.",
+        "AttributionNote": null,
+        "RegisterNote": "Emphasis is on how agents are used, not on the fact that he builds them. Do not lead with the tooling. The claim is that the strategy work is better, not that there are more agents.",
+        "FeaturedOnWorkPage": false,
+        "FeaturedInResumeSelectedWork": true,
+        "SortOrder": 7
+      },
+      {
+        "ProofPointId": "startup-work",
+        "Title": "Startup work, concept to capital",
+        "ProblemText": "Two early companies with real technology and no product story an outsider could buy.",
+        "ActionText": "For an FDA cleared medical technology company focused on breast cancer prevention, led a pivot from a multi state Series A to a focused single state validation program and built the seed investor materials, shifting the narrative from detection to prevention. For an AI driven materials discovery company, translated lab technology into a customer facing platform through facilitation and interactive prototyping.",
+        "OutcomeText": "Investor ready materials and a defined MVP path in both cases. Phase one delivered on the medical device engagement, with the strategy and investment direction in place.",
+        "AttributionNote": "Neither client is named. Describe both by category. The medical technology engagement concluded after phase one due to internal changes on the client side.",
+        "RegisterNote": "Covered on the resume via the m+d2 & Associates and Vortent Partners job entries rather than as a standalone Work page item.",
+        "FeaturedOnWorkPage": false,
+        "FeaturedInResumeSelectedWork": false,
+        "SortOrder": 8
+      }
+    ]
+  },
+  "JobEntries": {
+    "Description": "Table: JobEntries. Career history, shared by both resume variants via inclusion flags rather than duplicated per variant. Rows are grouped by DisplayGroupKey where a variant collapses multiple rows into one displayed entry (e.g. Variant A merges the two Power Automate roles).",
+    "schema": [
+      { "name": "JobEntryId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
+      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Company}} & \" - \" & {{JobTitle}}" },
+      { "name": "Company", "datatype": "string", "type": "raw", "nullable": false, "Description": "Employer or entity name." },
+      { "name": "JobTitle", "datatype": "string", "type": "raw", "nullable": true, "Description": "Title held. Null on the single synthetic 'earlier roles' compressed row." },
+      { "name": "StartDate", "datatype": "string", "type": "raw", "nullable": false, "Description": "Start, YYYY-MM." },
+      { "name": "EndDate", "datatype": "string", "type": "raw", "nullable": true, "Description": "End, YYYY-MM. Null if current." },
+      { "name": "IsCurrent", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "True if this role is ongoing." },
+      { "name": "DisplayGroupKey", "datatype": "string", "type": "raw", "nullable": true, "Description": "Rows sharing this key render as one entry in Variant A (which uses the coarser grouping). Null where no grouping applies." },
+      { "name": "SummaryTextVariantA", "datatype": "string", "type": "raw", "nullable": true, "Description": "Prose summary as it appears in Resume Variant A. On a grouped pair, only the earliest row in the group carries the merged text; the later row is null and the app renders the group using the earliest row's text with the group's full date range." },
+      { "name": "SummaryTextVariantB", "datatype": "string", "type": "raw", "nullable": true, "Description": "Bullet-point summary as it appears in Resume Variant B, bullets joined with \\n." },
+      { "name": "CompressedLine", "datatype": "string", "type": "raw", "nullable": true, "Description": "One-line compressed text, used only on the synthetic 'earlier roles' row for Variant A's single-line pre-2019 summary." },
+      { "name": "IncludeInVariantA", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "Whether this row is shown (individually or as part of a group) on Resume Variant A." },
+      { "name": "IncludeInVariantB", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "Whether this row is shown on Resume Variant B." },
+      { "name": "IsPre2019", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "True for roles before 2019, compressed in Variant A per Content Strategy Section 7." },
+      { "name": "SortOrder", "datatype": "integer", "type": "raw", "nullable": false, "Description": "Reverse chronological display order." }
+    ],
+    "data": [
+      {
+        "JobEntryId": "banyan-software",
+        "Company": "Banyan Software",
+        "JobTitle": "Technical Advisor, Product Strategy and UX",
+        "StartDate": "2026-02",
+        "EndDate": null,
+        "IsCurrent": true,
+        "DisplayGroupKey": "banyan",
+        "SummaryTextVariantA": "Portfolio of 100+ B2B SaaS operating companies. Supports operating company teams, product management, and technology due diligence. Platform, reporting products, and workshop work described above.",
+        "SummaryTextVariantB": "Designed and built the product management platform serving the portfolio, concept through production: access model, frontend, API, PostgreSQL, content layer, and deployed infrastructure.\nAdvised on and implemented the experience layer across three executive reporting products: PM Workshop covering operating company maturity, participation and performance; Portfolio Operations covering cloud spend, escrow and compliance; and Technical Due Diligence covering deal management, time tracking and assignment.\nRebuilt the Portfolio Operations dashboard onto a database backed foundation, replacing generated exports with live data and improving performance.\nCo-led the redesign of the AI PM Workshop from training curriculum to execution engagement, with four owned artifacts as the outcome.\nWrote the project brief for the diligence reporting rebuild, aligning the executive team on the problem before scoping. The supporting analysis surfaced a process breakdown where staging and production served two different dashboards.",
+        "CompressedLine": null,
+        "IncludeInVariantA": true,
+        "IncludeInVariantB": true,
+        "IsPre2019": false,
+        "SortOrder": 1
+      },
+      {
+        "JobEntryId": "m-plus-d2-associates",
+        "Company": "m+d2 & Associates",
+        "JobTitle": "Partner, Strategic Product Advisor and Designer",
+        "StartDate": "2025-10",
+        "EndDate": null,
+        "IsCurrent": true,
+        "DisplayGroupKey": "m-plus-d2",
+        "SummaryTextVariantA": "Founded to take on a medical technology commercialization engagement. Led a pivot from a multi state Series A to a focused single state validation program, shifted the narrative from detection to prevention, and built the seed investor materials for two distinct audiences.",
+        "SummaryTextVariantB": "Led a medical technology client through a pivot from multi state Series A to focused single state validation.\nRepositioned the narrative from detection to prevention and built seed investor materials for two distinct audiences.\nUsed a purpose built domain expert agent to research pilot program design, distribution opportunity, and insurance carrier risk, feeding the strategy the team aligned on before execution.",
+        "CompressedLine": null,
+        "IncludeInVariantA": true,
+        "IncludeInVariantB": true,
+        "IsPre2019": false,
+        "SortOrder": 2
+      },
+      {
+        "JobEntryId": "vortent-partners",
+        "Company": "Vortent Partners",
+        "JobTitle": "Co-founder, Strategic Product Advisor and Designer",
+        "StartDate": "2025-06",
+        "EndDate": null,
+        "IsCurrent": true,
+        "DisplayGroupKey": "vortent",
+        "SummaryTextVariantA": "Execution partners for late seed and Series A founders in life sciences, deep tech, and cleantech. For an AI driven materials discovery company, translated lab technology into a customer facing platform through facilitation and interactive prototyping, defining an agent interface and dashboard for a multi stage MVP.",
+        "SummaryTextVariantB": "Translated an AI driven materials discovery company's lab technology into a customer facing platform.\nFacilitated cross functional sessions distilling complex scientific workflows into actionable product requirements.\nDelivered strategy documentation, design concepts, and interactive prototypes guiding a multi stage MVP.",
+        "CompressedLine": null,
+        "IncludeInVariantA": true,
+        "IncludeInVariantB": true,
+        "IsPre2019": false,
+        "SortOrder": 3
+      },
+      {
+        "JobEntryId": "microsoft-copilot-studio",
+        "Company": "Microsoft",
+        "JobTitle": "Principal Product Designer, Copilot Studio and Autonomous Agents",
+        "StartDate": "2024-05",
+        "EndDate": "2025-01",
+        "IsCurrent": false,
+        "DisplayGroupKey": "microsoft-copilot",
+        "SummaryTextVariantA": "Shaped product direction for agent based systems automating enterprise workflows. Defined and prototyped agent workflows for supply chain and invoice scenarios. Led concept sprints validating multi-agent feasibility in enterprise environments.",
+        "SummaryTextVariantB": "Shaped product direction for agent based systems automating complex enterprise workflows.\nDefined and prototyped agent workflows for supply chain and invoice scenarios, informing roadmap priorities.\nLed cross functional concept sprints validating multi-agent feasibility in enterprise environments.\nCreated experience maps and systems diagrams aligning stakeholders around long term vision.\nContributed to design standards adopted across Microsoft's automation and Copilot teams.",
+        "CompressedLine": null,
+        "IncludeInVariantA": true,
+        "IncludeInVariantB": true,
+        "IsPre2019": false,
+        "SortOrder": 4
+      },
+      {
+        "JobEntryId": "microsoft-power-automate-principal-designer",
+        "Company": "Microsoft",
+        "JobTitle": "Principal Product Designer, Power Automate",
+        "StartDate": "2024-01",
+        "EndDate": "2024-05",
+        "IsCurrent": false,
+        "DisplayGroupKey": "microsoft-power-automate",
+        "SummaryTextVariantA": null,
+        "SummaryTextVariantB": "Partnered with product and engineering to identify intelligent automation opportunities within Power Platform.\nFacilitated envisioning workshops and concept testing aligning enterprise scenarios with product direction.\nInfluenced roadmap and investment decisions through prototypes and product recommendations.",
+        "CompressedLine": null,
+        "IncludeInVariantA": true,
+        "IncludeInVariantB": true,
+        "IsPre2019": false,
+        "SortOrder": 5
+      },
+      {
+        "JobEntryId": "microsoft-power-automate-design-manager",
+        "Company": "Microsoft",
+        "JobTitle": "Principal Design Manager, Power Automate",
+        "StartDate": "2019-08",
+        "EndDate": "2024-01",
+        "IsCurrent": false,
+        "DisplayGroupKey": "microsoft-power-automate",
+        "SummaryTextVariantA": "Led design strategy across Cloud Flows, Desktop, Process Insights, and AI Builder. Launched the product's first AI powered natural language interface. Built and mentored a global design team.",
+        "SummaryTextVariantB": "Led design strategy and execution across Cloud Flows, Desktop, Process Insights, and AI Builder.\nLaunched Power Automate's first AI powered natural language interface, expanding adoption.\nBuilt and mentored a global design team and scaled prioritization practices across the organization.\nCo-owned product direction across key features with measurable impact on experience and business goals.",
+        "CompressedLine": null,
+        "IncludeInVariantA": true,
+        "IncludeInVariantB": true,
+        "IsPre2019": false,
+        "SortOrder": 6
+      },
+      {
+        "JobEntryId": "oracle",
+        "Company": "Oracle",
+        "JobTitle": "UX Strategy Lead and Acting Product Owner, Oracle Cloud Infrastructure",
+        "StartDate": "2017-07",
+        "EndDate": "2019-08",
+        "IsCurrent": false,
+        "DisplayGroupKey": "oracle",
+        "SummaryTextVariantA": "Delivered OCI's first in-console marketplace. Unified fragmented console systems. Launched a customer insights program integrating qualitative and usage data into product planning.",
+        "SummaryTextVariantB": "Defined and delivered OCI's first in-console marketplace experience.\nUnified fragmented console systems through journey mapping and cross team alignment.\nLaunched a customer insights program integrating qualitative and usage data into product planning.",
+        "CompressedLine": null,
+        "IncludeInVariantA": true,
+        "IncludeInVariantB": true,
+        "IsPre2019": false,
+        "SortOrder": 7
+      },
+      {
+        "JobEntryId": "earlier-roles-summary",
+        "Company": "Earlier",
+        "JobTitle": null,
+        "StartDate": "2002-06",
+        "EndDate": "2017-07",
+        "IsCurrent": false,
+        "DisplayGroupKey": "earlier",
+        "SummaryTextVariantA": null,
+        "SummaryTextVariantB": null,
+        "CompressedLine": "Shiftboard, Hewlett Packard Helion, Snap Skout (founding designer), SDL Social Intelligence, Second on Left, Microsoft Bing, Microsoft Platform Strategy, Microsoft Developer and Platform Evangelism · 2002 to 2017",
+        "IncludeInVariantA": true,
+        "IncludeInVariantB": false,
+        "IsPre2019": true,
+        "SortOrder": 8
+      },
+      {
+        "JobEntryId": "shiftboard",
+        "Company": "Shiftboard",
+        "JobTitle": "UX Designer and Product Strategist",
+        "StartDate": "2016-03",
+        "EndDate": "2017-07",
+        "IsCurrent": false,
+        "DisplayGroupKey": null,
+        "SummaryTextVariantA": null,
+        "SummaryTextVariantB": null,
+        "CompressedLine": null,
+        "IncludeInVariantA": false,
+        "IncludeInVariantB": true,
+        "IsPre2019": true,
+        "SortOrder": 9
+      },
+      {
+        "JobEntryId": "hp-helion",
+        "Company": "Hewlett Packard, Helion Cloud Infrastructure",
+        "JobTitle": "UX Designer and Product Strategist",
+        "StartDate": "2014-09",
+        "EndDate": "2016-03",
+        "IsCurrent": false,
+        "DisplayGroupKey": null,
+        "SummaryTextVariantA": null,
+        "SummaryTextVariantB": null,
+        "CompressedLine": null,
+        "IncludeInVariantA": false,
+        "IncludeInVariantB": true,
+        "IsPre2019": true,
+        "SortOrder": 10
+      },
+      {
+        "JobEntryId": "snap-skout",
+        "Company": "Snap Skout",
+        "JobTitle": "Founding Product Designer",
+        "StartDate": "2013-02",
+        "EndDate": "2014-08",
+        "IsCurrent": false,
+        "DisplayGroupKey": null,
+        "SummaryTextVariantA": null,
+        "SummaryTextVariantB": null,
+        "CompressedLine": null,
+        "IncludeInVariantA": false,
+        "IncludeInVariantB": true,
+        "IsPre2019": true,
+        "SortOrder": 11
+      },
+      {
+        "JobEntryId": "sdl-social-intelligence",
+        "Company": "SDL Social Intelligence",
+        "JobTitle": "UX and Product Designer",
+        "StartDate": "2012-08",
+        "EndDate": "2013-02",
+        "IsCurrent": false,
+        "DisplayGroupKey": null,
+        "SummaryTextVariantA": null,
+        "SummaryTextVariantB": null,
+        "CompressedLine": null,
+        "IncludeInVariantA": false,
+        "IncludeInVariantB": true,
+        "IsPre2019": true,
+        "SortOrder": 12
+      },
+      {
+        "JobEntryId": "second-on-left",
+        "Company": "Second on Left",
+        "JobTitle": "UX and Product Consultant",
+        "StartDate": "2011-02",
+        "EndDate": "2014-09",
+        "IsCurrent": false,
+        "DisplayGroupKey": null,
+        "SummaryTextVariantA": null,
+        "SummaryTextVariantB": null,
+        "CompressedLine": null,
+        "IncludeInVariantA": false,
+        "IncludeInVariantB": true,
+        "IsPre2019": true,
+        "SortOrder": 13
+      },
+      {
+        "JobEntryId": "microsoft-bing",
+        "Company": "Microsoft, Bing",
+        "JobTitle": "Senior UX Designer",
+        "StartDate": "2010-05",
+        "EndDate": "2011-05",
+        "IsCurrent": false,
+        "DisplayGroupKey": null,
+        "SummaryTextVariantA": null,
+        "SummaryTextVariantB": null,
+        "CompressedLine": null,
+        "IncludeInVariantA": false,
+        "IncludeInVariantB": true,
+        "IsPre2019": true,
+        "SortOrder": 14
+      },
+      {
+        "JobEntryId": "microsoft-platform-strategy",
+        "Company": "Microsoft, Platform Strategy",
+        "JobTitle": "Senior UX Designer",
+        "StartDate": "2008-10",
+        "EndDate": "2010-05",
+        "IsCurrent": false,
+        "DisplayGroupKey": null,
+        "SummaryTextVariantA": null,
+        "SummaryTextVariantB": null,
+        "CompressedLine": null,
+        "IncludeInVariantA": false,
+        "IncludeInVariantB": true,
+        "IsPre2019": true,
+        "SortOrder": 15
+      },
+      {
+        "JobEntryId": "microsoft-dev-platform-evangelism",
+        "Company": "Microsoft, Developer and Platform Evangelism",
+        "JobTitle": "UX and Visual Designer",
+        "StartDate": "2002-06",
+        "EndDate": "2008-10",
+        "IsCurrent": false,
+        "DisplayGroupKey": null,
+        "SummaryTextVariantA": null,
+        "SummaryTextVariantB": null,
+        "CompressedLine": null,
+        "IncludeInVariantA": false,
+        "IncludeInVariantB": true,
+        "IsPre2019": true,
+        "SortOrder": 16
+      }
+    ]
+  },
+  "ResumeVariants": {
+    "Description": "Table: ResumeVariants. Two variants, one spine, per David_Shadle_Resume_Variants_v1.md. Variant A is public/served from the site; Variant B is sent directly and never published.",
+    "schema": [
+      { "name": "ResumeVariantId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
+      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Label}}" },
+      { "name": "Label", "datatype": "string", "type": "raw", "nullable": false, "Description": "Variant label." },
+      { "name": "AudienceDescription", "datatype": "string", "type": "raw", "nullable": false, "Description": "Who this variant targets and how it is distributed." },
+      { "name": "SummaryText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The opening capability statement ('What I do' / 'Summary'). Paragraph breaks encoded as \\n\\n." },
+      { "name": "PublishedOnSite", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "Whether this variant is served from the public site (Section 10: only Variant A)." }
+    ],
+    "data": [
+      {
+        "ResumeVariantId": "variant-a",
+        "Label": "Variant A — Consulting and Advisory",
+        "AudienceDescription": "Public. Linked from davidshadle.com, offered as a PDF download. Target length: two pages.",
+        "SummaryText": "I build the systems that turn strategy into working software. Most advisors stop at the recommendation. I keep going, through the model, the interface, and the handoff, so the thing that gets agreed on is the thing that gets shipped.\n\nI start with the problem and write it down before anyone proposes a solution. From there I work from a rulebook: the rules of a domain written down once in plain language, with the technical pieces derived from that rather than maintained by hand. It is what lets me deliver complete projects rather than stopping at design and project management.\n\nTwenty five years in product strategy and design make the systems worth building. Full stack product practitioner. Not just capable of wearing several hats at once, but confident delivering the outcome in each.",
+        "PublishedOnSite": true
+      },
+      {
+        "ResumeVariantId": "variant-b",
+        "Label": "Variant B — Principal and Director Roles",
+        "AudienceDescription": "Sent directly for specific roles. Never published online. Conventional reverse-chronological structure for applicant tracking systems and hiring managers.",
+        "SummaryText": "Product strategy and design leader with twenty five years across enterprise platforms, cloud infrastructure, and early stage companies, including principal roles at Microsoft and Oracle. I define what to build and why, align the people who have to agree, and stay with the work through delivery.\n\nI also build. Over the last two years I have designed and shipped a production platform end to end and implemented the experience layer across three executive reporting products. Working from a written rulebook rather than hand-maintained specs is what extended me from design and project management into complete delivery. That range means no handoff gap between strategy, design, and engineering.\n\nLooking for defined ownership at a small to mid sized organization.",
+        "PublishedOnSite": false
+      }
+    ]
+  },
+  "ResumeListItems": {
+    "Description": "Table: ResumeListItems. The Methods and Technical blocks, shared identically by both resume variants, replacing the old comma-separated skills paragraph.",
+    "schema": [
+      { "name": "ResumeListItemId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
+      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Label}}" },
+      { "name": "Category", "datatype": "string", "type": "raw", "nullable": false, "Description": "'Methods' or 'Technical'." },
+      { "name": "Label", "datatype": "string", "type": "raw", "nullable": false, "Description": "The item text as it appears on the resume." },
+      { "name": "SortOrder", "datatype": "integer", "type": "raw", "nullable": false, "Description": "Display order within its category." }
+    ],
+    "data": [
+      { "ResumeListItemId": "methods-problem-brief-first", "Category": "Methods", "Label": "Problem brief first", "SortOrder": 1 },
+      { "ResumeListItemId": "methods-rulebook-driven-delivery", "Category": "Methods", "Label": "Rulebook driven delivery", "SortOrder": 2 },
+      { "ResumeListItemId": "methods-prototype-as-spec", "Category": "Methods", "Label": "Prototype as spec", "SortOrder": 3 },
+      { "ResumeListItemId": "methods-product-maturity-modeling", "Category": "Methods", "Label": "Product maturity modeling", "SortOrder": 4 },
+      { "ResumeListItemId": "methods-rice-prioritization", "Category": "Methods", "Label": "RICE prioritization against capacity", "SortOrder": 5 },
+      { "ResumeListItemId": "methods-strategic-facilitation", "Category": "Methods", "Label": "Strategic facilitation", "SortOrder": 6 },
+      { "ResumeListItemId": "technical-nextjs", "Category": "Technical", "Label": "Next.js", "SortOrder": 1 },
+      { "ResumeListItemId": "technical-node-express", "Category": "Technical", "Label": "Node and Express", "SortOrder": 2 },
+      { "ResumeListItemId": "technical-prisma", "Category": "Technical", "Label": "Prisma", "SortOrder": 3 },
+      { "ResumeListItemId": "technical-postgresql", "Category": "Technical", "Label": "PostgreSQL", "SortOrder": 4 },
+      { "ResumeListItemId": "technical-terraform", "Category": "Technical", "Label": "Terraform", "SortOrder": 5 },
+      { "ResumeListItemId": "technical-docker", "Category": "Technical", "Label": "Docker", "SortOrder": 6 },
+      { "ResumeListItemId": "technical-github-actions", "Category": "Technical", "Label": "GitHub Actions", "SortOrder": 7 },
+      { "ResumeListItemId": "technical-aws", "Category": "Technical", "Label": "AWS, including ECS Fargate, RDS, S3, and CloudFront", "SortOrder": 8 },
+      { "ResumeListItemId": "technical-oidc", "Category": "Technical", "Label": "OIDC authentication", "SortOrder": 9 },
+      { "ResumeListItemId": "technical-agent-skill-dev", "Category": "Technical", "Label": "Agent and skill development", "SortOrder": 10 }
+    ]
+  },
+  "EducationEntries": {
+    "Description": "Table: EducationEntries.",
+    "schema": [
+      { "name": "EducationEntryId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
+      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Institution}} & \" - \" & {{Degree}}" },
+      { "name": "Institution", "datatype": "string", "type": "raw", "nullable": false, "Description": "School name." },
+      { "name": "Degree", "datatype": "string", "type": "raw", "nullable": false, "Description": "Degree earned." },
+      { "name": "FieldOfStudy", "datatype": "string", "type": "raw", "nullable": true, "Description": "Major/field." },
+      { "name": "GradYear", "datatype": "integer", "type": "raw", "nullable": true, "Description": "Graduation year." }
+    ],
+    "data": [
+      {
+        "EducationEntryId": "university-of-oregon",
+        "Institution": "University of Oregon",
+        "Degree": "Bachelor of Fine Arts",
+        "FieldOfStudy": "Visual Design",
+        "GradYear": 1994
+      }
+    ]
+  },
+  "_meta": {
+    "_CMCC_Summary": "Hand-authored rulebook for davidshadle.com v4, seeded directly from the Content Strategy, Bio Set, How I Work, and Resume Variants source markdown documents. No upstream input spoke (no Airtable/Excel).",
+    "_conversion_metadata": {
+      "source": "hand-authored from David_Shadle_Content_Strategy_v1.md, David_Shadle_Bio_Set_v1.md, David_Shadle_How_I_Work_v1.md, David_Shadle_Resume_Variants_v1.md",
+      "table_count": 8,
+      "tool_version": "1.0.0"
+    }
   }
 }

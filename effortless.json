@@ -7,10 +7,34 @@
   "Name": "David Shadle Website v4",
   "ProjectSettings": [
     {
-      "ProjectSettingId": "61b3faf3-6bf6-49e5-9d65-3e53bed61f1e",
       "Name": "project-name",
       "Value": "David Shadle Website v4"
     }
   ],
-  "ProjectTranspilers": []
+  "ProjectTranspilers": [
+    {
+      "IsSSoTTranspiler": false,
+      "Name": "rulebook-to-rulespeak",
+      "RelativePath": "/rulespeak",
+      "CommandLine": "rulebook-to-rulespeak -i ../effortless-rulebook/effortless-rulebook.json",
+      "IsDisabled": false,
+      "PinnedVersion": "v2026.08.01.1813"
+    },
+    {
+      "IsSSoTTranspiler": false,
+      "Name": "rulebook-to-postgres",
+      "RelativePath": "/postgres",
+      "CommandLine": "rulebook-to-postgres -i ../effortless-rulebook/effortless-rulebook.json",
+      "IsDisabled": false,
+      "PinnedVersion": "v2026.07.31.1917"
+    },
+    {
+      "IsSSoTTranspiler": false,
+      "Name": "initdb",
+      "RelativePath": "/postgres",
+      "CommandLine": "-exec ./init-db.sh",
+      "IsDisabled": false,
+      "PinnedVersion": ""
+    }
+  ]
 }
