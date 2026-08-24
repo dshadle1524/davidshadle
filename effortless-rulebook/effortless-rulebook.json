@@ -90,8 +90,8 @@
       {
         "BioVariantId": "home-body",
         "Label": "Home body (first person, no opening paragraph)",
-        "UsageContext": "Website Home, directly under the hero headline/subheadline. Derived from the One hundred fifty words variant with its opening paragraph dropped (the hero already carries it), converted to first person to match the hero's voice.",
-        "BodyText": "I am Technical Advisor, Product Strategy and UX at Banyan Software, working across a portfolio of more than 100 B2B SaaS operating companies. There I designed and built the product management platform the program runs on, and advised on and implemented the experience layer across three executive reporting products covering workshop performance, portfolio operations, and technology due diligence.\n\nI work from a rulebook. The rules of a domain get written down once, in plain language, and the technical pieces are derived from that rather than maintained by hand. It is a working discipline, not a product, and it is what lets me carry a project through delivery rather than stopping at design.\n\nTwenty five years in product strategy and design precede this, including principal roles at Microsoft and Oracle.",
+        "UsageContext": "Website Home, directly under the hero headline/subheadline. Sourced from the Variant A resume's 'What I do' paragraphs 2-3 (already first person), which pick up right after the hero's opening two sentences.",
+        "BodyText": "I start with the problem and write it down before anyone proposes a solution. From there I work from a rulebook: the rules of a domain written down once in plain language, with the technical pieces derived from that rather than maintained by hand. It is what lets me deliver complete projects rather than stopping at design and project management.\n\nTwenty five years in product strategy and design make the systems worth building. Full stack product practitioner. Not just capable of wearing several hats at once, but confident delivering the outcome in each.",
         "SortOrder": 7
       }
     ]

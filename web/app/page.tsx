@@ -30,7 +30,6 @@ export default async function Home() {
               <p key={i} className="body-text" style={{ marginBottom: 20 }}>{para}</p>
             ))}
           </div>
-          <p className="body-text" style={{ fontWeight: 600 }}>{settings.self_description_line}</p>
         </div>
       </section>
 
