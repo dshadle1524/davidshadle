@@ -34,6 +34,8 @@ SELECT
   t.portfolio_company_count,                                                    -- Standardized portfolio count string, per Content Strategy Section 6 ('100+' everywhere, never 107 or 111).
   t.self_description_line,                                                      -- The 'full stack product practitioner' anchor phrase. Per Section 2: say it once, never next to a list.
   t.positioning_statement,                                                      -- The core positioning paragraph everything else derives from (Content Strategy Section 2).
+  t.hero_headline,                                                              -- The large opening line of the Home hero, first person. First sentence of PositioningStatement, curated separately so the hero can style it distinctly from HeroSubheadline.
+  t.hero_subheadline,                                                           -- The medium-sized second line of the Home hero, directly under HeroHeadline. Second/third sentence of PositioningStatement.
   t.currently_text,                                                             -- The undated 'Currently' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule.
   t.banyan_title                                                                -- Full Banyan title, used everywhere per Section 6: 'Technical Advisor, Product Strategy and UX'.
 FROM site_settings t;

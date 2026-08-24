@@ -181,7 +181,37 @@ a {
 
 .hero {
   background: linear-gradient(180deg, var(--color-tint-300) 0%, var(--color-tint-200) 100%);
-  padding: 64px 0 72px;
+  padding: 72px 0 88px;
+}
+
+.hero-inner {
+  max-width: 860px;
+}
+
+.hero-headline {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 2.5rem;
+  line-height: 1.25;
+  color: var(--color-ink);
+  margin-bottom: 20px;
+}
+
+.hero-subheadline {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.65rem;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+@media (max-width: 640px) {
+  .hero-headline {
+    font-size: 1.9rem;
+  }
+  .hero-subheadline {
+    font-size: 1.3rem;
+  }
 }
 
 .hero .title-separator {

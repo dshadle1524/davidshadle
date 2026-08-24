@@ -10,6 +10,8 @@ export interface SiteSettings {
   portfolio_company_count: string;
   self_description_line: string;
   positioning_statement: string;
+  hero_headline: string;
+  hero_subheadline: string;
   currently_text: string | null;
   banyan_title: string;
 }

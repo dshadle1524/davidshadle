@@ -19,6 +19,8 @@ _Rulebook for davidshadle.com v4: bio variants, method statement, proof/work ent
 | Portfolio Company Count | A defined attribute. | _Standardized portfolio count string, per Content Strategy Section 6 ('100+' everywhere, never 107 or 111)._ |
 | Self Description Line | A defined attribute. | _The 'full stack product practitioner' anchor phrase. Per Section 2: say it once, never next to a list._ |
 | Positioning Statement | A defined attribute. | _The core positioning paragraph everything else derives from (Content Strategy Section 2)._ |
+| Hero Headline | A defined attribute. | _The large opening line of the Home hero, first person. First sentence of PositioningStatement, curated separately so the hero can style it distinctly from HeroSubheadline._ |
+| Hero Subheadline | A defined attribute. | _The medium-sized second line of the Home hero, directly under HeroHeadline. Second/third sentence of PositioningStatement._ |
 | Currently Text | A defined attribute. | _The undated 'Currently' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule._ |
 | Banyan Title | A defined attribute. | _Full Banyan title, used everywhere per Section 6: 'Technical Advisor, Product Strategy and UX'._ |
 | **Bio Variant** | A bio variant is identified by its name. | — |
@@ -86,7 +88,7 @@ already computes (cross-referenced as DR-N in the Definitional Rules below)._
 
 ### Structural Constraints (from the schema)
 
-- A site setting **must** have a contact email, a site domain, a portfolio company count, a self description line, a positioning statement, and a banyan title.
+- A site setting **must** have a contact email, a site domain, a portfolio company count, a self description line, a positioning statement, a hero headline, a hero subheadline, and a banyan title.
 - A bio variant **must** have a label, an usage context, a body text, and a sort order.
 - A how i work section **must** have a heading, a body text, and a sort order.
 - A proof point **must** have a title, a problem text, an action text, an outcome text, and a sort order, and record whether it is featured on work page and whether it is featured in resume selected work.

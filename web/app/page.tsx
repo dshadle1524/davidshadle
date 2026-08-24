@@ -5,7 +5,7 @@ import { ContactSection } from "@/components/ContactSection";
 export default async function Home() {
   const [settings, bio, howIWork, proofPoints] = await Promise.all([
     getSiteSettings(),
-    getBioVariant("three-hundred-words"),
+    getBioVariant("home-body"),
     getHowIWorkSections(),
     getFeaturedWorkProofPoints(),
   ]);
@@ -16,21 +16,9 @@ export default async function Home() {
     <>
       {/* ---- Hero / Intro ---- */}
       <section className="hero">
-        <div className="container two-col">
-          <div>
-            <h1 className="name-title">David Shadle</h1>
-            <div className="title-separator" />
-            <p className="body-text">{settings.banyan_title}</p>
-            <p className="body-text">Banyan Software</p>
-            <div className="icon-links">
-              <a className="icon-link" href={`mailto:${settings.contact_email}`}>Email</a>
-              <Link className="icon-link" href="/resume">Resume</Link>
-              <Link className="icon-link" href="/work">Work</Link>
-            </div>
-          </div>
-          <div>
-            <p className="quote">{settings.positioning_statement}</p>
-          </div>
+        <div className="container hero-inner">
+          <p className="hero-headline">{settings.hero_headline}</p>
+          <p className="hero-subheadline">{settings.hero_subheadline}</p>
         </div>
       </section>
 
