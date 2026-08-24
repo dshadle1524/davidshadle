@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { getSiteSettings, getBioVariant, getCurrentlyItems, getHowIWorkSections, getFeaturedWorkProofPoints } from "@/lib/content";
-import { ContactSection } from "@/components/ContactSection";
 
 export default async function Home() {
   const [settings, bio, currentlyItems, howIWork, proofPoints] = await Promise.all([
@@ -86,8 +85,6 @@ export default async function Home() {
           </Link>
         </div>
       </section>
-
-      <ContactSection />
     </>
   );
 }
