@@ -14,10 +14,13 @@ export DATABASE_URL="${DATABASE_URL:-postgresql://postgres:postgres@localhost:57
 export PATH="$ROOT/bin:$PATH"
 
 free_port() {
+  # No lsof in this Git Bash on Windows - use netstat/taskkill instead.
   local p="$1"
   local pids
-  pids=$(lsof -ti "tcp:${p}" 2>/dev/null || true)
-  [[ -n "$pids" ]] && kill -9 $pids 2>/dev/null || true
+  pids=$( { netstat.exe -ano 2>/dev/null | grep -E "LISTENING" | grep -E ":${p}[^0-9]" | awk '{print $NF}' | sort -u; } || true )
+  for pid in $pids; do
+    taskkill.exe //PID "$pid" //F >/dev/null 2>&1 || true
+  done
 }
 
 case "${1:-}" in

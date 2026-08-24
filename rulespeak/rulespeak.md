@@ -19,7 +19,7 @@ _Rulebook for davidshadle.com v4: bio variants, method statement, proof/work ent
 | Portfolio Company Count | A defined attribute. | _Standardized portfolio count string, per Content Strategy Section 6 ('100+' everywhere, never 107 or 111)._ |
 | Self Description Line | A defined attribute. | _The 'full stack product practitioner' anchor phrase. Per Section 2: say it once, never next to a list._ |
 | Positioning Statement | A defined attribute. | _The core positioning paragraph everything else derives from (Content Strategy Section 2)._ |
-| Currently Text | A defined attribute. | _PLACEHOLDER, not yet approved copy. The undated 'Currently' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule. Confirm real wording with David before shipping._ |
+| Currently Text | A defined attribute. | _The undated 'Currently' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule._ |
 | Banyan Title | A defined attribute. | _Full Banyan title, used everywhere per Section 6: 'Technical Advisor, Product Strategy and UX'._ |
 | **Bio Variant** | A bio variant is identified by its name. | — |
 | Name | The same as its label. | _Display alias._ |

@@ -1,0 +1,1737 @@
+/*
+Theme Name: David Shadle Portfolio - Simplified
+Description: Clean, optimized single-page WordPress theme
+Author: David Shadle
+Version: 3.0.0
+*/
+
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Roboto+Slab:wght@300;400;700&family=Roboto+Serif:wght@600&display=swap');
+
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   BASE LAYOUT
+   ======================================== */
+
+body {
+    font-family: 'Raleway', sans-serif;
+    background-color: #FFFFFF;
+    overflow-x: hidden;
+}
+
+/* Section Container - 1005px total width, centered */
+.section-container {
+    max-width: 1005px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Two Column Layout - 335px left, 85px gap, 585px right */
+.two-col-layout {
+    display: grid;
+    grid-template-columns: 335px 585px;
+    gap: 85px;
+    align-items: start;
+}
+
+/* ========================================
+   HERO IMAGE
+   ======================================== */
+
+.hero-image-container {
+    text-align: center;
+    background: linear-gradient(to bottom, #D0FAFF 0%, #C2F0FA 100%);
+    padding-top: 10px;
+}
+
+.hero-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* ========================================
+   SECTION 01: INTRODUCTION
+   ======================================== */
+
+.section-introduction {
+    background: linear-gradient(to bottom, #D0FAFF 0%, #C2F0FA 100%);
+    padding: 60px 0 80px;
+}
+
+/* Left Column */
+.intro-left-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.intro-name {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 30px;
+    color: #05668D;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.intro-name-bold {
+    font-weight: 800;
+}
+
+.intro-divider {
+    width: 100%;
+    height: 1px;
+    background-color: #05668D;
+    margin-bottom: 20px;
+}
+
+.intro-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.intro-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #295579;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.intro-link:hover {
+    color: #05668D;
+}
+
+.intro-link-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* Right Column */
+.intro-right-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.intro-quote {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 400;
+    font-size: 29px;
+    line-height: 42px;
+    color: #295579;
+    margin-bottom: 30px;
+    border: none;
+    padding: 0;
+}
+
+.intro-section-header {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 35px;
+    color: #295579;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.intro-body {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: #295579;
+    margin-bottom: 35px;
+}
+
+.intro-body:last-child {
+    margin-bottom: 0;
+}
+
+.intro-body strong {
+    font-weight: 600;
+}
+
+/* ========================================
+   SECTION 02: DETAILS
+   ======================================== */
+
+.section-details {
+    background-color: #FFFFFF;
+    padding: 0;
+    min-height: 800px;
+}
+
+/* Tab Navigation */
+.details-nav {
+    position: relative;
+    background: linear-gradient(to bottom, #C2F0FA 0%, #C2F0FA 100%);
+    padding-bottom: 12px;
+}
+
+.details-nav-container {
+    max-width: 1005px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    position: relative;
+    padding: 0 20px;
+}
+
+.details-nav-link {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #295579;
+    text-transform: uppercase;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: font-weight 0.3s ease;
+    position: relative;
+}
+
+.details-nav-link.active {
+    font-weight: 600;
+}
+
+.details-nav-link:hover {
+    color: #05668D;
+}
+
+.nav-pipe {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    color: #295579;
+}
+
+/* Sliding Indicator */
+.nav-indicator {
+    position: absolute;
+    bottom: -13px;
+    height: 9px;
+    background-color: #83D9FF;
+    border-radius: 0 0 2px 2px;
+    transition: left 0.3s ease, width 0.3s ease;
+    z-index: 10;
+}
+
+/* Details Content Area */
+.details-content-area {
+    position: relative;
+    background-color: #FFFFFF;
+}
+
+.details-top-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #A5D2E2;
+}
+
+.details-tab-content {
+    display: none;
+    padding: 60px 0;
+}
+
+.details-tab-content.active {
+    display: block;
+}
+
+.details-layout {
+    align-items: flex-start;
+}
+
+.details-left-col {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.details-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.details-right-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.details-section-header {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 35px;
+    color: #295579;
+    margin-bottom: 20px;
+}
+
+.details-body {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: #295579;
+    margin-bottom: 35px;
+}
+
+.details-body:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   SECTION 03: CONTACT
+   ======================================== */
+
+.section-contact {
+    background: linear-gradient(to bottom, #BBEBF9 0%, #B5E6F6 100%);
+    padding: 80px 0;
+}
+
+.contact-left-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-header {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 35px;
+    color: #295579;
+    margin-bottom: 20px;
+}
+
+.contact-body {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: #295579;
+    margin-bottom: 35px;
+}
+
+.contact-body:last-child {
+    margin-bottom: 0;
+}
+
+/* Contact Form */
+.contact-right-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #295579;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    transition: border-color 0.3s ease;
+}
+
+.contact-form input[type="email"]:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #05668D;
+}
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.contact-submit-btn {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #FFFFFF;
+    background-color: #5ECDFB;
+    border: none;
+    border-radius: 6px;
+    padding: 15px 40px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+}
+
+.contact-submit-btn:hover {
+    background-color: #4ABDEB;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.site-footer {
+    background-color: #CBEEF9;
+    padding: 20px 0;
+    border-top: 1px solid #A5D2E2;
+}
+
+.footer-content {
+    max-width: 1005px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+.footer-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-name-text {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #05668B;
+}
+
+.footer-pipe {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    color: #05668B;
+}
+
+.footer-tagline {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 300;
+    font-size: 16px;
+    color: #05668B;
+}
+
+/* ========================================
+   HEADER STYLES
+   ======================================== */
+
+.site-header {
+    background-color: #FFFFFF;
+    padding: 30px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header-content {
+    max-width: 1005px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Raleway', sans-serif;
+    font-size: 23px;
+    color: #05668D;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.logo .david {
+    font-weight: 400;
+}
+
+.logo .shadle {
+    font-weight: 800;
+}
+
+.main-navigation ul {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+.main-navigation a {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: #05668D;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.main-navigation a:hover {
+    opacity: 0.7;
+}
+
+/* Mobile Menu */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    width: 25px;
+    height: 20px;
+}
+
+.hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #05668D;
+    margin-bottom: 4px;
+    transition: 0.3s;
+}
+
+.hamburger span:last-child {
+    margin-bottom: 0;
+}
+
+.mobile-menu-toggle.active .hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-menu-toggle.active .hamburger span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active .hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 1050px) {
+    .two-col-layout {
+        grid-template-columns: 1fr 1.5fr;
+        gap: 40px;
+    }
+
+    .details-nav-container {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-container {
+        padding: 0 20px;
+    }
+
+    .two-col-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    /* Hero */
+    .hero-image-container {
+        padding: 20px;
+    }
+
+    /* Introduction */
+    .section-introduction {
+        padding: 40px 0 60px;
+    }
+
+    .intro-left-col {
+        text-align: center;
+        align-items: center;
+    }
+
+    .intro-name {
+        font-size: 26px;
+    }
+
+    .intro-divider {
+        max-width: 200px;
+    }
+
+    .intro-links {
+        align-items: center;
+    }
+
+    .intro-quote {
+        font-size: 24px;
+        line-height: 36px;
+    }
+
+    .intro-body {
+        font-size: 16px;
+        line-height: 26px;
+    }
+
+    /* Details Navigation */
+    .details-nav-container {
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .nav-pipe {
+        display: none;
+    }
+
+    .details-nav-link {
+        font-size: 14px;
+    }
+
+    /* Details Content */
+    .details-layout {
+        flex-direction: column;
+    }
+
+    .details-left-col {
+        order: 1;
+        margin-bottom: 30px;
+    }
+
+    .details-right-col {
+        order: 2;
+    }
+
+    .details-image {
+        max-width: 250px;
+    }
+
+    /* Contact */
+    .section-contact {
+        padding: 60px 0;
+    }
+
+    .contact-submit-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Footer */
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .footer-text {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Header */
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .main-navigation {
+        display: none;
+    }
+
+    .main-navigation.mobile-active {
+        display: block;
+    }
+
+    .main-navigation.mobile-active ul {
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #FFFFFF;
+        padding: 20px 40px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        gap: 20px;
+    }
+}
+
+/* ========================================
+   RESUME PAGE STYLES
+   ======================================== */
+
+.resume-section {
+    padding: 6rem 0 4rem;
+    background-color: #FFFFFF;
+}
+
+.resume-content {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+}
+
+.resume-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid #D4F3FB;
+}
+
+.resume-header .section-header-01 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #295579;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+}
+
+.resume-header .section-header-02 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #05668D;
+    margin-bottom: 1rem;
+}
+
+.contact-info .section-body {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.125rem;
+    color: #295579;
+    margin: 0;
+}
+
+.resume-section-block {
+    margin-bottom: 3rem;
+}
+
+.resume-section-block .section-header-01 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #295579;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #D4F3FB;
+    padding-bottom: 0.5rem;
+}
+
+.resume-section-block .section-body {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #05668D;
+    margin-bottom: 1rem;
+}
+
+.resume-section-block .section-body p {
+    margin-bottom: 1rem;
+}
+
+.experience-item {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #F0F8FF;
+}
+
+.experience-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.experience-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #295579;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.experience-role {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #05668D;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.resume-section .experience-item p.experience-details {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #05668D !important;
+    margin-bottom: 1rem;
+}
+
+.resume-section .experience-item p.experience-details b,
+.resume-section .experience-item p.experience-details strong {
+    color: #05668D !important;
+}
+
+.experience-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+p.experience-details {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #05668D !important;
+    margin-bottom: 1rem;
+}
+
+.experience-details li {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #05668D;
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.experience-details li:before {
+    content: "•";
+    color: #D4F3FB;
+    font-weight: 600;
+    position: absolute;
+    left: 0;
+    font-size: 1.2rem;
+}
+
+.additional-roles {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #D4F3FB;
+}
+
+.additional-roles .section-header-02 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #295579;
+    margin-bottom: 1rem;
+}
+
+.additional-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.additional-list li {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #05668D;
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.additional-list li:before {
+    content: "•";
+    color: #D4F3FB;
+    font-weight: 600;
+    position: absolute;
+    left: 0;
+    font-size: 1.2rem;
+}
+
+.education-item {
+    margin-top: 1rem;
+}
+
+.education-item .experience-title {
+    margin-bottom: 0.25rem;
+}
+
+.education-item .experience-role {
+    margin-bottom: 0.5rem;
+}
+
+.education-item .section-body {
+    margin: 0;
+    font-style: italic;
+    color: #295579;
+}
+
+/* Resume Mobile Styles */
+@media (max-width: 768px) {
+    .resume-section {
+        padding: 4rem 0 3rem;
+    }
+
+    .resume-content {
+        padding: 0 1rem;
+    }
+
+    .resume-header .section-header-01 {
+        font-size: 2rem;
+        letter-spacing: 1px;
+    }
+
+    .resume-header .section-header-02 {
+        font-size: 1.25rem;
+    }
+
+    .contact-info .section-body {
+        font-size: 1rem;
+    }
+
+    .resume-section-block .section-header-01 {
+        font-size: 1.5rem;
+    }
+
+    .experience-title {
+        font-size: 1.125rem;
+    }
+
+    .experience-role {
+        font-size: 1rem;
+    }
+
+    .experience-details li,
+    .additional-list li {
+        font-size: 0.9rem;
+        padding-left: 1.25rem;
+    }
+}
+
+/* ========================================
+   CASE STUDIES STYLES
+   ======================================== */
+
+.case-studies-archive {
+    padding: 6rem 0 4rem;
+}
+
+.archive-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.archive-header .section-header {
+    margin-bottom: 1rem;
+}
+
+.case-studies-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-bottom: 4rem;
+}
+
+.case-study-card {
+    background: #FFFFFF;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Desktop layout: image left, content right */
+@media (min-width: 768px) {
+    .case-study-card {
+        flex-direction: row;
+    }
+
+    .case-study-image {
+        flex: 0 0 45%;
+        max-width: 45%;
+    }
+
+    .case-study-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+.case-study-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.case-study-image {
+    position: relative;
+    overflow: hidden;
+    height: 250px;
+}
+
+@media (min-width: 768px) {
+    .case-study-image {
+        height: auto;
+        min-height: 300px;
+    }
+}
+
+.case-study-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.case-study-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.case-study-card:hover .case-study-thumbnail {
+    transform: scale(1.05);
+}
+
+.case-study-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: linear-gradient(135deg, #D4F3FB, #05668D);
+    color: #FFFFFF;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.case-study-content {
+    padding: 2rem;
+}
+
+.case-study-title {
+    margin-bottom: 1rem;
+}
+
+.case-study-title a {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #295579;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.case-study-title a:hover {
+    color: #05668D;
+}
+
+.case-study-excerpt {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #05668D;
+    margin-bottom: 1.5rem;
+}
+
+.case-study-link {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #05668D;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.case-study-link:hover {
+    color: #295579;
+}
+
+.no-case-studies {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+/* Single Case Study Styles */
+.case-study-single {
+    background: #FFFFFF;
+}
+
+.case-study-hero {
+    padding: 6rem 0 4rem;
+    background: linear-gradient(135deg, #F8FEFF, #D4F3FB);
+}
+
+.case-study-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.case-study-intro {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.case-study-featured-image {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.case-study-hero-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.case-study-body {
+    max-width: 1100px;
+    margin: 0 auto;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #05668D;
+}
+
+.case-study-body h1 {
+    line-height: 1.2;
+    margin-top: 80px;
+    margin-bottom: 25px;
+}
+
+.case-study-body h2,
+.case-study-body h3,
+.case-study-body h4 {
+    font-family: 'Roboto Slab', serif;
+    color: #295579;
+    margin: 2rem 0 1rem;
+}
+
+.case-study-body h2 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.case-study-body h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 3rem;
+}
+
+.case-study-body h4 {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.case-study-body p {
+    margin-bottom: 1.5rem;
+}
+
+.case-study-body ol,
+.case-study-body ul {
+    margin-left: 25px;
+    margin-bottom: 25px;
+}
+
+.case-study-body ol {
+    margin-top: 25px;
+}
+
+/* Image Caption Styling */
+.image-caption {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+    text-align: center;
+    line-height: 1.4;
+}
+
+/* Phases Wrapper */
+.phases-wrapper {
+    margin-bottom: 32px;
+}
+
+.case-study-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.case-study-details {
+    max-width: 800px;
+    margin: 3rem auto 0;
+    padding: 2rem;
+    background: #F8FEFF;
+    border-radius: 8px;
+    border-left: 4px solid #D4F3FB;
+}
+
+.details-header {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #295579;
+    margin-bottom: 1.5rem;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.detail-item {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    color: #05668D;
+}
+
+.detail-item strong {
+    color: #295579;
+}
+
+.case-study-navigation {
+    padding: 3rem 0;
+}
+
+.case-study-nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item.center {
+    justify-self: center;
+}
+
+.nav-link {
+    font-family: 'Raleway', sans-serif;
+    text-decoration: none;
+    color: #05668D;
+    transition: color 0.3s ease;
+    text-align: center;
+}
+
+.nav-link:hover {
+    color: #295579;
+}
+
+.nav-link.prev {
+    text-align: left;
+}
+
+.nav-link.next {
+    text-align: right;
+}
+
+.nav-direction {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.nav-title {
+    font-size: 1rem;
+    font-weight: 400;
+    display: block;
+}
+
+.nav-link.all {
+    padding: 0.75rem 1.5rem;
+    background: #FFFFFF;
+    border: 2px solid #D4F3FB;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-link.all:hover {
+    background: #D4F3FB;
+    color: #295579;
+}
+
+/* Case Studies Mobile Styles */
+@media (max-width: 767px) {
+    .case-studies-archive {
+        padding: 4rem 0 3rem;
+    }
+
+    .case-studies-grid {
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+
+    .case-study-card {
+        flex-direction: column;
+    }
+
+    .case-study-image {
+        height: 250px;
+    }
+
+    .case-study-hero {
+        padding: 4rem 0 3rem;
+    }
+
+    .case-study-content {
+        padding: 3rem 0;
+    }
+
+    .case-study-body {
+        padding: 0 1rem;
+        font-size: 1rem;
+    }
+
+    .case-study-details {
+        margin: 2rem 1rem 0;
+        padding: 1.5rem;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .case-study-nav {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .nav-link.prev,
+    .nav-link.next {
+        text-align: center;
+    }
+}
+
+/* Pagination Styles */
+.pagination {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.nav-links {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.page-numbers {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    color: #05668D;
+    text-decoration: none;
+    border: 1px solid #D4F3FB;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.page-numbers:hover,
+.page-numbers.current {
+    background: #D4F3FB;
+    color: #295579;
+}
+
+.page-numbers.current {
+    font-weight: 600;
+    cursor: default;
+}
+
+.next.page-numbers,
+.prev.page-numbers {
+    font-weight: 600;
+}
+
+/* ========================================
+   CASE STUDY SLIDESHOW STYLES
+   ======================================== */
+
+.case-study-slideshow {
+    margin: 60px 0;
+    position: relative;
+}
+
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.slideshow-slide {
+    display: none;
+    width: 100%;
+}
+
+.slideshow-slide.active {
+    display: block;
+}
+
+.slideshow-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.slideshow-controls {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.slideshow-btn {
+    background: rgba(255,255,255,0.9);
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.slideshow-btn:hover {
+    background: #fff;
+    transform: scale(1.1);
+}
+
+.slideshow-btn::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.slideshow-btn--prev::before {
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 12px solid #333;
+    margin-right: 2px;
+}
+
+.slideshow-btn--next::before {
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 12px solid #333;
+    margin-left: 2px;
+}
+
+.slideshow-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.slideshow-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ddd;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.slideshow-dot.active {
+    background: #0078d4;
+    transform: scale(1.2);
+}
+
+/* Case Study Base Styles */
+.case-study {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.case-study__hero {
+    margin-bottom: 60px;
+}
+
+.case-study__hero-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.case-study__hero-caption {
+    margin-top: 16px;
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Case Study Typography */
+.case-study h1 {
+    font-size: 42px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+}
+
+.case-study__subtitle {
+    font-size: 20px;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 60px;
+    font-weight: 500;
+}
+
+.case-study h2 {
+    font-size: 32px;
+    line-height: 1.3;
+    margin-top: 80px;
+    margin-bottom: 24px;
+    color: #1a1a1a;
+}
+
+.case-study h3 {
+    font-size: 24px;
+    line-height: 1.4;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #2a2a2a;
+}
+
+.case-study p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+    color: #333;
+}
+
+.case-study strong {
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+/* Role Section */
+.case-study__role {
+    padding: 32px;
+    margin: 60px 0;
+}
+
+.case-study__role h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.case-study__role h4 {
+    font-size: 18px;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    color: #0078d4;
+}
+
+.case-study__role ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.case-study__role li {
+    padding-left: 24px;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.case-study__role li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #0078d4;
+    font-weight: bold;
+}
+
+/* Image with Caption */
+.case-study__image-block {
+    margin: 60px 0;
+}
+
+.case-study__image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.case-study__caption {
+    margin-top: 16px;
+    font-size: 15px;
+    color: #666;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+/* Case Study Responsive */
+@media (max-width: 768px) {
+    .case-study {
+        padding: 40px 16px;
+    }
+
+    .case-study h1 {
+        font-size: 32px;
+    }
+
+    .case-study-body h1 {
+        margin-top: 40px;
+    }
+
+    .case-study__subtitle {
+        font-size: 18px;
+    }
+
+    .case-study h2 {
+        font-size: 26px;
+        margin-top: 60px;
+    }
+
+    .case-study h3 {
+        font-size: 20px;
+    }
+
+    .case-study p {
+        font-size: 16px;
+    }
+
+    .slideshow__controls {
+        padding: 0 8px;
+    }
+
+    .slideshow__btn {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* ========================================
+   UNDER CONSTRUCTION STYLES
+   ======================================== */
+
+.under-construction {
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.construction-message {
+    font-family: 'Roboto Slab', serif;
+    font-size: 32px;
+    color: #05668D;
+    margin-bottom: 2rem;
+}
+
+.construction-subtitle {
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    color: #295579;
+    margin-bottom: 4rem;
+}
+
+/* ========================================
+   GENERAL TYPOGRAPHY (Legacy Support)
+   ======================================== */
+
+.section-header {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.625rem;
+    line-height: 1.875rem;
+    font-weight: 400;
+    color: #05668D;
+    margin-bottom: 2rem;
+}
+
+.section-header.light {
+    color: #D4F3FB;
+}
+
+.body-text {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.375rem;
+    line-height: 2.188rem;
+    font-weight: 400;
+    color: #295579;
+}
+
+.body-text.large {
+    line-height: 1.875rem;
+}
+
+.body-text.light {
+    color: #F5F5F5;
+}
+
+.body-text.bold {
+    font-weight: 700;
+}
+
+.body-text.semi-bold {
+    font-weight: 600;
+}
+
+/* General Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.section {
+    padding: 4rem 0;
+}

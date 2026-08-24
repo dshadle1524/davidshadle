@@ -13,7 +13,7 @@
       { "name": "PortfolioCompanyCount", "datatype": "string", "type": "raw", "nullable": false, "Description": "Standardized portfolio count string, per Content Strategy Section 6 ('100+' everywhere, never 107 or 111)." },
       { "name": "SelfDescriptionLine", "datatype": "string", "type": "raw", "nullable": false, "Description": "The 'full stack product practitioner' anchor phrase. Per Section 2: say it once, never next to a list." },
       { "name": "PositioningStatement", "datatype": "string", "type": "raw", "nullable": false, "Description": "The core positioning paragraph everything else derives from (Content Strategy Section 2)." },
-      { "name": "CurrentlyText", "datatype": "string", "type": "raw", "nullable": true, "Description": "PLACEHOLDER, not yet approved copy. The undated 'Currently' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule. Confirm real wording with David before shipping." },
+      { "name": "CurrentlyText", "datatype": "string", "type": "raw", "nullable": true, "Description": "The undated 'Currently' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule." },
       { "name": "BanyanTitle", "datatype": "string", "type": "raw", "nullable": false, "Description": "Full Banyan title, used everywhere per Section 6: 'Technical Advisor, Product Strategy and UX'." }
     ],
     "data": [
@@ -25,7 +25,7 @@
         "PortfolioCompanyCount": "100+",
         "SelfDescriptionLine": "A full stack product practitioner. Not just capable of wearing several hats at once, but confident delivering the outcome in each one.",
         "PositioningStatement": "I build the systems that turn strategy into working software. Most advisors stop at the recommendation. I keep going, through the model, the interface, and the handoff, so the thing that gets agreed on is the thing that gets shipped. I work from a rulebook: the rules of a domain written down once in plain language, with the technical pieces derived from that rather than maintained by hand. It is a discipline, not a product. It is what lets me carry a project through delivery instead of stopping at design and project management.",
-        "CurrentlyText": "PLACEHOLDER - confirm wording: Advising on product strategy and UX at Banyan Software across a portfolio of 100+ operating companies, and rebuilding davidshadle.com as the next thing to ship.",
+        "CurrentlyText": "Advising on product strategy and UX at Banyan Software, across a portfolio of 100+ B2B SaaS operating companies. Also rebuilding this site from the ground up, the same way I build everything else: model first, then interface.",
         "BanyanTitle": "Technical Advisor, Product Strategy and UX"
       }
     ]

@@ -25,7 +25,7 @@ ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS site_domain TEXT;            
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS portfolio_company_count TEXT;                    -- Standardized portfolio count string, per Content Strategy Section 6 ('100+' everywhere, never 107 or 111).
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS self_description_line TEXT;                      -- The 'full stack product practitioner' anchor phrase. Per Section 2: say it once, never next to a list.
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS positioning_statement TEXT;                      -- The core positioning paragraph everything else derives from (Content Strategy Section 2).
-ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS currently_text TEXT;                             -- PLACEHOLDER, not yet approved copy. The undated 'Currently' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule. Confirm real wording with David before shipping.
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS currently_text TEXT;                             -- The undated 'Currently' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule.
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS banyan_title TEXT;                               -- Full Banyan title, used everywhere per Section 6: 'Technical Advisor, Product Strategy and UX'.
 COMMENT ON TABLE site_settings IS 'Singleton table of site-wide facts: contact info, positioning statement, and the undated ''Currently'' block. One row.';
 COMMENT ON COLUMN site_settings.site_setting_id IS 'Stored identity of the singleton settings row.';
@@ -35,7 +35,7 @@ COMMENT ON COLUMN site_settings.site_domain IS 'Canonical site domain.';
 COMMENT ON COLUMN site_settings.portfolio_company_count IS 'Standardized portfolio count string, per Content Strategy Section 6 (''100+'' everywhere, never 107 or 111).';
 COMMENT ON COLUMN site_settings.self_description_line IS 'The ''full stack product practitioner'' anchor phrase. Per Section 2: say it once, never next to a list.';
 COMMENT ON COLUMN site_settings.positioning_statement IS 'The core positioning paragraph everything else derives from (Content Strategy Section 2).';
-COMMENT ON COLUMN site_settings.currently_text IS 'PLACEHOLDER, not yet approved copy. The undated ''Currently'' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule. Confirm real wording with David before shipping.';
+COMMENT ON COLUMN site_settings.currently_text IS 'The undated ''Currently'' block on Home (Section 10): 2-3 lines on what David is working on now. Update when something changes, not on a schedule.';
 COMMENT ON COLUMN site_settings.banyan_title IS 'Full Banyan title, used everywhere per Section 6: ''Technical Advisor, Product Strategy and UX''.';
 
 -- ----------------------------------------------------------------------------
