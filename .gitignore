@@ -4,3 +4,5 @@ node_modules/
 .DS_Store
 # Intermediate build artifacts from the ssotme:// protocol
 /.ssotme/**/*.zfs
+
+effortless.env
