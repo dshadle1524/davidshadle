@@ -103,6 +103,7 @@ SELECT
   t.status_label,                                                               -- Short status/type word for the Projects page meta row (e.g. 'Live in production', 'Problem brief').
   t.featured_on_work_page,                                                      -- Whether this proof point is one of the 2-3 engagements shown on the Work page (Section 10). First-pass selection - confirm with David before Phase 2.
   t.featured_in_resume_selected_work,                                           -- Whether this proof point appears in the resume's 'Selected work, 2024 to 2026' block (Variant A).
+  t.image_url,                                                                  -- Public URL of this project's single representative image (hosted in Cloudflare R2). Optional — shown on the Work page when set.
   t.sort_order                                                                  -- Order matching Content Strategy Section 4 numbering.
 FROM proof_points t;
 

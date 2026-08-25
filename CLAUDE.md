@@ -37,9 +37,11 @@ is setup only — visual design and final page layouts are a later phase.
 6. **Always run `effortless build`** after any change reaches the rulebook hub.
 7. **Never reimplement business logic** in app code — consume calculated fields
    from views as opaque truth.
-8. **NO MIGRATIONS.** `init-db.sh` drops + recreates the local Postgres DB on
-   every build. There is no `migrations/` folder. If the answer feels like
-   "write a migration," the answer is "edit the rulebook and rerun `effortless build`."
+8. **NO MIGRATIONS on local dev.** `init-db.sh` drops + recreates the local
+   Postgres DB on every build. If the answer feels like "write a migration
+   for local dev," the answer is "edit the rulebook and rerun `effortless build`."
+   The one exception is the persistent, bases.effortlessapi.com-hosted admin
+   CMS database, which can never be dropped — see "Bases is migration-only" below.
 
 ## Local Postgres (Docker)
 
@@ -89,20 +91,46 @@ finitely-computable, design-time semantics factor into SDLAF (Schema, Data,
 Lookups, Aggregations, Formulas) over a bitemporal ACID DAG. Load
 `effortless-cmcc` before answering an evaluative "why" question about it.
 
-## NO MIGRATIONS — read before touching Postgres
+## NO MIGRATIONS on local dev — read before touching Postgres
 
-This project's local Postgres DB is regenerated from scratch on every
-`effortless build` via `init-db.sh` (drop + recreate). There is no
-`migrations/` folder, no migrations tracking table, no incremental SQL deltas.
+This project's **local** Postgres DB is regenerated from scratch on every
+`effortless build` via `init-db.sh` (drop + recreate). No migrations tracking
+table, no incremental SQL deltas, ever, on local dev.
 
-**To change schema, calculated fields, or seed data:**
+**To change schema, calculated fields, or seed data (local dev):**
 1. Edit the rulebook.
 2. Run `effortless build`.
-3. The DB is wiped and rebuilt. Done.
+3. The local DB is wiped and rebuilt. Done.
 
-**Never on this DB:** `CREATE TABLE` / `ALTER TABLE` / `DROP TABLE` by hand,
-files under `postgres/migrations/`, a `migrations` tracking table, or hand
-edits to generated `0*.sql` files.
+**Never on local dev:** `CREATE TABLE` / `ALTER TABLE` / `DROP TABLE` by hand,
+a migrations tracking table, or hand edits to generated `0*.sql` files.
+
+## Bases is migration-only
+
+The admin CMS (see `web/app/admin/`) reads/writes a **second, persistent**
+Postgres database hosted on `bases.effortlessapi.com` — completely separate
+from local dev's Docker Postgres, with its own `BASES_DATABASE_URL`. This
+database is edited live by the admin dashboard and can **never** be dropped
+or recreated, so `init-db.sh` refuses outright to run against it (see the
+refusal check near the top of `postgres/init-db.sh`).
+
+The rulebook is still schema's source of truth. `postgres/migrations/` is
+how a rulebook schema change gets *projected* onto the bases DB, not a
+parallel schema-authoring surface — a schema change still starts as a
+rulebook edit; the migration file is the hand-written, idempotent SQL that
+carries that same change onto a database that can't be dropped.
+
+**To change the bases DB's schema:**
+1. Edit the rulebook, `effortless build` (this also updates local dev as usual).
+2. Hand-write a new `postgres/migrations/NNNN-description.sql` (idempotent —
+   `CREATE TABLE IF NOT EXISTS` / `ADD COLUMN IF NOT EXISTS` / `CREATE OR
+   REPLACE VIEW`, safe to re-run, never drops a table).
+3. Run `postgres/apply-migration.sh postgres/migrations/NNNN-description.sql`
+   — applies to local dev first, then only applies to `$BASES_DATABASE_URL`
+   after typing the literal confirmation phrase it prompts for.
+
+**Never against bases:** `init-db.sh`, `effortless -exec ./init-db.sh`, or any
+DROP/recreate of a table that already holds live admin-edited content.
 
 ## Build discipline (applies every time)
 

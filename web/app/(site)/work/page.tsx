@@ -21,7 +21,7 @@ export default async function WorkPage() {
       <section className="band-alt">
         <div className="container">
           <div className="projects-list">
-            {proofPoints.map((point, i) => (
+            {proofPoints.map((point) => (
               <div key={point.proof_point_id} className="project-item">
                 <div className="project-item-text">
                   {(point.client_or_category || point.status_label) && (
@@ -39,7 +39,9 @@ export default async function WorkPage() {
                     {point.problem_text} {point.action_text} {point.outcome_text}
                   </p>
                 </div>
-                {i === 0 && (
+                {point.image_url ? (
+                  <img src={point.image_url} alt={point.title} className="project-screenshot" />
+                ) : (
                   <div className="project-screenshot-slot">
                     <p className="project-screenshot-label">Screenshot pending</p>
                     <p className="project-screenshot-note">Portal and dashboard captures go here once permission clears.</p>

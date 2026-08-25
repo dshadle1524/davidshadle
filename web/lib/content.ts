@@ -50,6 +50,7 @@ export interface ProofPoint {
   featured_on_work_page: boolean;
   featured_in_resume_selected_work: boolean;
   sort_order: number;
+  image_url: string | null;
 }
 
 export interface JobEntry {

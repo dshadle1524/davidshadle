@@ -671,6 +671,14 @@ a:hover {
   padding: 34px 28px;
 }
 
+.project-screenshot {
+  flex: 0 1 420px;
+  min-width: 260px;
+  align-self: stretch;
+  object-fit: cover;
+  border: 1px solid var(--rule-on-alt);
+}
+
 .project-screenshot-label {
   font-family: var(--font-body);
   font-size: 12.5px;

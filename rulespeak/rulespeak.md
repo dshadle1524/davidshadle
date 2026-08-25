@@ -51,6 +51,7 @@ _Rulebook for davidshadle.com v4: bio variants, method statement, proof/work ent
 | Status Label | A defined attribute. | _Short status/type word for the Projects page meta row (e.g. 'Live in production', 'Problem brief')._ |
 | Featured on Work Page | True when an empty string. | _Whether this proof point is one of the 2-3 engagements shown on the Work page (Section 10). First-pass selection - confirm with David before Phase 2._ |
 | Featured in Resume Selected Work | True when an empty string. | _Whether this proof point appears in the resume's 'Selected work, 2024 to 2026' block (Variant A)._ |
+| Image URL | A defined attribute. | _Public URL of this project's single representative image (hosted in Cloudflare R2). Optional — shown on the Work page when set._ |
 | Sort Order | A defined attribute. | _Order matching Content Strategy Section 4 numbering._ |
 | **Job Entry** | A job entry is identified by its name. | — |
 | Name | Computed as the company, followed by “ - ”, followed by the job title. | _Display alias._ |

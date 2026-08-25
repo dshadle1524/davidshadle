@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-25T00:37:47Z",
+  "built_at": "2026-08-25T17:38:01Z",
   "transpiler": "rulebook-to-postgres",
   "mode": "check-add",
   "stage": "dev",

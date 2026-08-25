@@ -5,17 +5,84 @@
   "SiteSettings": {
     "Description": "Singleton table of site-wide facts: contact info, positioning statement, and the undated 'Currently' block. One row.",
     "schema": [
-      { "name": "SiteSettingId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity of the singleton settings row." },
-      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{SiteSettingId}}" },
-      { "name": "ContactEmail", "datatype": "string", "type": "raw", "nullable": false, "Description": "Primary contact email, shown in the Contact section on Home and Work." },
-      { "name": "ContactPhone", "datatype": "string", "type": "raw", "nullable": true, "Description": "Contact phone number, as it appears on the resume header." },
-      { "name": "SiteDomain", "datatype": "string", "type": "raw", "nullable": false, "Description": "Canonical site domain." },
-      { "name": "PortfolioCompanyCount", "datatype": "string", "type": "raw", "nullable": false, "Description": "Standardized portfolio count string, per Content Strategy Section 6 ('100+' everywhere, never 107 or 111)." },
-      { "name": "SelfDescriptionLine", "datatype": "string", "type": "raw", "nullable": false, "Description": "The 'full stack product practitioner' anchor phrase. Per Section 2: say it once, never next to a list." },
-      { "name": "PositioningStatement", "datatype": "string", "type": "raw", "nullable": false, "Description": "The core positioning paragraph everything else derives from (Content Strategy Section 2)." },
-      { "name": "HeroHeadline", "datatype": "string", "type": "raw", "nullable": false, "Description": "The large opening line of the Home hero, first person. First sentence of PositioningStatement, curated separately so the hero can style it distinctly from HeroSubheadline." },
-      { "name": "HeroSubheadline", "datatype": "string", "type": "raw", "nullable": false, "Description": "The medium-sized second line of the Home hero, directly under HeroHeadline. Second/third sentence of PositioningStatement." },
-      { "name": "BanyanTitle", "datatype": "string", "type": "raw", "nullable": false, "Description": "Full Banyan title, used everywhere per Section 6: 'Technical Advisor, Product Strategy and UX'." }
+      {
+        "name": "SiteSettingId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Stored identity of the singleton settings row."
+      },
+      {
+        "name": "Name",
+        "datatype": "string",
+        "type": "calculated",
+        "nullable": true,
+        "Description": "Display alias.",
+        "formula": "={{SiteSettingId}}"
+      },
+      {
+        "name": "ContactEmail",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Primary contact email, shown in the Contact section on Home and Work."
+      },
+      {
+        "name": "ContactPhone",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Contact phone number, as it appears on the resume header."
+      },
+      {
+        "name": "SiteDomain",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Canonical site domain."
+      },
+      {
+        "name": "PortfolioCompanyCount",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Standardized portfolio count string, per Content Strategy Section 6 ('100+' everywhere, never 107 or 111)."
+      },
+      {
+        "name": "SelfDescriptionLine",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "The 'full stack product practitioner' anchor phrase. Per Section 2: say it once, never next to a list."
+      },
+      {
+        "name": "PositioningStatement",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "The core positioning paragraph everything else derives from (Content Strategy Section 2)."
+      },
+      {
+        "name": "HeroHeadline",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "The large opening line of the Home hero, first person. First sentence of PositioningStatement, curated separately so the hero can style it distinctly from HeroSubheadline."
+      },
+      {
+        "name": "HeroSubheadline",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "The medium-sized second line of the Home hero, directly under HeroHeadline. Second/third sentence of PositioningStatement."
+      },
+      {
+        "name": "BanyanTitle",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Full Banyan title, used everywhere per Section 6: 'Technical Advisor, Product Strategy and UX'."
+      }
     ],
     "data": [
       {
@@ -35,11 +102,42 @@
   "CurrentlyItems": {
     "Description": "Table: CurrentlyItems. The undated 'Currently' block on Home (Section 10): a short bulleted list of what David is working on now. Update items when something changes, not on a schedule.",
     "schema": [
-      { "name": "CurrentlyItemId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
-      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Title}}" },
-      { "name": "Title", "datatype": "string", "type": "raw", "nullable": false, "Description": "The bullet's title/name, e.g. 'Banyan Software' or 'Lookout Together'." },
-      { "name": "BodyText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The bullet's description text, under the title." },
-      { "name": "SortOrder", "datatype": "integer", "type": "raw", "nullable": false, "Description": "Display order." }
+      {
+        "name": "CurrentlyItemId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Stored identity, slug form."
+      },
+      {
+        "name": "Name",
+        "datatype": "string",
+        "type": "calculated",
+        "nullable": true,
+        "Description": "Display alias.",
+        "formula": "={{Title}}"
+      },
+      {
+        "name": "Title",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "The bullet's title/name, e.g. 'Banyan Software' or 'Lookout Together'."
+      },
+      {
+        "name": "BodyText",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "The bullet's description text, under the title."
+      },
+      {
+        "name": "SortOrder",
+        "datatype": "integer",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Display order."
+      }
     ],
     "data": [
       {
@@ -59,12 +157,49 @@
   "BioVariants": {
     "Description": "Table: BioVariants. Five lengths plus one alternate, one spine, per David_Shadle_Bio_Set_v1.md. Voice standard applied: no em dashes, short sentences, active voice, no filler.",
     "schema": [
-      { "name": "BioVariantId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
-      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Label}}" },
-      { "name": "Label", "datatype": "string", "type": "raw", "nullable": false, "Description": "Human label for this bio length/context, e.g. 'Fifty words'." },
-      { "name": "UsageContext", "datatype": "string", "type": "raw", "nullable": false, "Description": "Where this variant gets used, e.g. 'Directory listings, conference programs, deck footers, introductions.'" },
-      { "name": "BodyText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The bio copy itself. Paragraph breaks encoded as \\n\\n." },
-      { "name": "SortOrder", "datatype": "integer", "type": "raw", "nullable": false, "Description": "Display order, shortest to longest." }
+      {
+        "name": "BioVariantId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Stored identity, slug form."
+      },
+      {
+        "name": "Name",
+        "datatype": "string",
+        "type": "calculated",
+        "nullable": true,
+        "Description": "Display alias.",
+        "formula": "={{Label}}"
+      },
+      {
+        "name": "Label",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Human label for this bio length/context, e.g. 'Fifty words'."
+      },
+      {
+        "name": "UsageContext",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Where this variant gets used, e.g. 'Directory listings, conference programs, deck footers, introductions.'"
+      },
+      {
+        "name": "BodyText",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "The bio copy itself. Paragraph breaks encoded as \\n\\n."
+      },
+      {
+        "name": "SortOrder",
+        "datatype": "integer",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Display order, shortest to longest."
+      }
     ],
     "data": [
       {
@@ -113,7 +248,7 @@
         "BioVariantId": "home-body",
         "Label": "Home body (first person, no opening paragraph)",
         "UsageContext": "Website Home, directly under the hero headline/subheadline. Sourced from the Variant A resume's 'What I do' paragraphs 2-3 (already first person), which pick up right after the hero's opening two sentences.",
-        "BodyText": "I start with the problem and write it down before anyone proposes a solution. From there I work from a rulebook: the rules of a domain written down once in plain language, with the technical pieces derived from that rather than maintained by hand. It is what lets me deliver complete projects rather than stopping at design and project management.\n\nTwenty five years in product strategy and design make the systems worth building. Full stack product practitioner. Not just capable of wearing several hats at once, but confident delivering the outcome in each.",
+        "BodyText": "I start with the problem and write it down before anyone proposes a solution. From there I work from a rulebook: the rules of a domain written down once in plain language, with the technical pieces derived from that rather than maintained by hand. It is what lets me deliver complete projects rather than stopping at design and project management.\n\nTwenty five years in product strategy and design make the systems worth building.",
         "SortOrder": 7
       }
     ]
@@ -121,12 +256,49 @@
   "HowIWorkSections": {
     "Description": "Table: HowIWorkSections. The method statement for the How I Work page, per David_Shadle_How_I_Work_v1.md. Written to be true indefinitely.",
     "schema": [
-      { "name": "HowIWorkSectionId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
-      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Heading}}" },
-      { "name": "Heading", "datatype": "string", "type": "raw", "nullable": false, "Description": "Section heading as it appears on the page." },
-      { "name": "BodyText", "datatype": "string", "type": "raw", "nullable": false, "Description": "Full-page body copy for this section. Paragraph breaks encoded as \\n\\n." },
-      { "name": "ShortBodyText", "datatype": "string", "type": "raw", "nullable": true, "Description": "Condensed ~1-paragraph version, used if How I Work becomes a Home section instead of its own page. Null where the short version drops the section entirely." },
-      { "name": "SortOrder", "datatype": "integer", "type": "raw", "nullable": false, "Description": "Display order on the page." }
+      {
+        "name": "HowIWorkSectionId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Stored identity, slug form."
+      },
+      {
+        "name": "Name",
+        "datatype": "string",
+        "type": "calculated",
+        "nullable": true,
+        "Description": "Display alias.",
+        "formula": "={{Heading}}"
+      },
+      {
+        "name": "Heading",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Section heading as it appears on the page."
+      },
+      {
+        "name": "BodyText",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Full-page body copy for this section. Paragraph breaks encoded as \\n\\n."
+      },
+      {
+        "name": "ShortBodyText",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Condensed ~1-paragraph version, used if How I Work becomes a Home section instead of its own page. Null where the short version drops the section entirely."
+      },
+      {
+        "name": "SortOrder",
+        "datatype": "integer",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Display order on the page."
+      }
     ],
     "data": [
       {
@@ -183,19 +355,105 @@
   "ProofPoints": {
     "Description": "Table: ProofPoints. The proof inventory from Content Strategy Section 4. Raw material for the Work page and the resume's Selected Work block. Nothing goes into a bio, resume, or Work page entry that is not traceable to a row here.",
     "schema": [
-      { "name": "ProofPointId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form, matches Content Strategy subsection (e.g. 'pm-portal' for 4.2)." },
-      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Title}}" },
-      { "name": "Title", "datatype": "string", "type": "raw", "nullable": false, "Description": "Short title for this proof point." },
-      { "name": "ProblemText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The problem, as stated in the proof inventory." },
-      { "name": "ActionText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The action taken." },
-      { "name": "OutcomeText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The outcome." },
-      { "name": "AttributionNote", "datatype": "string", "type": "raw", "nullable": true, "Description": "Precise attribution language required when describing this work (e.g. 'advised on and implemented,' not 'owned'). See Content Strategy Section 6." },
-      { "name": "RegisterNote", "datatype": "string", "type": "raw", "nullable": true, "Description": "Internal guidance on tone/register for this proof point. Not published copy - for whoever writes site/resume text from this row." },
-      { "name": "ClientOrCategory", "datatype": "string", "type": "raw", "nullable": true, "Description": "Client name where nameable, otherwise a category label (e.g. 'Medical technology'). Shown as the first half of the Projects page meta row." },
-      { "name": "StatusLabel", "datatype": "string", "type": "raw", "nullable": true, "Description": "Short status/type word for the Projects page meta row (e.g. 'Live in production', 'Problem brief')." },
-      { "name": "FeaturedOnWorkPage", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "Whether this proof point is one of the 2-3 engagements shown on the Work page (Section 10). First-pass selection - confirm with David before Phase 2." },
-      { "name": "FeaturedInResumeSelectedWork", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "Whether this proof point appears in the resume's 'Selected work, 2024 to 2026' block (Variant A)." },
-      { "name": "SortOrder", "datatype": "integer", "type": "raw", "nullable": false, "Description": "Order matching Content Strategy Section 4 numbering." }
+      {
+        "name": "ProofPointId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Stored identity, slug form, matches Content Strategy subsection (e.g. 'pm-portal' for 4.2)."
+      },
+      {
+        "name": "Name",
+        "datatype": "string",
+        "type": "calculated",
+        "nullable": true,
+        "Description": "Display alias.",
+        "formula": "={{Title}}"
+      },
+      {
+        "name": "Title",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Short title for this proof point."
+      },
+      {
+        "name": "ProblemText",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "The problem, as stated in the proof inventory."
+      },
+      {
+        "name": "ActionText",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "The action taken."
+      },
+      {
+        "name": "OutcomeText",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "The outcome."
+      },
+      {
+        "name": "AttributionNote",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Precise attribution language required when describing this work (e.g. 'advised on and implemented,' not 'owned'). See Content Strategy Section 6."
+      },
+      {
+        "name": "RegisterNote",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Internal guidance on tone/register for this proof point. Not published copy - for whoever writes site/resume text from this row."
+      },
+      {
+        "name": "ClientOrCategory",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Client name where nameable, otherwise a category label (e.g. 'Medical technology'). Shown as the first half of the Projects page meta row."
+      },
+      {
+        "name": "StatusLabel",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Short status/type word for the Projects page meta row (e.g. 'Live in production', 'Problem brief')."
+      },
+      {
+        "name": "FeaturedOnWorkPage",
+        "datatype": "boolean",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Whether this proof point is one of the 2-3 engagements shown on the Work page (Section 10). First-pass selection - confirm with David before Phase 2."
+      },
+      {
+        "name": "FeaturedInResumeSelectedWork",
+        "datatype": "boolean",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Whether this proof point appears in the resume's 'Selected work, 2024 to 2026' block (Variant A)."
+      },
+      {
+        "name": "ImageUrl",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Public URL of this project's single representative image (hosted in Cloudflare R2). Optional — shown on the Work page when set."
+      },
+      {
+        "name": "SortOrder",
+        "datatype": "integer",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Order matching Content Strategy Section 4 numbering."
+      }
     ],
     "data": [
       {
@@ -315,21 +573,112 @@
   "JobEntries": {
     "Description": "Table: JobEntries. Career history, shared by both resume variants via inclusion flags rather than duplicated per variant. Rows are grouped by DisplayGroupKey where a variant collapses multiple rows into one displayed entry (e.g. Variant A merges the two Power Automate roles).",
     "schema": [
-      { "name": "JobEntryId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
-      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Company}} & \" - \" & {{JobTitle}}" },
-      { "name": "Company", "datatype": "string", "type": "raw", "nullable": false, "Description": "Employer or entity name." },
-      { "name": "JobTitle", "datatype": "string", "type": "raw", "nullable": true, "Description": "Title held. Null on the single synthetic 'earlier roles' compressed row." },
-      { "name": "StartDate", "datatype": "string", "type": "raw", "nullable": false, "Description": "Start, YYYY-MM." },
-      { "name": "EndDate", "datatype": "string", "type": "raw", "nullable": true, "Description": "End, YYYY-MM. Null if current." },
-      { "name": "IsCurrent", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "True if this role is ongoing." },
-      { "name": "DisplayGroupKey", "datatype": "string", "type": "raw", "nullable": true, "Description": "Rows sharing this key render as one entry in Variant A (which uses the coarser grouping). Null where no grouping applies." },
-      { "name": "SummaryTextVariantA", "datatype": "string", "type": "raw", "nullable": true, "Description": "Prose summary as it appears in Resume Variant A. On a grouped pair, only the earliest row in the group carries the merged text; the later row is null and the app renders the group using the earliest row's text with the group's full date range." },
-      { "name": "SummaryTextVariantB", "datatype": "string", "type": "raw", "nullable": true, "Description": "Bullet-point summary as it appears in Resume Variant B, bullets joined with \\n." },
-      { "name": "CompressedLine", "datatype": "string", "type": "raw", "nullable": true, "Description": "One-line compressed text, used only on the synthetic 'earlier roles' row for Variant A's single-line pre-2019 summary." },
-      { "name": "IncludeInVariantA", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "Whether this row is shown (individually or as part of a group) on Resume Variant A." },
-      { "name": "IncludeInVariantB", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "Whether this row is shown on Resume Variant B." },
-      { "name": "IsPre2019", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "True for roles before 2019, compressed in Variant A per Content Strategy Section 7." },
-      { "name": "SortOrder", "datatype": "integer", "type": "raw", "nullable": false, "Description": "Reverse chronological display order." }
+      {
+        "name": "JobEntryId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Stored identity, slug form."
+      },
+      {
+        "name": "Name",
+        "datatype": "string",
+        "type": "calculated",
+        "nullable": true,
+        "Description": "Display alias.",
+        "formula": "={{Company}} & \" - \" & {{JobTitle}}"
+      },
+      {
+        "name": "Company",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Employer or entity name."
+      },
+      {
+        "name": "JobTitle",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Title held. Null on the single synthetic 'earlier roles' compressed row."
+      },
+      {
+        "name": "StartDate",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Start, YYYY-MM."
+      },
+      {
+        "name": "EndDate",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "End, YYYY-MM. Null if current."
+      },
+      {
+        "name": "IsCurrent",
+        "datatype": "boolean",
+        "type": "raw",
+        "nullable": false,
+        "Description": "True if this role is ongoing."
+      },
+      {
+        "name": "DisplayGroupKey",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Rows sharing this key render as one entry in Variant A (which uses the coarser grouping). Null where no grouping applies."
+      },
+      {
+        "name": "SummaryTextVariantA",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Prose summary as it appears in Resume Variant A. On a grouped pair, only the earliest row in the group carries the merged text; the later row is null and the app renders the group using the earliest row's text with the group's full date range."
+      },
+      {
+        "name": "SummaryTextVariantB",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Bullet-point summary as it appears in Resume Variant B, bullets joined with \\n."
+      },
+      {
+        "name": "CompressedLine",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "One-line compressed text, used only on the synthetic 'earlier roles' row for Variant A's single-line pre-2019 summary."
+      },
+      {
+        "name": "IncludeInVariantA",
+        "datatype": "boolean",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Whether this row is shown (individually or as part of a group) on Resume Variant A."
+      },
+      {
+        "name": "IncludeInVariantB",
+        "datatype": "boolean",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Whether this row is shown on Resume Variant B."
+      },
+      {
+        "name": "IsPre2019",
+        "datatype": "boolean",
+        "type": "raw",
+        "nullable": false,
+        "Description": "True for roles before 2019, compressed in Variant A per Content Strategy Section 7."
+      },
+      {
+        "name": "SortOrder",
+        "datatype": "integer",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Reverse chronological display order."
+      }
     ],
     "data": [
       {
@@ -593,12 +942,49 @@
   "ResumeVariants": {
     "Description": "Table: ResumeVariants. Two variants, one spine, per David_Shadle_Resume_Variants_v1.md. Variant A is public/served from the site; Variant B is sent directly and never published.",
     "schema": [
-      { "name": "ResumeVariantId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
-      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Label}}" },
-      { "name": "Label", "datatype": "string", "type": "raw", "nullable": false, "Description": "Variant label." },
-      { "name": "AudienceDescription", "datatype": "string", "type": "raw", "nullable": false, "Description": "Who this variant targets and how it is distributed." },
-      { "name": "SummaryText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The opening capability statement ('What I do' / 'Summary'). Paragraph breaks encoded as \\n\\n." },
-      { "name": "PublishedOnSite", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "Whether this variant is served from the public site (Section 10: only Variant A)." }
+      {
+        "name": "ResumeVariantId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Stored identity, slug form."
+      },
+      {
+        "name": "Name",
+        "datatype": "string",
+        "type": "calculated",
+        "nullable": true,
+        "Description": "Display alias.",
+        "formula": "={{Label}}"
+      },
+      {
+        "name": "Label",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Variant label."
+      },
+      {
+        "name": "AudienceDescription",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Who this variant targets and how it is distributed."
+      },
+      {
+        "name": "SummaryText",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "The opening capability statement ('What I do' / 'Summary'). Paragraph breaks encoded as \\n\\n."
+      },
+      {
+        "name": "PublishedOnSite",
+        "datatype": "boolean",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Whether this variant is served from the public site (Section 10: only Variant A)."
+      }
     ],
     "data": [
       {
@@ -620,40 +1006,188 @@
   "ResumeListItems": {
     "Description": "Table: ResumeListItems. The Methods and Technical blocks, shared identically by both resume variants, replacing the old comma-separated skills paragraph.",
     "schema": [
-      { "name": "ResumeListItemId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
-      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Label}}" },
-      { "name": "Category", "datatype": "string", "type": "raw", "nullable": false, "Description": "'Methods' or 'Technical'." },
-      { "name": "Label", "datatype": "string", "type": "raw", "nullable": false, "Description": "The item text as it appears on the resume." },
-      { "name": "SortOrder", "datatype": "integer", "type": "raw", "nullable": false, "Description": "Display order within its category." }
+      {
+        "name": "ResumeListItemId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Stored identity, slug form."
+      },
+      {
+        "name": "Name",
+        "datatype": "string",
+        "type": "calculated",
+        "nullable": true,
+        "Description": "Display alias.",
+        "formula": "={{Label}}"
+      },
+      {
+        "name": "Category",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "'Methods' or 'Technical'."
+      },
+      {
+        "name": "Label",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "The item text as it appears on the resume."
+      },
+      {
+        "name": "SortOrder",
+        "datatype": "integer",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Display order within its category."
+      }
     ],
     "data": [
-      { "ResumeListItemId": "methods-problem-brief-first", "Category": "Methods", "Label": "Problem brief first", "SortOrder": 1 },
-      { "ResumeListItemId": "methods-rulebook-driven-delivery", "Category": "Methods", "Label": "Rulebook driven delivery", "SortOrder": 2 },
-      { "ResumeListItemId": "methods-prototype-as-spec", "Category": "Methods", "Label": "Prototype as spec", "SortOrder": 3 },
-      { "ResumeListItemId": "methods-product-maturity-modeling", "Category": "Methods", "Label": "Product maturity modeling", "SortOrder": 4 },
-      { "ResumeListItemId": "methods-rice-prioritization", "Category": "Methods", "Label": "RICE prioritization against capacity", "SortOrder": 5 },
-      { "ResumeListItemId": "methods-strategic-facilitation", "Category": "Methods", "Label": "Strategic facilitation", "SortOrder": 6 },
-      { "ResumeListItemId": "technical-nextjs", "Category": "Technical", "Label": "Next.js", "SortOrder": 1 },
-      { "ResumeListItemId": "technical-node-express", "Category": "Technical", "Label": "Node and Express", "SortOrder": 2 },
-      { "ResumeListItemId": "technical-prisma", "Category": "Technical", "Label": "Prisma", "SortOrder": 3 },
-      { "ResumeListItemId": "technical-postgresql", "Category": "Technical", "Label": "PostgreSQL", "SortOrder": 4 },
-      { "ResumeListItemId": "technical-terraform", "Category": "Technical", "Label": "Terraform", "SortOrder": 5 },
-      { "ResumeListItemId": "technical-docker", "Category": "Technical", "Label": "Docker", "SortOrder": 6 },
-      { "ResumeListItemId": "technical-github-actions", "Category": "Technical", "Label": "GitHub Actions", "SortOrder": 7 },
-      { "ResumeListItemId": "technical-aws", "Category": "Technical", "Label": "AWS, including ECS Fargate, RDS, S3, and CloudFront", "SortOrder": 8 },
-      { "ResumeListItemId": "technical-oidc", "Category": "Technical", "Label": "OIDC authentication", "SortOrder": 9 },
-      { "ResumeListItemId": "technical-agent-skill-dev", "Category": "Technical", "Label": "Agent and skill development", "SortOrder": 10 }
+      {
+        "ResumeListItemId": "methods-problem-brief-first",
+        "Category": "Methods",
+        "Label": "Problem brief first",
+        "SortOrder": 1
+      },
+      {
+        "ResumeListItemId": "methods-rulebook-driven-delivery",
+        "Category": "Methods",
+        "Label": "Rulebook driven delivery",
+        "SortOrder": 2
+      },
+      {
+        "ResumeListItemId": "methods-prototype-as-spec",
+        "Category": "Methods",
+        "Label": "Prototype as spec",
+        "SortOrder": 3
+      },
+      {
+        "ResumeListItemId": "methods-product-maturity-modeling",
+        "Category": "Methods",
+        "Label": "Product maturity modeling",
+        "SortOrder": 4
+      },
+      {
+        "ResumeListItemId": "methods-rice-prioritization",
+        "Category": "Methods",
+        "Label": "RICE prioritization against capacity",
+        "SortOrder": 5
+      },
+      {
+        "ResumeListItemId": "methods-strategic-facilitation",
+        "Category": "Methods",
+        "Label": "Strategic facilitation",
+        "SortOrder": 6
+      },
+      {
+        "ResumeListItemId": "technical-nextjs",
+        "Category": "Technical",
+        "Label": "Next.js",
+        "SortOrder": 1
+      },
+      {
+        "ResumeListItemId": "technical-node-express",
+        "Category": "Technical",
+        "Label": "Node and Express",
+        "SortOrder": 2
+      },
+      {
+        "ResumeListItemId": "technical-prisma",
+        "Category": "Technical",
+        "Label": "Prisma",
+        "SortOrder": 3
+      },
+      {
+        "ResumeListItemId": "technical-postgresql",
+        "Category": "Technical",
+        "Label": "PostgreSQL",
+        "SortOrder": 4
+      },
+      {
+        "ResumeListItemId": "technical-terraform",
+        "Category": "Technical",
+        "Label": "Terraform",
+        "SortOrder": 5
+      },
+      {
+        "ResumeListItemId": "technical-docker",
+        "Category": "Technical",
+        "Label": "Docker",
+        "SortOrder": 6
+      },
+      {
+        "ResumeListItemId": "technical-github-actions",
+        "Category": "Technical",
+        "Label": "GitHub Actions",
+        "SortOrder": 7
+      },
+      {
+        "ResumeListItemId": "technical-aws",
+        "Category": "Technical",
+        "Label": "AWS, including ECS Fargate, RDS, S3, and CloudFront",
+        "SortOrder": 8
+      },
+      {
+        "ResumeListItemId": "technical-oidc",
+        "Category": "Technical",
+        "Label": "OIDC authentication",
+        "SortOrder": 9
+      },
+      {
+        "ResumeListItemId": "technical-agent-skill-dev",
+        "Category": "Technical",
+        "Label": "Agent and skill development",
+        "SortOrder": 10
+      }
     ]
   },
   "EducationEntries": {
     "Description": "Table: EducationEntries.",
     "schema": [
-      { "name": "EducationEntryId", "datatype": "string", "type": "raw", "nullable": false, "Description": "Stored identity, slug form." },
-      { "name": "Name", "datatype": "string", "type": "calculated", "nullable": true, "Description": "Display alias.", "formula": "={{Institution}} & \" - \" & {{Degree}}" },
-      { "name": "Institution", "datatype": "string", "type": "raw", "nullable": false, "Description": "School name." },
-      { "name": "Degree", "datatype": "string", "type": "raw", "nullable": false, "Description": "Degree earned." },
-      { "name": "FieldOfStudy", "datatype": "string", "type": "raw", "nullable": true, "Description": "Major/field." },
-      { "name": "GradYear", "datatype": "integer", "type": "raw", "nullable": true, "Description": "Graduation year." }
+      {
+        "name": "EducationEntryId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Stored identity, slug form."
+      },
+      {
+        "name": "Name",
+        "datatype": "string",
+        "type": "calculated",
+        "nullable": true,
+        "Description": "Display alias.",
+        "formula": "={{Institution}} & \" - \" & {{Degree}}"
+      },
+      {
+        "name": "Institution",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "School name."
+      },
+      {
+        "name": "Degree",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Degree earned."
+      },
+      {
+        "name": "FieldOfStudy",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Major/field."
+      },
+      {
+        "name": "GradYear",
+        "datatype": "integer",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Graduation year."
+      }
     ],
     "data": [
       {
