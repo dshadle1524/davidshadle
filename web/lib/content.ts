@@ -45,6 +45,8 @@ export interface ProofPoint {
   action_text: string;
   outcome_text: string;
   attribution_note: string | null;
+  client_or_category: string | null;
+  status_label: string | null;
   featured_on_work_page: boolean;
   featured_in_resume_selected_work: boolean;
   sort_order: number;
@@ -118,6 +120,13 @@ export async function getHowIWorkSections(): Promise<HowIWorkSection[]> {
 export async function getFeaturedWorkProofPoints(): Promise<ProofPoint[]> {
   const { rows } = await pool.query(
     "SELECT * FROM vw_proof_points WHERE featured_on_work_page = true ORDER BY sort_order",
+  );
+  return rows;
+}
+
+export async function getSelectedWorkProofPoints(): Promise<ProofPoint[]> {
+  const { rows } = await pool.query(
+    "SELECT * FROM vw_proof_points WHERE featured_in_resume_selected_work = true ORDER BY sort_order",
   );
   return rows;
 }

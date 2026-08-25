@@ -20,7 +20,7 @@
     "data": [
       {
         "SiteSettingId": "default",
-        "ContactEmail": "dshadle1524@gmail.com",
+        "ContactEmail": "david@davidshadle.com",
         "ContactPhone": "425.417.2339",
         "SiteDomain": "davidshadle.com",
         "PortfolioCompanyCount": "100+",
@@ -191,6 +191,8 @@
       { "name": "OutcomeText", "datatype": "string", "type": "raw", "nullable": false, "Description": "The outcome." },
       { "name": "AttributionNote", "datatype": "string", "type": "raw", "nullable": true, "Description": "Precise attribution language required when describing this work (e.g. 'advised on and implemented,' not 'owned'). See Content Strategy Section 6." },
       { "name": "RegisterNote", "datatype": "string", "type": "raw", "nullable": true, "Description": "Internal guidance on tone/register for this proof point. Not published copy - for whoever writes site/resume text from this row." },
+      { "name": "ClientOrCategory", "datatype": "string", "type": "raw", "nullable": true, "Description": "Client name where nameable, otherwise a category label (e.g. 'Medical technology'). Shown as the first half of the Projects page meta row." },
+      { "name": "StatusLabel", "datatype": "string", "type": "raw", "nullable": true, "Description": "Short status/type word for the Projects page meta row (e.g. 'Live in production', 'Problem brief')." },
       { "name": "FeaturedOnWorkPage", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "Whether this proof point is one of the 2-3 engagements shown on the Work page (Section 10). First-pass selection - confirm with David before Phase 2." },
       { "name": "FeaturedInResumeSelectedWork", "datatype": "boolean", "type": "raw", "nullable": false, "Description": "Whether this proof point appears in the resume's 'Selected work, 2024 to 2026' block (Variant A)." },
       { "name": "SortOrder", "datatype": "integer", "type": "raw", "nullable": false, "Description": "Order matching Content Strategy Section 4 numbering." }
@@ -204,6 +206,8 @@
         "OutcomeText": "It made him materially more productive. Previously the responsibility ended at design and project management, with development handed to someone else. Working this way, a project can be carried from concept through delivery by one person. That is the claim. Not that the method is novel.",
         "AttributionNote": "His working method, not his invention. Described, never sold.",
         "RegisterNote": "Describe, do not sell. Two or three sentences max, never a section. Never name transpilers, toolchains, or vendors. Safe line, use sparingly and never more than once per document: 'Consistency comes from derivation rather than discipline.'",
+        "ClientOrCategory": null,
+        "StatusLabel": null,
         "FeaturedOnWorkPage": false,
         "FeaturedInResumeSelectedWork": false,
         "SortOrder": 1
@@ -216,6 +220,8 @@
         "OutcomeText": "Live in production, serving PMs, operating partners, delivery coordinators, and program leads.",
         "AttributionNote": "Sole responsibility, concept through production. Language to use: 'Designed and built end to end.'",
         "RegisterNote": "The single strongest artifact in the record. Sole responsibility, concept to production.",
+        "ClientOrCategory": "Banyan Software",
+        "StatusLabel": "Live in production",
         "FeaturedOnWorkPage": true,
         "FeaturedInResumeSelectedWork": true,
         "SortOrder": 2
@@ -228,6 +234,8 @@
         "OutcomeText": "Companies now finish with four artifacts they own, including a CEO signed strategy, a prioritized and capacity validated roadmap, a customer facing roadmap, and a ledger tracing every decision back to evidence.",
         "AttributionNote": "Co-led with the program team. Language to use: 'Co-led the redesign.'",
         "RegisterNote": "Line worth keeping: 'You don't take the program and then go build your roadmap. You build your roadmap in the program.'",
+        "ClientOrCategory": "Banyan Software",
+        "StatusLabel": "Program redesign",
         "FeaturedOnWorkPage": false,
         "FeaturedInResumeSelectedWork": true,
         "SortOrder": 3
@@ -240,6 +248,8 @@
         "OutcomeText": "Three products, each built for its own audience and its own question, with Portfolio Operations now reporting current state rather than the last export.",
         "AttributionNote": "Precisely: 'Advised on and implemented the experience layer.' Not owned. Did not own the estate, the data platform, or the engineering. The Portfolio Operations rebuild onto live data is his outright. Do not say 'five reporting surfaces' - there are three products.",
         "RegisterNote": "The three products: PM Workshop (operating partners, program leads, participants), Portfolio Operations (finance and executive), Technical Due Diligence (corporate development and diligence teams).",
+        "ClientOrCategory": "Banyan Software",
+        "StatusLabel": "Three products",
         "FeaturedOnWorkPage": true,
         "FeaturedInResumeSelectedWork": true,
         "SortOrder": 4
@@ -252,6 +262,8 @@
         "OutcomeText": "An executive team aligned on the problem before anyone designed against it. The analysis behind the brief also surfaced a non-trivial breakdown in process: staging and production were serving two different dashboards.",
         "AttributionNote": null,
         "RegisterNote": "The staging/production finding was a byproduct of doing the analysis properly, not a detective story. Overselling it turns a sound process into a boast. The value is the sequence: brief, alignment, scope, spec, execution.",
+        "ClientOrCategory": "Banyan Software",
+        "StatusLabel": "Problem brief",
         "FeaturedOnWorkPage": true,
         "FeaturedInResumeSelectedWork": true,
         "SortOrder": 5
@@ -264,6 +276,8 @@
         "OutcomeText": "An on demand coach that reinforces the program instead of competing with it, reached through the portal at the point in the journey where the participant needs it.",
         "AttributionNote": "Advisory only. The coach, skills toolkit, and maturity model were built by others. Contribution is program alignment and integration design. Must not imply authorship of the agents themselves.",
         "RegisterNote": "Demonstrates knowing what an AI product is accountable for, and where it stops. That judgment is the scarce part.",
+        "ClientOrCategory": null,
+        "StatusLabel": null,
         "FeaturedOnWorkPage": false,
         "FeaturedInResumeSelectedWork": false,
         "SortOrder": 6
@@ -276,6 +290,8 @@
         "OutcomeText": "Better problem identification, opportunities surfaced that would not have come up otherwise, and concrete evidence in front of stakeholders early enough for alignment to be cheap.",
         "AttributionNote": null,
         "RegisterNote": "Emphasis is on how agents are used, not on the fact that he builds them. Do not lead with the tooling. The claim is that the strategy work is better, not that there are more agents.",
+        "ClientOrCategory": "Medical technology",
+        "StatusLabel": "Strategy",
         "FeaturedOnWorkPage": false,
         "FeaturedInResumeSelectedWork": true,
         "SortOrder": 7
@@ -288,6 +304,8 @@
         "OutcomeText": "Investor ready materials and a defined MVP path in both cases. Phase one delivered on the medical device engagement, with the strategy and investment direction in place.",
         "AttributionNote": "Neither client is named. Describe both by category. The medical technology engagement concluded after phase one due to internal changes on the client side.",
         "RegisterNote": "Covered on the resume via the m+d2 & Associates and Vortent Partners job entries rather than as a standalone Work page item.",
+        "ClientOrCategory": null,
+        "StatusLabel": null,
         "FeaturedOnWorkPage": false,
         "FeaturedInResumeSelectedWork": false,
         "SortOrder": 8

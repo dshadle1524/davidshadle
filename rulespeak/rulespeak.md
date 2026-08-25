@@ -47,6 +47,8 @@ _Rulebook for davidshadle.com v4: bio variants, method statement, proof/work ent
 | Outcome Text | A defined attribute. | _The outcome._ |
 | Attribution Note | A defined attribute. | _Precise attribution language required when describing this work (e.g. 'advised on and implemented,' not 'owned'). See Content Strategy Section 6._ |
 | Register Note | A defined attribute. | _Internal guidance on tone/register for this proof point. Not published copy - for whoever writes site/resume text from this row._ |
+| Client or Category | A defined attribute. | _Client name where nameable, otherwise a category label (e.g. 'Medical technology'). Shown as the first half of the Projects page meta row._ |
+| Status Label | A defined attribute. | _Short status/type word for the Projects page meta row (e.g. 'Live in production', 'Problem brief')._ |
 | Featured on Work Page | True when an empty string. | _Whether this proof point is one of the 2-3 engagements shown on the Work page (Section 10). First-pass selection - confirm with David before Phase 2._ |
 | Featured in Resume Selected Work | True when an empty string. | _Whether this proof point appears in the resume's 'Selected work, 2024 to 2026' block (Variant A)._ |
 | Sort Order | A defined attribute. | _Order matching Content Strategy Section 4 numbering._ |

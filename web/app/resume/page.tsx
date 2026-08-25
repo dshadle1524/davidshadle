@@ -4,7 +4,7 @@ import {
   getJobEntriesForVariantA,
   getResumeListItems,
   getEducationEntries,
-  getFeaturedWorkProofPoints,
+  getSelectedWorkProofPoints,
 } from "@/lib/content";
 import { groupJobEntriesForVariantA } from "@/lib/jobs";
 import { formatDateRange } from "@/lib/format";
@@ -18,85 +18,119 @@ export default async function ResumePage() {
     getJobEntriesForVariantA(),
     getResumeListItems(),
     getEducationEntries(),
-    getFeaturedWorkProofPoints(),
+    getSelectedWorkProofPoints(),
   ]);
 
   const displayJobs = groupJobEntriesForVariantA(jobEntries);
   const methods = listItems.filter((i) => i.category === "Methods");
   const technical = listItems.filter((i) => i.category === "Technical");
+  const summaryParas = variant.summary_text.split("\n\n");
 
   return (
-    <section className="resume-section">
-      <div className="container resume-content">
-        <header className="resume-header">
-          <h1 className="name-title">David Shadle</h1>
-          <p className="tagline">Product Strategy · UX and Information Architecture · AI Development</p>
-          <p className="contact-line">
-            {settings.contact_email}
-            {settings.contact_phone ? ` · ${settings.contact_phone}` : ""} · {settings.site_domain}
-          </p>
-        </header>
-
-        <div className="resume-block">
-          <h2 className="section-heading">What I do</h2>
-          {variant.summary_text.split("\n\n").map((para, i) => (
-            <p key={i} className="body-text" style={{ marginBottom: 16 }}>{para}</p>
-          ))}
-        </div>
-
-        <div className="resume-block">
-          <h2 className="section-heading">Selected work, 2024 to 2026</h2>
-          {selectedWork.map((point) => (
-            <div key={point.proof_point_id} className="experience-item">
-              <p className="experience-title">{point.title}</p>
-              <p className="body-text">{point.problem_text} {point.action_text} {point.outcome_text}</p>
+    <>
+      <section className="band">
+        <div className="container">
+          <span className="eyebrow">Resume</span>
+          <div className="resume-hero-row">
+            <div className="resume-hero-left">
+              <h1 className="h1-inner">Product strategy, UX and information architecture, AI development.</h1>
+              <hr className="accent-rule" />
+              <p className="contact-line">
+                {[settings.contact_email, settings.contact_phone, settings.site_domain]
+                  .filter(Boolean)
+                  .map((part, i) => (
+                    <span key={i}>
+                      {i > 0 && <span className="sep">&middot;</span>}
+                      {part}
+                    </span>
+                  ))}
+              </p>
             </div>
-          ))}
-        </div>
-
-        <div className="resume-block">
-          <h2 className="section-heading">Experience</h2>
-          {displayJobs.map((job) => (
-            <div key={job.key} className="experience-item">
-              <p className="experience-title">{job.company}</p>
-              {job.jobTitle && <p className="experience-role">{job.jobTitle}</p>}
-              <p className="experience-dates">{formatDateRange(job.startDate, job.endDate)}</p>
-              {job.summaryText && <p className="body-text">{job.summaryText}</p>}
-              {job.compressedLine && <p className="compressed-line">{job.compressedLine}</p>}
-            </div>
-          ))}
-        </div>
-
-        <div className="resume-block methods-technical-grid">
-          <div>
-            <h2 className="section-heading">Methods</h2>
-            <ul className="resume-list" style={{ marginTop: 16 }}>
-              {methods.map((item) => (
-                <li key={item.resume_list_item_id}>{item.label}</li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h2 className="section-heading">Technical</h2>
-            <ul className="resume-list" style={{ marginTop: 16 }}>
-              {technical.map((item) => (
-                <li key={item.resume_list_item_id}>{item.label}</li>
-              ))}
-            </ul>
+            <a className="btn" href="#">
+              Download as PDF <span className="btn-arrow">&darr;</span>
+            </a>
           </div>
         </div>
+      </section>
 
-        <div className="resume-block">
-          <h2 className="section-heading">Education</h2>
-          {education.map((ed) => (
-            <p key={ed.education_entry_id} className="body-text">
-              {ed.institution} · {ed.degree}
-              {ed.field_of_study ? `, ${ed.field_of_study}` : ""}
-              {ed.grad_year ? ` · ${ed.grad_year}` : ""}
-            </p>
-          ))}
+      <section className="band-alt">
+        <div className="container">
+          <span className="eyebrow">What I do</span>
+          <div className="what-i-do">
+            {summaryParas.map((para, i) =>
+              i === 0 ? (
+                <p key={i} className="what-i-do-lead">{para}</p>
+              ) : (
+                <p key={i} className="body-text">{para}</p>
+              ),
+            )}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section className="band">
+        <div className="container">
+          <span className="eyebrow">Selected work, 2024 to 2026</span>
+          <div className="divider-list selected-work-list">
+            {selectedWork.map((point) => (
+              <div key={point.proof_point_id} className="divider-item">
+                <h2 className="h2">{point.title}</h2>
+                <p className="body-text">
+                  {point.problem_text} {point.action_text} {point.outcome_text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="band-alt">
+        <div className="container">
+          <span className="eyebrow">Experience</span>
+          <div className="experience-list">
+            {displayJobs.map((job) => (
+              <div key={job.key} className="experience-row">
+                <div className="experience-left">
+                  <p className="experience-company">{job.company}</p>
+                  {job.jobTitle && <p className="experience-role">{job.jobTitle}</p>}
+                  <p className="experience-dates">{formatDateRange(job.startDate, job.endDate)}</p>
+                </div>
+                <div className="experience-right">
+                  {job.summaryText && <p className="body-text">{job.summaryText}</p>}
+                  {job.compressedLine && <p className="compressed-line">{job.compressedLine}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="band">
+        <div className="container">
+          <div className="resume-columns">
+            <div className="resume-column">
+              <span className="eyebrow">Methods</span>
+              <p>{methods.map((item) => item.label).join(" · ")}</p>
+            </div>
+            <div className="resume-column">
+              <span className="eyebrow">Technical</span>
+              <p>{technical.map((item) => item.label).join(" · ")}</p>
+            </div>
+            <div className="resume-column">
+              <span className="eyebrow">Education</span>
+              <p>
+                {education
+                  .map((ed) =>
+                    [ed.institution, [ed.degree, ed.field_of_study].filter(Boolean).join(", "), ed.grad_year]
+                      .filter(Boolean)
+                      .join(" · "),
+                  )
+                  .join(" · ")}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

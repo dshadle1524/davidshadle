@@ -1,20 +1,47 @@
 import type { Metadata } from "next";
+import { Roboto_Slab, Raleway } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { getSiteSettings } from "@/lib/content";
+
+const robotoSlab = Roboto_Slab({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-slab",
+  display: "swap",
+});
+
+const raleway = Raleway({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-raleway",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "David Shadle",
   description: "Product strategy, design, and the systems that ship them.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const settings = await getSiteSettings();
+  const [taglineLead, ...taglineRestParts] = settings.self_description_line.split(". ");
+  const taglineRest = taglineRestParts.length
+    ? ` ${taglineRestParts.join(". ")}`
+    : "";
+
   return (
-    <html lang="en" className="h-full">
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`h-full ${robotoSlab.variable} ${raleway.variable}`}
+    >
       <body className="min-h-full flex flex-col">
-        <Header />
+        <div className="top-bar" />
+        <Header taglineLead={`${taglineLead}.`} taglineRest={taglineRest} email={settings.contact_email} />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <Footer email={settings.contact_email} />
       </body>
     </html>
   );
