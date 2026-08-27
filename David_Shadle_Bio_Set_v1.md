@@ -1,7 +1,7 @@
 # Bio Set
-**David Shadle · Draft 4 · derived from Content Strategy v3.2**
+**David Shadle · Draft 5 · derived from Content Strategy v3.2**
 
-Five lengths, one spine. Voice standard applied: no em dashes, short sentences, active voice, no filler. Attribution held to Section 6. The rulebook stays high level throughout, described rather than sold.
+Six versions, one spine. Voice standard applied: no em dashes, short sentences, active voice, no filler. Attribution held to Section 6. The rulebook stays high level throughout, described rather than sold.
 
 ---
 
@@ -72,6 +72,35 @@ Five lengths, one spine. Voice standard applied: no em dashes, short sentences, 
 
 ---
 
+## 6. Introduction to a new team
+*First person, conversational. For a kickoff email, a Slack intro, or the first thirty seconds of a first meeting. Roughly 380 words.*
+
+> Short version of who I am and how I work, so you know what to expect.
+>
+> I am the person who steps in when there is a good idea and no clear path forward, or when a team is stuck and needs someone to build alignment and get moving again. I have done that at Microsoft, at Oracle, and with startups raising money.
+>
+> Twenty five years of it. UX design, product strategy, and hands on delivery, which means I know what it takes to get from concept to launch and most of what can go sideways in between. I have built experiences for complex enterprise platforms, developed AI powered workflows, simplified cloud infrastructure setup, and helped founders turn breakthrough technology into something a customer can understand and buy.
+>
+> What is different about the last couple of years is that I carry projects further now. My responsibility used to end at design and project management, with development handed to someone else. That has changed. I write the model down, build the thing, and ship it. Most recently that has meant a production platform serving more than a hundred operating companies, and the experience layer across three executive reporting products.
+>
+> A few things you can count on.
+>
+> I start with the problem, and I will want to write it down before anyone proposes a solution. That step feels slow and it is not.
+>
+> I will put a rough prototype in front of you early, and I want you to tell me what is wrong with it. It is faster to argue with a wrong sketch than a blank page.
+>
+> I will say what I do not know. Open questions belong in the room, not tidied away and presented as settled.
+>
+> I own my calls. If I set a direction and it turns out to be wrong, I will say so and help fix it.
+>
+> I use AI agents as a working tool, mostly for research and for pressure testing a position before we commit to it. It gets us to the real problem faster.
+>
+> I am comfortable in an executive conversation about positioning in the morning and in the details of a user flow that afternoon. That range is the useful part, and it is why I like the messy middle, where the vision exists but the path does not.
+>
+> Looking forward to it. Ask me anything.
+
+---
+
 ## Notes
 
 ### What changed in draft 2
@@ -83,6 +112,30 @@ Five lengths, one spine. Voice standard applied: no em dashes, short sentences, 
 | Rulebook described in mechanical detail | Two or three sentences, high level | Describe it, do not sell it. The claim is what it lets you deliver. |
 | Rulebook as "my method" | "I work from a rulebook" | Removes the implication that you invented or own it. |
 | Method absent from the 300 | Problem-brief-first added | It is the more distinctive habit and it needs no caveat. |
+
+**Draft 5 addition.** Version 6, the team introduction, is new. It merges the warmth of the current About page with the corrected positioning. Notes on what was kept and cut are below.
+
+### On version 6, the team introduction
+
+**Kept from your current About page**
+
+- "The person who steps in when there is a good idea and no clear path forward." This is the best sentence you have written about yourself. It is concrete, it is a situation people recognize, and it does not describe a job title.
+- The Microsoft, Oracle, startups sequence. It establishes range fast without listing.
+- "Everything that can go sideways in between." Honest and human, and it signals experience better than the word experience does.
+- "The messy middle." Same reason.
+- The morning and afternoon contrast for range. It shows rather than claims.
+
+**Changed**
+
+- "What sets me apart" cut. It is a framing that announces a boast before making it. The version now shows the range and lets the reader conclude it.
+- "Bridge the gap between vision and execution" cut. True, but it is the most common sentence in consulting. Replaced with the specific version: responsibility used to end at design, now it does not.
+- The list of things you can count on is new. A team introduction should tell people what working with you is actually like, not just what you have done. This is the part that makes it an introduction rather than a bio.
+- The tone is warmer than the other five versions on purpose. This one is read by people who will work with you, not by people deciding whether to.
+
+**Deliberately absent**
+
+- The rulebook by name. In a team introduction it lands as jargon before you have earned the right to use it. "I write the model down" says the same thing in words nobody has to decode.
+- Metrics and portfolio counts beyond one mention. A new team does not need the credential, they need to know how you operate.
 
 **Draft 4 correction.** The database rebuild was the Portfolio Operations dashboard, not the workshop dashboards. Corrected everywhere.
 

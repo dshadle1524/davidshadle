@@ -1,5 +1,5 @@
 # Resume, Two Variants
-**David Shadle · Draft 4 · derived from Content Strategy v3.2**
+**David Shadle · Draft 5 · derived from Content Strategy v3.2**
 
 Same evidence, different center of gravity. Variant A is the public one, served from the site. Variant B is sent directly for specific roles and never goes online.
 
@@ -77,7 +77,7 @@ Problem brief first · Rulebook driven delivery · Prototype as spec · Product 
 
 ### Technical
 
-Next.js · Node and Express · Prisma · PostgreSQL · Terraform · Docker · GitHub Actions · AWS, including ECS Fargate, RDS, S3, and CloudFront · OIDC authentication · Agent and skill development
+PostgreSQL · Next.js · Node · Prisma · Docker · AWS · CI/CD with automated testing · OIDC authentication · EffortlessAPI for rulebook driven builds · Agent and skill development
 
 ### Education
 
@@ -166,7 +166,7 @@ Portfolio of 100+ B2B SaaS operating companies, supporting operating company tea
 
 Problem brief first · Rulebook driven delivery · Prototype as spec · Product maturity modeling · RICE prioritization against capacity · Strategic facilitation
 
-Next.js · Node and Express · Prisma · PostgreSQL · Terraform · Docker · GitHub Actions · AWS · OIDC authentication · Agent and skill development
+PostgreSQL · Next.js · Node · Prisma · Docker · AWS · CI/CD with automated testing · OIDC authentication · EffortlessAPI for rulebook driven builds · Agent and skill development
 
 ### Education
 
@@ -184,6 +184,8 @@ University of Oregon · Bachelor of Fine Arts, Visual Design · 1994
 - The rulebook reduced to one sentence in each variant, framed as what extended the range rather than as a method being promoted.
 - The staging and production finding reframed as a result of the analysis behind the brief, not as a discovery narrative.
 - Migration language removed. Only the workshop rebuild is claimed.
+
+**Draft 5 change.** The technical line was tightened and EffortlessAPI added. Terraform, GitHub Actions by name, and the AWS service enumeration came off. A shorter list reads as more confident and leaves less surface to test. EffortlessAPI is named because it is the toolchain behind the rulebook work, and it is the one item on the line that prompts a question you actually want to be asked.
 
 **Draft 4 correction.** The database rebuild was Portfolio Operations, not the workshop dashboards. Corrected in both variants.
 
