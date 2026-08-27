@@ -2,6 +2,21 @@ import { pool } from "./db";
 
 // Every query reads from vw_* views, never base tables, per CLAUDE.md.
 
+/**
+ * Split a rich-text field into paragraphs. The rulebook stores "\n\n" between
+ * paragraphs, but the admin CMS textarea round-trips through the browser and
+ * saves Windows line endings ("\r\n\r\n"), so a bare split("\n\n") silently
+ * collapses everything into one paragraph. Normalize first, then split on any
+ * run of two-or-more newlines.
+ */
+export function splitParagraphs(text: string): string[] {
+  return text
+    .replace(/\r\n?/g, "\n")
+    .split(/\n{2,}/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+}
+
 export interface SiteSettings {
   site_setting_id: string;
   contact_email: string;

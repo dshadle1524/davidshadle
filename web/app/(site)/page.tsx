@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getSiteSettings, getBioVariant, getCurrentlyItems, getHowIWorkSections, getFeaturedWorkProofPoints } from "@/lib/content";
+import { getSiteSettings, getBioVariant, getCurrentlyItems, getHowIWorkSections, getFeaturedWorkProofPoints, splitParagraphs } from "@/lib/content";
 
 export default async function Home() {
   const [settings, bio, currentlyItems, howIWork, proofPoints] = await Promise.all([
@@ -11,7 +11,7 @@ export default async function Home() {
   ]);
 
   const howIWorkTeaser = howIWork.slice(0, 3);
-  const introParas = bio.body_text.split("\n\n");
+  const introParas = splitParagraphs(bio.body_text);
 
   return (
     <>

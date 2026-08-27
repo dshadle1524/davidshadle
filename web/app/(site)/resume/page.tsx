@@ -4,6 +4,7 @@ import {
   getResumeListItems,
   getEducationEntries,
   getSelectedWorkProofPoints,
+  splitParagraphs,
 } from "@/lib/content";
 import { groupJobEntriesForVariantA } from "@/lib/jobs";
 import { formatDateRange } from "@/lib/format";
@@ -22,7 +23,7 @@ export default async function ResumePage() {
   const displayJobs = groupJobEntriesForVariantA(jobEntries);
   const methods = listItems.filter((i) => i.category === "Methods");
   const technical = listItems.filter((i) => i.category === "Technical");
-  const summaryParas = variant.summary_text.split("\n\n");
+  const summaryParas = splitParagraphs(variant.summary_text);
 
   return (
     <>

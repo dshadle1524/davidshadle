@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getHowIWorkSections } from "@/lib/content";
+import { getHowIWorkSections, splitParagraphs } from "@/lib/content";
 
 export const metadata = { title: "How I Work — David Shadle" };
 
@@ -36,7 +36,7 @@ export default async function HowIWorkPage() {
   const sections = await getHowIWorkSections();
   const principles = sections.filter((s) => s.heading !== "Where AI fits");
   const aiFits = sections.find((s) => s.heading === "Where AI fits");
-  const aiFitsParas = aiFits ? aiFits.body_text.split("\n\n") : [];
+  const aiFitsParas = aiFits ? splitParagraphs(aiFits.body_text) : [];
 
   return (
     <>
@@ -58,9 +58,9 @@ export default async function HowIWorkPage() {
                 <span className="principle-number">{String(i + 1).padStart(2, "0")}</span>
                 <div className="principle-body">
                   <h2 className="h2">{section.heading}</h2>
-                  {section.body_text
-                    .split("\n\n")
-                    .map((para, j) => renderParagraph(para, j))}
+                  {splitParagraphs(section.body_text).map((para, j) =>
+                    renderParagraph(para, j),
+                  )}
                 </div>
               </div>
             ))}
