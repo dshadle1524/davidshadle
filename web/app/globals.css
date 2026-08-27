@@ -113,14 +113,7 @@ a:hover {
 .header-row {
   display: grid;
   grid-template-columns: 1fr auto;
-  align-items: flex-start;
-  gap: 48px;
-}
-
-.header-right {
-  display: grid;
-  grid-template-columns: auto minmax(280px, 480px);
-  align-items: flex-start;
+  align-items: center;
   gap: 48px;
 }
 
@@ -145,34 +138,26 @@ a:hover {
   font-weight: 700;
 }
 
+/* The wordmark is the Home link: never underline, and go italic on hover
+   instead of changing color or underlining. */
+.wordmark:hover {
+  color: var(--ink);
+  text-decoration: none;
+  font-style: italic;
+}
+
 .main-nav {
   min-width: 0;
 }
 
 .main-nav ul {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
   list-style: none;
   margin: 0;
   padding: 0;
-}
-
-.main-nav li {
-  display: grid;
-  grid-template-columns: 10px 1fr;
-  align-items: center;
-  gap: 12px;
-}
-
-.main-nav .nav-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.main-nav li.is-active .nav-dot {
-  background-color: var(--accent);
 }
 
 .main-nav a {
@@ -181,43 +166,19 @@ a:hover {
   line-height: 1.2;
   color: var(--nav-inactive);
   font-weight: 400;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
 }
 
 .main-nav a:hover {
-  color: var(--nav-inactive);
+  color: var(--ink);
   text-decoration: none;
 }
 
 .main-nav li.is-active a {
   color: var(--ink);
   font-weight: 700;
-}
-
-.header-aside {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.header-tagline {
-  font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--body-alt);
-  font-weight: 400;
-  text-wrap: balance;
-  margin: 0;
-}
-
-.header-tagline strong {
-  font-weight: 700;
-}
-
-.header-email {
-  font-family: var(--font-body);
-  font-size: 15px;
-  color: var(--accent-link);
+  border-bottom-color: var(--accent-link);
 }
 
 /* ---- Bands ---- */
@@ -864,30 +825,8 @@ a:hover {
     gap: 16px;
   }
 
-  .header-right {
-    grid-template-columns: 1fr;
-  }
-
-  .header-aside {
-    display: none;
-  }
-
   .main-nav ul {
-    flex-direction: row;
     gap: 24px;
-  }
-
-  .main-nav li {
-    display: block;
-  }
-
-  .main-nav .nav-dot {
-    display: none;
-  }
-
-  .main-nav li.is-active a {
-    border-bottom: 2px solid var(--accent);
-    padding-bottom: 2px;
   }
 
   /* ---- Footer (mobile) ---- */

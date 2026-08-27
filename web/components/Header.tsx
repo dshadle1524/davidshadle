@@ -9,13 +9,7 @@ const NAV_ITEMS = [
   { href: "/resume", label: "Resume" },
 ];
 
-interface HeaderProps {
-  taglineLead: string;
-  taglineRest: string;
-  email: string;
-}
-
-export function Header({ taglineLead, taglineRest, email }: HeaderProps) {
+export function Header() {
   const pathname = usePathname();
 
   return (
@@ -25,31 +19,18 @@ export function Header({ taglineLead, taglineRest, email }: HeaderProps) {
           david <strong>shadle</strong>
         </Link>
 
-        <div className="header-right">
-          <nav className="main-nav" aria-label="Primary">
-            <ul>
-              {NAV_ITEMS.map((item) => {
-                const isActive = pathname === item.href;
-                return (
-                  <li key={item.href} className={isActive ? "is-active" : undefined}>
-                    <span className="nav-dot" />
-                    <Link href={item.href}>{item.label}</Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-
-          <div className="header-aside">
-            <p className="header-tagline">
-              <strong>{taglineLead}</strong>
-              {taglineRest}
-            </p>
-            <a className="header-email" href={`mailto:${email}`}>
-              {email}
-            </a>
-          </div>
-        </div>
+        <nav className="main-nav" aria-label="Primary">
+          <ul>
+            {NAV_ITEMS.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <li key={item.href} className={isActive ? "is-active" : undefined}>
+                  <Link href={item.href}>{item.label}</Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
       </div>
       <div className="container">
         <hr className="header-rule" />
