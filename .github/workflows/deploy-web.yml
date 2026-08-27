@@ -10,6 +10,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      CPLN_ORG: second-on-left
+      CPLN_TOKEN: ${{ secrets.CPLN_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -17,7 +20,7 @@ jobs:
         run: npm install -g @controlplane/cli
 
       - name: Docker login to Control Plane registry
-        run: cpln image docker-login --org second-on-left --token "${{ secrets.CPLN_TOKEN }}"
+        run: cpln image docker-login
 
       - name: Build and push image
         working-directory: web
@@ -27,15 +30,11 @@ jobs:
             --name "davidshadle:${TAG}" \
             --dockerfile Dockerfile \
             --dir . \
-            --push \
-            --org second-on-left \
-            --token "${{ secrets.CPLN_TOKEN }}"
+            --push
 
       - name: Point workload at the new image
         run: |
           TAG="${GITHUB_SHA::7}"
           cpln workload update web \
             --gvc davidshadle \
-            --org second-on-left \
-            --set spec.containers.web.image="/org/second-on-left/image/davidshadle:${TAG}" \
-            --token "${{ secrets.CPLN_TOKEN }}"
+            --set spec.containers.web.image="/org/second-on-left/image/davidshadle:${TAG}"
