@@ -124,6 +124,8 @@ a:hover {
 }
 
 .wordmark {
+  justify-self: start;
+  width: fit-content;
   min-width: 0;
   white-space: nowrap;
   font-family: var(--font-serif);
