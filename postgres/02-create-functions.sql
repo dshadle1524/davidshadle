@@ -73,9 +73,9 @@ $$ LANGUAGE sql STABLE;
 -- Type: calculated | DataType: string | Returns: TEXT
 
 
-CREATE OR REPLACE FUNCTION calc_job_entries_name(p_job_entries_id TEXT)
+CREATE OR REPLACE FUNCTION calc_job_entries_name(p_job_entry_id TEXT)
 RETURNS TEXT AS $$
-  SELECT (CONCAT((SELECT NULLIF(company, '') FROM job_entries WHERE job_entries_id = p_job_entries_id), ' - ', (SELECT NULLIF(job_title, '') FROM job_entries WHERE job_entries_id = p_job_entries_id)))::text;
+  SELECT (CONCAT((SELECT NULLIF(company, '') FROM job_entries WHERE job_entry_id = p_job_entry_id), ' - ', (SELECT NULLIF(job_title, '') FROM job_entries WHERE job_entry_id = p_job_entry_id)))::text;
 $$ LANGUAGE sql STABLE;
 
 -- calc_resume_variants_name
@@ -103,9 +103,9 @@ $$ LANGUAGE sql STABLE;
 -- Type: calculated | DataType: string | Returns: TEXT
 
 
-CREATE OR REPLACE FUNCTION calc_education_entries_name(p_education_entries_id TEXT)
+CREATE OR REPLACE FUNCTION calc_education_entries_name(p_education_entry_id TEXT)
 RETURNS TEXT AS $$
-  SELECT (CONCAT((SELECT NULLIF(institution, '') FROM education_entries WHERE education_entries_id = p_education_entries_id), ' - ', (SELECT NULLIF(degree, '') FROM education_entries WHERE education_entries_id = p_education_entries_id)))::text;
+  SELECT (CONCAT((SELECT NULLIF(institution, '') FROM education_entries WHERE education_entry_id = p_education_entry_id), ' - ', (SELECT NULLIF(degree, '') FROM education_entries WHERE education_entry_id = p_education_entry_id)))::text;
 $$ LANGUAGE sql STABLE;
 
 -- ============================================================================

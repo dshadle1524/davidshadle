@@ -114,9 +114,8 @@ FROM proof_points t;
 DROP VIEW IF EXISTS vw_job_entries CASCADE;
 CREATE VIEW vw_job_entries WITH (security_invoker = ON) AS
 SELECT
-  t.job_entries_id,                                                             -- Primary key (synthesized from the calculated Name — the table's logical key — so it wins over incidental Id-ending attribute fields).
   t.job_entry_id,                                                               -- Stored identity, slug form.
-  calc_job_entries_name(t.job_entries_id) AS name,                              -- Display alias.
+  calc_job_entries_name(t.job_entry_id) AS name,                                -- Display alias.
   t.company,                                                                    -- Employer or entity name.
   t.job_title,                                                                  -- Title held. Null on the single synthetic 'earlier roles' compressed row.
   t.start_date,                                                                 -- Start, YYYY-MM.
@@ -168,9 +167,8 @@ FROM resume_list_items t;
 DROP VIEW IF EXISTS vw_education_entries CASCADE;
 CREATE VIEW vw_education_entries WITH (security_invoker = ON) AS
 SELECT
-  t.education_entries_id,                                                       -- Primary key (synthesized from the calculated Name — the table's logical key — so it wins over incidental Id-ending attribute fields).
   t.education_entry_id,                                                         -- Stored identity, slug form.
-  calc_education_entries_name(t.education_entries_id) AS name,                  -- Display alias.
+  calc_education_entries_name(t.education_entry_id) AS name,                    -- Display alias.
   t.institution,                                                                -- School name.
   t.degree,                                                                     -- Degree earned.
   t.field_of_study,                                                             -- Major/field.

@@ -1,7 +1,7 @@
 {
   "ShowHidden": false,
   "ShowAllFiles": false,
-  "CurrentPath": null,
+  "CurrentPath": "/postgres",
   "SSoTmeProjectFiles": null,
   "SSoTmeProjectId": "e505b335-1c14-4480-b3c8-b2ecda3e703c",
   "Name": "David Shadle Website v4",
@@ -18,9 +18,8 @@
       "RelativePath": "/rulespeak",
       "CommandLine": "rulebook-to-rulespeak -i ../effortless-rulebook/effortless-rulebook.json",
       "IsDisabled": false,
-      "PinnedVersion": "v2026.08.01.1813",
-      "LastVersionUsed": "v2026.08.01.1813",
-      "LastUrl": "https://effortless-rulebook-to-rulespeak-v2026-08-01-1813-cmvbd4phczmeg.7pktzg2z971j0.cpln.app"
+      "LastVersionUsed": "v2026.08.10.1839",
+      "LastUrl": "https://effortless-rulebook-to-rulespeak-v2026-08-10-1839-cmvbd4phczmeg.7pktzg2z971j0.cpln.app"
     },
     {
       "IsSSoTTranspiler": false,
@@ -28,9 +27,8 @@
       "RelativePath": "/postgres",
       "CommandLine": "rulebook-to-postgres -i ../effortless-rulebook/effortless-rulebook.json",
       "IsDisabled": false,
-      "PinnedVersion": "v2026.07.31.1917",
-      "LastVersionUsed": "v2026.07.31.1917",
-      "LastUrl": "https://effortless-rulebook-to-postgres-v2026-07-31-1917-cmvbd4phczmeg.7pktzg2z971j0.cpln.app"
+      "LastVersionUsed": "v2026.08.09.0157",
+      "LastUrl": "https://effortless-rulebook-to-postgres-v2026-08-09-0157-cmvbd4phczmeg.7pktzg2z971j0.cpln.app"
     },
     {
       "IsSSoTTranspiler": false,

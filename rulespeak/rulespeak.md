@@ -1,4 +1,4 @@
-# 📘 David Shadle Website v4 — RuleSpeak
+# 📘 David Shadle Website v4 — RuleSpeak®
 
 _Rulebook for davidshadle.com v4: bio variants, method statement, proof/work entries, resume content, and site settings. Content and navigation as data, per the PM Portal discipline referenced in David_Shadle_Content_Strategy_v1.md._
 
@@ -127,7 +127,7 @@ but clunky — a flag for an optional downstream reword pass, not a defect._
 
 ## 5 Traceability to Schema
 
-_The expression column is the rule's definition in RuleSpeak notation —
+_The expression column is the rule's definition in RuleSpeak® notation —
 the same logic the rulebook stores, written for a business reader._
 
 | Schema element | Kind | Expression |
@@ -147,5 +147,5 @@ the same logic the rulebook stores, written for a business reader._
 _This document is rendered in **RuleSpeak®**, the declarative business-rule
 notation created by **Ronald G. Ross**, and follows the conventions of
 **SBVR** (Semantics of Business Vocabulary and Business Rules). With thanks to
-Ronald G. Ross for RuleSpeak and his foundational work on business rules —
+Ronald G. Ross for RuleSpeak® and his foundational work on business rules —
 [www.RonRoss.info](https://www.RonRoss.info)._
