@@ -852,5 +852,55 @@ a:hover {
 
   .footer-row {
     padding: 32px 24px 40px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  /* ---- Header (mobile) ---- */
+
+  .header-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .header-right {
+    grid-template-columns: 1fr;
+  }
+
+  .header-aside {
+    display: none;
+  }
+
+  .main-nav ul {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .main-nav li {
+    display: block;
+  }
+
+  .main-nav .nav-dot {
+    display: none;
+  }
+
+  .main-nav li.is-active a {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 2px;
+  }
+
+  /* ---- Footer (mobile) ---- */
+
+  .footer-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .footer-monogram,
+  .footer-middot,
+  .footer-crosslink {
+    display: none;
   }
 }

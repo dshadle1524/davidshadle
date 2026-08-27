@@ -1,5 +1,4 @@
 import {
-  getSiteSettings,
   getResumeVariant,
   getJobEntriesForVariantA,
   getResumeListItems,
@@ -12,8 +11,7 @@ import { formatDateRange } from "@/lib/format";
 export const metadata = { title: "Resume — David Shadle" };
 
 export default async function ResumePage() {
-  const [settings, variant, jobEntries, listItems, education, selectedWork] = await Promise.all([
-    getSiteSettings(),
+  const [variant, jobEntries, listItems, education, selectedWork] = await Promise.all([
     getResumeVariant("variant-a"),
     getJobEntriesForVariantA(),
     getResumeListItems(),
@@ -35,16 +33,6 @@ export default async function ResumePage() {
             <div className="resume-hero-left">
               <h1 className="h1-inner">Product strategy, UX and information architecture, AI development.</h1>
               <hr className="accent-rule" />
-              <p className="contact-line">
-                {[settings.contact_email, settings.contact_phone, settings.site_domain]
-                  .filter(Boolean)
-                  .map((part, i) => (
-                    <span key={i}>
-                      {i > 0 && <span className="sep">&middot;</span>}
-                      {part}
-                    </span>
-                  ))}
-              </p>
             </div>
             <a className="btn" href="#">
               Download as PDF <span className="btn-arrow">&darr;</span>
