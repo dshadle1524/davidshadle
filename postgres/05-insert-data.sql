@@ -297,3 +297,113 @@ VALUES ('technical-agent-skill-dev', 'Technical', 'Agent and skill development',
 INSERT INTO education_entries (education_entry_id, institution, degree, field_of_study, grad_year)
 VALUES ('university-of-oregon', 'University of Oregon', 'Bachelor of Fine Arts', 'Visual Design', 1994) ON CONFLICT (education_entry_id) DO UPDATE SET institution = EXCLUDED.institution, degree = EXCLUDED.degree, field_of_study = EXCLUDED.field_of_study, grad_year = EXCLUDED.grad_year;
 
+-- ----------------------------------------------------------------------------
+-- LandingPages: Table: LandingPages. One promotional landing page per row, reachable only by its direct URL. LandingPageId is the URL slug.
+-- ----------------------------------------------------------------------------
+INSERT INTO landing_pages (landing_page_id, meta_title, meta_description, eyebrow, headline, lede, video_url, primary_cta_label, primary_cta_href, secondary_cta_label, secondary_cta_href, is_published)
+VALUES ('idea-to-evidence', 'Idea to Evidence: David Shadle', 'One product idea, carried to a working prototype your customers have tested, so you decide what to build on evidence. A service for Banyan operating companies.', 'Idea to Evidence', 'New interaction concepts, prototyped and tested with your customers.', 'Idea to Evidence takes one idea for how your product could work and carries it to a working prototype that your customers (or agents) can interact with. You leave with evidence and a decision, not a recommendation.', 'https://www.youtube.com/watch?v=49NfG8CoGJQ', 'Let''s get started', 'mailto:david@davidshadle.com?subject=Idea%20to%20Evidence%3A%20Discovery%20conversation', 'Download the capability statement (PDF)', '/downloads/David-Shadle-Idea-to-Evidence-Capability-Statement.pdf', FALSE) ON CONFLICT (landing_page_id) DO UPDATE SET meta_title = EXCLUDED.meta_title, meta_description = EXCLUDED.meta_description, eyebrow = EXCLUDED.eyebrow, headline = EXCLUDED.headline, lede = EXCLUDED.lede, video_url = EXCLUDED.video_url, primary_cta_label = EXCLUDED.primary_cta_label, primary_cta_href = EXCLUDED.primary_cta_href, secondary_cta_label = EXCLUDED.secondary_cta_label, secondary_cta_href = EXCLUDED.secondary_cta_href, is_published = EXCLUDED.is_published;
+
+-- ----------------------------------------------------------------------------
+-- LandingPageSections: Table: LandingPageSections. The ordered sections of a landing page. Kind selects the renderer.
+-- ----------------------------------------------------------------------------
+INSERT INTO landing_page_sections (landing_page_section_id, landing_page, sort_order, kind, anchor_id, eyebrow, heading, body_text)
+VALUES ('idea-to-evidence-why-now', 'idea-to-evidence', 1, 'prose', NULL, 'Why now', 'AI can now do part of the work your customers do by hand.', 'AI can act on a customer''s behalf, anticipate a need, and complete a task. Forms, reports, help, and transactions can all work differently. That opens new ways for your product to serve customers, and gives them a reason to renew and buy more.
+
+Most leadership teams already have ideas about where to start. What is hard to find is the time to learn which idea is worth building before committing to build it. This engagement is built to find that out, in a few focused sessions, with the building and testing done outside your leadership team''s calendar.') ON CONFLICT (landing_page_section_id) DO UPDATE SET landing_page = EXCLUDED.landing_page, sort_order = EXCLUDED.sort_order, kind = EXCLUDED.kind, anchor_id = EXCLUDED.anchor_id, eyebrow = EXCLUDED.eyebrow, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_sections (landing_page_section_id, landing_page, sort_order, kind, anchor_id, eyebrow, heading, body_text)
+VALUES ('idea-to-evidence-what-you-get', 'idea-to-evidence', 2, 'list', NULL, 'What you get', 'Five things you take away.', NULL) ON CONFLICT (landing_page_section_id) DO UPDATE SET landing_page = EXCLUDED.landing_page, sort_order = EXCLUDED.sort_order, kind = EXCLUDED.kind, anchor_id = EXCLUDED.anchor_id, eyebrow = EXCLUDED.eyebrow, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_sections (landing_page_section_id, landing_page, sort_order, kind, anchor_id, eyebrow, heading, body_text)
+VALUES ('idea-to-evidence-ways-to-engage', 'idea-to-evidence', 3, 'cards', 'ways-to-engage', 'Ways to engage', 'Choose how far to go.', 'The level is chosen in Discovery and can be extended later.') ON CONFLICT (landing_page_section_id) DO UPDATE SET landing_page = EXCLUDED.landing_page, sort_order = EXCLUDED.sort_order, kind = EXCLUDED.kind, anchor_id = EXCLUDED.anchor_id, eyebrow = EXCLUDED.eyebrow, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_sections (landing_page_section_id, landing_page, sort_order, kind, anchor_id, eyebrow, heading, body_text)
+VALUES ('idea-to-evidence-commitments', 'idea-to-evidence', 4, 'list', NULL, 'Commitments', 'Five commitments.', NULL) ON CONFLICT (landing_page_section_id) DO UPDATE SET landing_page = EXCLUDED.landing_page, sort_order = EXCLUDED.sort_order, kind = EXCLUDED.kind, anchor_id = EXCLUDED.anchor_id, eyebrow = EXCLUDED.eyebrow, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_sections (landing_page_section_id, landing_page, sort_order, kind, anchor_id, eyebrow, heading, body_text)
+VALUES ('idea-to-evidence-who-it-is-for', 'idea-to-evidence', 5, 'prose', NULL, 'Who it is for', 'Operating company leadership.', 'Leadership of a Banyan operating company, usually the CEO or the person who holds product direction, working with the Operating Partner who owns the Value Creation Plan. OpCos arrive by referral from an Operating Partner or Banyan leadership, or after a Guild Session on an interaction pattern. Both routes begin with a free Discovery conversation.') ON CONFLICT (landing_page_section_id) DO UPDATE SET landing_page = EXCLUDED.landing_page, sort_order = EXCLUDED.sort_order, kind = EXCLUDED.kind, anchor_id = EXCLUDED.anchor_id, eyebrow = EXCLUDED.eyebrow, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_sections (landing_page_section_id, landing_page, sort_order, kind, anchor_id, eyebrow, heading, body_text)
+VALUES ('idea-to-evidence-what-we-ask', 'idea-to-evidence', 6, 'list', NULL, 'What we ask of you', 'What the engagement needs from your side.', NULL) ON CONFLICT (landing_page_section_id) DO UPDATE SET landing_page = EXCLUDED.landing_page, sort_order = EXCLUDED.sort_order, kind = EXCLUDED.kind, anchor_id = EXCLUDED.anchor_id, eyebrow = EXCLUDED.eyebrow, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_sections (landing_page_section_id, landing_page, sort_order, kind, anchor_id, eyebrow, heading, body_text)
+VALUES ('idea-to-evidence-your-data', 'idea-to-evidence', 7, 'prose', NULL, 'Your data', 'Your data stays yours.', 'Your data is used only for your engagement. Testing participants give consent and are not named. Everything produced, including testing records, transfers to you, and the provider keeps no copy. Nothing is shared with another company.') ON CONFLICT (landing_page_section_id) DO UPDATE SET landing_page = EXCLUDED.landing_page, sort_order = EXCLUDED.sort_order, kind = EXCLUDED.kind, anchor_id = EXCLUDED.anchor_id, eyebrow = EXCLUDED.eyebrow, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_sections (landing_page_section_id, landing_page, sort_order, kind, anchor_id, eyebrow, heading, body_text)
+VALUES ('idea-to-evidence-about', 'idea-to-evidence', 8, 'prose', NULL, 'About', 'David Shadle.', 'Twenty years leading product, design, and engineering teams. I work where experience design and product strategy meet, and I build what I design. AI tools do the volume work of research, drafting, and building. My judgment decides what matters.') ON CONFLICT (landing_page_section_id) DO UPDATE SET landing_page = EXCLUDED.landing_page, sort_order = EXCLUDED.sort_order, kind = EXCLUDED.kind, anchor_id = EXCLUDED.anchor_id, eyebrow = EXCLUDED.eyebrow, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_sections (landing_page_section_id, landing_page, sort_order, kind, anchor_id, eyebrow, heading, body_text)
+VALUES ('idea-to-evidence-to-start', 'idea-to-evidence', 9, 'callout', 'to-start', 'To start', 'Request a free Discovery conversation.', 'One conversation to confirm fit, name the metric, and agree where to start.') ON CONFLICT (landing_page_section_id) DO UPDATE SET landing_page = EXCLUDED.landing_page, sort_order = EXCLUDED.sort_order, kind = EXCLUDED.kind, anchor_id = EXCLUDED.anchor_id, eyebrow = EXCLUDED.eyebrow, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+-- ----------------------------------------------------------------------------
+-- LandingPageItems: Table: LandingPageItems. The ordered items inside a landing page section (cards, steps, list entries).
+-- ----------------------------------------------------------------------------
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-what-you-get-item-1', 'idea-to-evidence-what-you-get', 1, NULL, 'A decision on evidence.', 'Your customers use a working prototype before you commit to building it.') ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-what-you-get-item-2', 'idea-to-evidence-what-you-get', 2, NULL, 'New thinking on how your product works.', 'That includes where AI and agents can do part of the work while your customer stays in control.') ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-what-you-get-item-3', 'idea-to-evidence-what-you-get', 3, NULL, 'A build-ready handoff.', 'Working code, the full rulebook behind it, and an engineering scope your team can build from without starting over.') ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-what-you-get-item-4', 'idea-to-evidence-what-you-get', 4, NULL, 'A clear line to value.', 'The metric is named before any paid work begins, a baseline is taken, and results are reported at 90 and 180 days.') ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-what-you-get-item-5', 'idea-to-evidence-what-you-get', 5, NULL, 'Your team, able to run the next cycle on its own.', 'There is no retainer.') ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-ways-to-engage-understand', 'idea-to-evidence-ways-to-engage', 1, NULL, 'Understand', NULL) ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-ways-to-engage-define', 'idea-to-evidence-ways-to-engage', 2, NULL, 'Define', NULL) ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-ways-to-engage-prove', 'idea-to-evidence-ways-to-engage', 3, NULL, 'Prove', NULL) ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-commitments-item-1', 'idea-to-evidence-commitments', 1, NULL, 'The initiative aligns to or extends your own roadmap.', NULL) ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-commitments-item-2', 'idea-to-evidence-commitments', 2, NULL, 'Every engagement is tied to a Value Creation Plan metric, named in the first conversation.', NULL) ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-commitments-item-3', 'idea-to-evidence-commitments', 3, NULL, 'The work ends in something built, used by your customers before any decision is made.', NULL) ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-commitments-item-4', 'idea-to-evidence-commitments', 4, NULL, 'You own every output of each phase you complete.', NULL) ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-commitments-item-5', 'idea-to-evidence-commitments', 5, NULL, 'Every engagement is time-bound and ends with your team able to run the next cycle.', NULL) ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-what-we-ask-item-1', 'idea-to-evidence-what-we-ask', 1, NULL, 'A named owner.', 'Someone who holds the engagement and, after Handoff, the Value Review numbers.') ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-what-we-ask-item-2', 'idea-to-evidence-what-we-ask', 2, NULL, 'Leadership time.', 'For Discovery, the Assessment sessions, and the decision session.') ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_items (landing_page_item_id, landing_page_section, sort_order, label, heading, body_text)
+VALUES ('idea-to-evidence-what-we-ask-item-3', 'idea-to-evidence-what-we-ask', 3, NULL, 'Access and help.', 'The product, the data, and the people who know it best, plus help recruiting three to five customers for testing and engineering time at Handoff.') ON CONFLICT (landing_page_item_id) DO UPDATE SET landing_page_section = EXCLUDED.landing_page_section, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, heading = EXCLUDED.heading, body_text = EXCLUDED.body_text;
+
+-- ----------------------------------------------------------------------------
+-- LandingPageItemFacts: Table: LandingPageItemFacts. Labeled lines shown under a landing page item.
+-- ----------------------------------------------------------------------------
+INSERT INTO landing_page_item_facts (landing_page_item_fact_id, landing_page_item, sort_order, label, body_text)
+VALUES ('idea-to-evidence-ways-to-engage-understand-fact-1', 'idea-to-evidence-ways-to-engage-understand', 1, 'Includes', 'Discovery and Audit') ON CONFLICT (landing_page_item_fact_id) DO UPDATE SET landing_page_item = EXCLUDED.landing_page_item, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_item_facts (landing_page_item_fact_id, landing_page_item, sort_order, label, body_text)
+VALUES ('idea-to-evidence-ways-to-engage-understand-fact-2', 'idea-to-evidence-ways-to-engage-understand', 2, 'You take away', 'An outside, evidence-based view of your product and the opportunity worth pursuing.') ON CONFLICT (landing_page_item_fact_id) DO UPDATE SET landing_page_item = EXCLUDED.landing_page_item, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_item_facts (landing_page_item_fact_id, landing_page_item, sort_order, label, body_text)
+VALUES ('idea-to-evidence-ways-to-engage-define-fact-1', 'idea-to-evidence-ways-to-engage-define', 1, 'Includes', 'Understand, plus Assessment') ON CONFLICT (landing_page_item_fact_id) DO UPDATE SET landing_page_item = EXCLUDED.landing_page_item, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_item_facts (landing_page_item_fact_id, landing_page_item, sort_order, label, body_text)
+VALUES ('idea-to-evidence-ways-to-engage-define-fact-2', 'idea-to-evidence-ways-to-engage-define', 2, 'You take away', 'One initiative, agreed and specified, ready to test or build.') ON CONFLICT (landing_page_item_fact_id) DO UPDATE SET landing_page_item = EXCLUDED.landing_page_item, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_item_facts (landing_page_item_fact_id, landing_page_item, sort_order, label, body_text)
+VALUES ('idea-to-evidence-ways-to-engage-prove-fact-1', 'idea-to-evidence-ways-to-engage-prove', 1, 'Includes', 'The full engagement') ON CONFLICT (landing_page_item_fact_id) DO UPDATE SET landing_page_item = EXCLUDED.landing_page_item, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, body_text = EXCLUDED.body_text;
+
+INSERT INTO landing_page_item_facts (landing_page_item_fact_id, landing_page_item, sort_order, label, body_text)
+VALUES ('idea-to-evidence-ways-to-engage-prove-fact-2', 'idea-to-evidence-ways-to-engage-prove', 2, 'You take away', 'A tested prototype, a decision, a build-ready handoff, and the Value Review.') ON CONFLICT (landing_page_item_fact_id) DO UPDATE SET landing_page_item = EXCLUDED.landing_page_item, sort_order = EXCLUDED.sort_order, label = EXCLUDED.label, body_text = EXCLUDED.body_text;
+

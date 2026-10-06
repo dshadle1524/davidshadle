@@ -12,4 +12,19 @@
 -- enforcement. Idempotent: every constraint is dropped if present, then added.
 -- ============================================================================
 
--- (no FK fields detected in rulebook)
+-- LandingPageSections
+ALTER TABLE landing_page_sections DROP CONSTRAINT IF EXISTS fk_landing_page_sections_landing_page;
+ALTER TABLE landing_page_sections ADD CONSTRAINT fk_landing_page_sections_landing_page
+  FOREIGN KEY (landing_page) REFERENCES landing_pages (landing_page_id);
+
+-- LandingPageItems
+ALTER TABLE landing_page_items DROP CONSTRAINT IF EXISTS fk_landing_page_items_landing_page_section;
+ALTER TABLE landing_page_items ADD CONSTRAINT fk_landing_page_items_landing_page_section
+  FOREIGN KEY (landing_page_section) REFERENCES landing_page_sections (landing_page_section_id);
+
+-- LandingPageItemFacts
+ALTER TABLE landing_page_item_facts DROP CONSTRAINT IF EXISTS fk_landing_page_item_facts_landing_page_item;
+ALTER TABLE landing_page_item_facts ADD CONSTRAINT fk_landing_page_item_facts_landing_page_item
+  FOREIGN KEY (landing_page_item) REFERENCES landing_page_items (landing_page_item_id);
+
+-- 3 FK constraint(s) declared (off unless EFFORTLESS_ENFORCE_FKS=true).

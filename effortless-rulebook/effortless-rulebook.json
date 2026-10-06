@@ -1199,6 +1199,560 @@
       }
     ]
   },
+  "LandingPages": {
+    "Description": "Table: LandingPages. One promotional landing page per row, reachable only by its direct URL. LandingPageId is the URL slug.",
+    "schema": [
+      {
+        "name": "LandingPageId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Stored identity. The URL slug, for example idea-to-evidence."
+      },
+      {
+        "name": "Name",
+        "datatype": "string",
+        "type": "calculated",
+        "nullable": true,
+        "Description": "Display alias.",
+        "formula": "={{Headline}}"
+      },
+      {
+        "name": "MetaTitle",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Browser title and Open Graph title."
+      },
+      {
+        "name": "MetaDescription",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Meta description and Open Graph description."
+      },
+      {
+        "name": "Eyebrow",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Small label above the headline in the hero."
+      },
+      {
+        "name": "Headline",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "The page h1."
+      },
+      {
+        "name": "Lede",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Opening paragraph under the headline."
+      },
+      {
+        "name": "VideoUrl",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Optional YouTube link. When present, the video is shown in the hero between the eyebrow and the headline."
+      },
+      {
+        "name": "PrimaryCtaLabel",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Label of the primary call-to-action button."
+      },
+      {
+        "name": "PrimaryCtaHref",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Target of the primary call-to-action button (mailto: or path)."
+      },
+      {
+        "name": "SecondaryCtaLabel",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Label of the optional secondary button."
+      },
+      {
+        "name": "SecondaryCtaHref",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Target of the optional secondary button."
+      },
+      {
+        "name": "IsPublished",
+        "datatype": "boolean",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Whether the page is served. Unpublished pages return 404."
+      }
+    ],
+    "data": [
+      {
+        "LandingPageId": "idea-to-evidence",
+        "MetaTitle": "Idea to Evidence: David Shadle",
+        "MetaDescription": "One product idea, carried to a working prototype your customers have tested, so you decide what to build on evidence. A service for Banyan operating companies.",
+        "Eyebrow": "Idea to Evidence",
+        "Headline": "New interaction concepts, prototyped and tested with your customers.",
+        "Lede": "Idea to Evidence takes one idea for how your product could work and carries it to a working prototype that your customers (or agents) can interact with. You leave with evidence and a decision, not a recommendation.",
+        "VideoUrl": "https://www.youtube.com/watch?v=49NfG8CoGJQ",
+        "PrimaryCtaLabel": "Let's get started",
+        "PrimaryCtaHref": "mailto:david@davidshadle.com?subject=Idea%20to%20Evidence%3A%20Discovery%20conversation",
+        "SecondaryCtaLabel": "Download the capability statement (PDF)",
+        "SecondaryCtaHref": "/downloads/David-Shadle-Idea-to-Evidence-Capability-Statement.pdf",
+        "IsPublished": false
+      }
+    ]
+  },
+  "LandingPageSections": {
+    "Description": "Table: LandingPageSections. The ordered sections of a landing page. Kind selects the renderer.",
+    "schema": [
+      {
+        "name": "LandingPageSectionId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Stored identity, slug form."
+      },
+      {
+        "name": "Name",
+        "datatype": "string",
+        "type": "calculated",
+        "nullable": true,
+        "Description": "Display alias.",
+        "formula": "={{Heading}}"
+      },
+      {
+        "name": "LandingPage",
+        "datatype": "string",
+        "type": "relationship",
+        "nullable": false,
+        "Description": "The landing page this section belongs to.",
+        "RelatedTo": "LandingPages"
+      },
+      {
+        "name": "SortOrder",
+        "datatype": "integer",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Display order within the page."
+      },
+      {
+        "name": "Kind",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Renderer: prose, list, steps, cards or callout."
+      },
+      {
+        "name": "AnchorId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Optional HTML id for the section, for in-page links."
+      },
+      {
+        "name": "Eyebrow",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Small label above the section heading."
+      },
+      {
+        "name": "Heading",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Section heading."
+      },
+      {
+        "name": "BodyText",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Section body copy. Paragraph breaks encoded as \\n\\n."
+      }
+    ],
+    "data": [
+      {
+        "LandingPageSectionId": "idea-to-evidence-why-now",
+        "LandingPage": "idea-to-evidence",
+        "SortOrder": 1,
+        "Kind": "prose",
+        "AnchorId": null,
+        "Eyebrow": "Why now",
+        "Heading": "AI can now do part of the work your customers do by hand.",
+        "BodyText": "AI can act on a customer's behalf, anticipate a need, and complete a task. Forms, reports, help, and transactions can all work differently. That opens new ways for your product to serve customers, and gives them a reason to renew and buy more.\n\nMost leadership teams already have ideas about where to start. What is hard to find is the time to learn which idea is worth building before committing to build it. This engagement is built to find that out, in a few focused sessions, with the building and testing done outside your leadership team's calendar."
+      },
+      {
+        "LandingPageSectionId": "idea-to-evidence-what-you-get",
+        "LandingPage": "idea-to-evidence",
+        "SortOrder": 2,
+        "Kind": "list",
+        "AnchorId": null,
+        "Eyebrow": "What you get",
+        "Heading": "Five things you take away.",
+        "BodyText": null
+      },
+      {
+        "LandingPageSectionId": "idea-to-evidence-ways-to-engage",
+        "LandingPage": "idea-to-evidence",
+        "SortOrder": 3,
+        "Kind": "cards",
+        "AnchorId": "ways-to-engage",
+        "Eyebrow": "Ways to engage",
+        "Heading": "Choose how far to go.",
+        "BodyText": "The level is chosen in Discovery and can be extended later."
+      },
+      {
+        "LandingPageSectionId": "idea-to-evidence-commitments",
+        "LandingPage": "idea-to-evidence",
+        "SortOrder": 4,
+        "Kind": "list",
+        "AnchorId": null,
+        "Eyebrow": "Commitments",
+        "Heading": "Five commitments.",
+        "BodyText": null
+      },
+      {
+        "LandingPageSectionId": "idea-to-evidence-who-it-is-for",
+        "LandingPage": "idea-to-evidence",
+        "SortOrder": 5,
+        "Kind": "prose",
+        "AnchorId": null,
+        "Eyebrow": "Who it is for",
+        "Heading": "Operating company leadership.",
+        "BodyText": "Leadership of a Banyan operating company, usually the CEO or the person who holds product direction, working with the Operating Partner who owns the Value Creation Plan. OpCos arrive by referral from an Operating Partner or Banyan leadership, or after a Guild Session on an interaction pattern. Both routes begin with a free Discovery conversation."
+      },
+      {
+        "LandingPageSectionId": "idea-to-evidence-what-we-ask",
+        "LandingPage": "idea-to-evidence",
+        "SortOrder": 6,
+        "Kind": "list",
+        "AnchorId": null,
+        "Eyebrow": "What we ask of you",
+        "Heading": "What the engagement needs from your side.",
+        "BodyText": null
+      },
+      {
+        "LandingPageSectionId": "idea-to-evidence-your-data",
+        "LandingPage": "idea-to-evidence",
+        "SortOrder": 7,
+        "Kind": "prose",
+        "AnchorId": null,
+        "Eyebrow": "Your data",
+        "Heading": "Your data stays yours.",
+        "BodyText": "Your data is used only for your engagement. Testing participants give consent and are not named. Everything produced, including testing records, transfers to you, and the provider keeps no copy. Nothing is shared with another company."
+      },
+      {
+        "LandingPageSectionId": "idea-to-evidence-about",
+        "LandingPage": "idea-to-evidence",
+        "SortOrder": 8,
+        "Kind": "prose",
+        "AnchorId": null,
+        "Eyebrow": "About",
+        "Heading": "David Shadle.",
+        "BodyText": "Twenty years leading product, design, and engineering teams. I work where experience design and product strategy meet, and I build what I design. AI tools do the volume work of research, drafting, and building. My judgment decides what matters."
+      },
+      {
+        "LandingPageSectionId": "idea-to-evidence-to-start",
+        "LandingPage": "idea-to-evidence",
+        "SortOrder": 9,
+        "Kind": "callout",
+        "AnchorId": "to-start",
+        "Eyebrow": "To start",
+        "Heading": "Request a free Discovery conversation.",
+        "BodyText": "One conversation to confirm fit, name the metric, and agree where to start."
+      }
+    ]
+  },
+  "LandingPageItems": {
+    "Description": "Table: LandingPageItems. The ordered items inside a landing page section (cards, steps, list entries).",
+    "schema": [
+      {
+        "name": "LandingPageItemId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Stored identity, slug form."
+      },
+      {
+        "name": "Name",
+        "datatype": "string",
+        "type": "calculated",
+        "nullable": true,
+        "Description": "Display alias.",
+        "formula": "={{Heading}}"
+      },
+      {
+        "name": "LandingPageSection",
+        "datatype": "string",
+        "type": "relationship",
+        "nullable": false,
+        "Description": "The section this item belongs to.",
+        "RelatedTo": "LandingPageSections"
+      },
+      {
+        "name": "SortOrder",
+        "datatype": "integer",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Display order within the section."
+      },
+      {
+        "name": "Label",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Optional short marker, for example a step number."
+      },
+      {
+        "name": "Heading",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Item heading."
+      },
+      {
+        "name": "BodyText",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Item body copy."
+      }
+    ],
+    "data": [
+      {
+        "LandingPageItemId": "idea-to-evidence-what-you-get-item-1",
+        "LandingPageSection": "idea-to-evidence-what-you-get",
+        "SortOrder": 1,
+        "Label": null,
+        "Heading": "A decision on evidence.",
+        "BodyText": "Your customers use a working prototype before you commit to building it."
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-what-you-get-item-2",
+        "LandingPageSection": "idea-to-evidence-what-you-get",
+        "SortOrder": 2,
+        "Label": null,
+        "Heading": "New thinking on how your product works.",
+        "BodyText": "That includes where AI and agents can do part of the work while your customer stays in control."
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-what-you-get-item-3",
+        "LandingPageSection": "idea-to-evidence-what-you-get",
+        "SortOrder": 3,
+        "Label": null,
+        "Heading": "A build-ready handoff.",
+        "BodyText": "Working code, the full rulebook behind it, and an engineering scope your team can build from without starting over."
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-what-you-get-item-4",
+        "LandingPageSection": "idea-to-evidence-what-you-get",
+        "SortOrder": 4,
+        "Label": null,
+        "Heading": "A clear line to value.",
+        "BodyText": "The metric is named before any paid work begins, a baseline is taken, and results are reported at 90 and 180 days."
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-what-you-get-item-5",
+        "LandingPageSection": "idea-to-evidence-what-you-get",
+        "SortOrder": 5,
+        "Label": null,
+        "Heading": "Your team, able to run the next cycle on its own.",
+        "BodyText": "There is no retainer."
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-ways-to-engage-understand",
+        "LandingPageSection": "idea-to-evidence-ways-to-engage",
+        "SortOrder": 1,
+        "Label": null,
+        "Heading": "Understand",
+        "BodyText": null
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-ways-to-engage-define",
+        "LandingPageSection": "idea-to-evidence-ways-to-engage",
+        "SortOrder": 2,
+        "Label": null,
+        "Heading": "Define",
+        "BodyText": null
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-ways-to-engage-prove",
+        "LandingPageSection": "idea-to-evidence-ways-to-engage",
+        "SortOrder": 3,
+        "Label": null,
+        "Heading": "Prove",
+        "BodyText": null
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-commitments-item-1",
+        "LandingPageSection": "idea-to-evidence-commitments",
+        "SortOrder": 1,
+        "Label": null,
+        "Heading": "The initiative aligns to or extends your own roadmap.",
+        "BodyText": null
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-commitments-item-2",
+        "LandingPageSection": "idea-to-evidence-commitments",
+        "SortOrder": 2,
+        "Label": null,
+        "Heading": "Every engagement is tied to a Value Creation Plan metric, named in the first conversation.",
+        "BodyText": null
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-commitments-item-3",
+        "LandingPageSection": "idea-to-evidence-commitments",
+        "SortOrder": 3,
+        "Label": null,
+        "Heading": "The work ends in something built, used by your customers before any decision is made.",
+        "BodyText": null
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-commitments-item-4",
+        "LandingPageSection": "idea-to-evidence-commitments",
+        "SortOrder": 4,
+        "Label": null,
+        "Heading": "You own every output of each phase you complete.",
+        "BodyText": null
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-commitments-item-5",
+        "LandingPageSection": "idea-to-evidence-commitments",
+        "SortOrder": 5,
+        "Label": null,
+        "Heading": "Every engagement is time-bound and ends with your team able to run the next cycle.",
+        "BodyText": null
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-what-we-ask-item-1",
+        "LandingPageSection": "idea-to-evidence-what-we-ask",
+        "SortOrder": 1,
+        "Label": null,
+        "Heading": "A named owner.",
+        "BodyText": "Someone who holds the engagement and, after Handoff, the Value Review numbers."
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-what-we-ask-item-2",
+        "LandingPageSection": "idea-to-evidence-what-we-ask",
+        "SortOrder": 2,
+        "Label": null,
+        "Heading": "Leadership time.",
+        "BodyText": "For Discovery, the Assessment sessions, and the decision session."
+      },
+      {
+        "LandingPageItemId": "idea-to-evidence-what-we-ask-item-3",
+        "LandingPageSection": "idea-to-evidence-what-we-ask",
+        "SortOrder": 3,
+        "Label": null,
+        "Heading": "Access and help.",
+        "BodyText": "The product, the data, and the people who know it best, plus help recruiting three to five customers for testing and engineering time at Handoff."
+      }
+    ]
+  },
+  "LandingPageItemFacts": {
+    "Description": "Table: LandingPageItemFacts. Labeled lines shown under a landing page item.",
+    "schema": [
+      {
+        "name": "LandingPageItemFactId",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Stored identity, slug form."
+      },
+      {
+        "name": "Name",
+        "datatype": "string",
+        "type": "calculated",
+        "nullable": true,
+        "Description": "Display alias.",
+        "formula": "={{Label}}"
+      },
+      {
+        "name": "LandingPageItem",
+        "datatype": "string",
+        "type": "relationship",
+        "nullable": false,
+        "Description": "The item this fact belongs to.",
+        "RelatedTo": "LandingPageItems"
+      },
+      {
+        "name": "SortOrder",
+        "datatype": "integer",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Display order within the item."
+      },
+      {
+        "name": "Label",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Fact label, for example What happens."
+      },
+      {
+        "name": "BodyText",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": false,
+        "Description": "Fact text. One fact per line when it is a list."
+      }
+    ],
+    "data": [
+      {
+        "LandingPageItemFactId": "idea-to-evidence-ways-to-engage-understand-fact-1",
+        "LandingPageItem": "idea-to-evidence-ways-to-engage-understand",
+        "SortOrder": 1,
+        "Label": "Includes",
+        "BodyText": "Discovery and Audit"
+      },
+      {
+        "LandingPageItemFactId": "idea-to-evidence-ways-to-engage-understand-fact-2",
+        "LandingPageItem": "idea-to-evidence-ways-to-engage-understand",
+        "SortOrder": 2,
+        "Label": "You take away",
+        "BodyText": "An outside, evidence-based view of your product and the opportunity worth pursuing."
+      },
+      {
+        "LandingPageItemFactId": "idea-to-evidence-ways-to-engage-define-fact-1",
+        "LandingPageItem": "idea-to-evidence-ways-to-engage-define",
+        "SortOrder": 1,
+        "Label": "Includes",
+        "BodyText": "Understand, plus Assessment"
+      },
+      {
+        "LandingPageItemFactId": "idea-to-evidence-ways-to-engage-define-fact-2",
+        "LandingPageItem": "idea-to-evidence-ways-to-engage-define",
+        "SortOrder": 2,
+        "Label": "You take away",
+        "BodyText": "One initiative, agreed and specified, ready to test or build."
+      },
+      {
+        "LandingPageItemFactId": "idea-to-evidence-ways-to-engage-prove-fact-1",
+        "LandingPageItem": "idea-to-evidence-ways-to-engage-prove",
+        "SortOrder": 1,
+        "Label": "Includes",
+        "BodyText": "The full engagement"
+      },
+      {
+        "LandingPageItemFactId": "idea-to-evidence-ways-to-engage-prove-fact-2",
+        "LandingPageItem": "idea-to-evidence-ways-to-engage-prove",
+        "SortOrder": 2,
+        "Label": "You take away",
+        "BodyText": "A tested prototype, a decision, a build-ready handoff, and the Value Review."
+      }
+    ]
+  },
   "_meta": {
     "_CMCC_Summary": "Hand-authored rulebook for davidshadle.com v4, seeded directly from the Content Strategy, Bio Set, How I Work, and Resume Variants source markdown documents. No upstream input spoke (no Airtable/Excel).",
     "_conversion_metadata": {

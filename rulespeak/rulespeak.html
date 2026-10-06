@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-lang="en" class="show-rulespeak show-desc show-inputs">
+<html lang="en" data-lang="en" class="show-english show-desc show-consumers show-data">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,6 +32,7 @@ html.show-formula   .elem-formula{display:block}
 html.show-desc      .elem-desc{display:block}
 html.show-inputs    .elem-inputs{display:block}
 html.show-consumers .elem-consumers{display:block}
+html.show-data      .elem-data{display:block}
 
 /* ── Sticky top bar — brand · breadcrumb · language · gear ───────────────── */
 .topbar{position:sticky;top:0;z-index:40;height:var(--bar-h);
@@ -164,6 +165,26 @@ span.input-static:hover{background:#fcfcfe}
 .input-glyph{font-size:12px;color:var(--muted)}
 .input-name{font-weight:700;color:var(--ink)}
 .input-table{font-size:11px;color:var(--muted);margin-left:auto}
+
+/* ── Example data (per entity, collapsible; gear switch: data) ─────────── */
+.entity-data{margin:14px 0 4px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.entity-data>summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--ink);list-style:none}
+.entity-data>summary::-webkit-details-marker{display:none}
+.entity-data>summary::before{content:'▸';display:inline-block;margin-right:6px;color:var(--muted);transition:transform .1s}
+.entity-data[open]>summary::before{transform:rotate(90deg)}
+.entity-data .sample-scroll{margin-top:10px}
+.sample-note{max-width:960px;margin:16px auto 0;padding:0 24px;color:var(--muted);font-size:13px}
+.sample-scroll{overflow-x:auto}
+.sample-table{border-collapse:collapse;font-size:13px;background:var(--card);
+  border:1px solid var(--line);border-radius:6px}
+.sample-table th,.sample-table td{padding:6px 12px;border-bottom:1px solid var(--line);
+  text-align:left;vertical-align:top;white-space:nowrap}
+.sample-table thead th{background:#f5f5fa;font-weight:600;color:var(--ink)}
+.sample-table tbody tr:last-child td{border-bottom:none}
+.sample-table th.sample-derived{background:var(--calc-bg);color:var(--calc)}
+.sample-table td.sample-derived{color:var(--calc)}
+.sample-fx{margin-left:4px;opacity:.75}
+.sample-legend{color:var(--muted);font-size:12px;margin-top:12px}
 .input-en{display:block;margin-top:3px;font-size:13px;color:var(--muted)}
 .ref-pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;
   border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:#fff;color:var(--ink)}
@@ -192,7 +213,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
 (function(){
   var LANGS=['en'];
   var DEFAULT_LANG='en';
-  var ELEMS=['rulespeak','english','formula','desc','inputs','consumers'];
+  var ELEMS=['rulespeak','english','formula','desc','inputs','consumers','data'];
   var root=document.documentElement;
 
   var lang=null;
@@ -226,12 +247,12 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
   <div class="gear-pop" role="dialog" aria-label="Documentation options" hidden>
     <p class="gear-pop-title">Show in this document</p>
     <label class="gear-opt" title="The declarative business rule (only if / must / priority)">
-      <input type="checkbox" data-elem="rulespeak" checked>
+      <input type="checkbox" data-elem="rulespeak">
       <span class="gear-opt-label">RuleSpeak®</span>
       <span class="gear-opt-hint">The declarative business rule (only if / must / priority)</span>
     </label>
     <label class="gear-opt" title="The formula read aloud as a plain sentence">
-      <input type="checkbox" data-elem="english">
+      <input type="checkbox" data-elem="english" checked>
       <span class="gear-opt-label">Plain reading</span>
       <span class="gear-opt-hint">The formula read aloud as a plain sentence</span>
     </label>
@@ -246,14 +267,19 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="gear-opt-hint">The author's narrative comment on a field, when present</span>
     </label>
     <label class="gear-opt" title="The fields each rule reads (its DAG inputs / upstream)">
-      <input type="checkbox" data-elem="inputs" checked>
+      <input type="checkbox" data-elem="inputs">
       <span class="gear-opt-label">Links to inputs</span>
       <span class="gear-opt-hint">The fields each rule reads (its DAG inputs / upstream)</span>
     </label>
     <label class="gear-opt" title="The rules that read this one (its DAG consumers / downstream)">
-      <input type="checkbox" data-elem="consumers">
+      <input type="checkbox" data-elem="consumers" checked>
       <span class="gear-opt-label">Links to consumers</span>
       <span class="gear-opt-hint">The rules that read this one (its DAG consumers / downstream)</span>
+    </label>
+    <label class="gear-opt" title="The first rows of each entity's data, computed columns included">
+      <input type="checkbox" data-elem="data" checked>
+      <span class="gear-opt-label">Example data</span>
+      <span class="gear-opt-hint">The first rows of each entity's data, computed columns included</span>
     </label>
     <button type="button" class="gear-reset">Reset to defaults</button>
   </div>
@@ -278,6 +304,10 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <li><a href="#en-t-resumevariants">Resume Variant</a> <span class="toc-meta">1 rules · 0 links</span></li>
     <li><a href="#en-t-resumelistitems">Resume List Item</a> <span class="toc-meta">1 rules · 0 links</span></li>
     <li><a href="#en-t-educationentries">Education Entry</a> <span class="toc-meta">1 rules · 0 links</span></li>
+    <li><a href="#en-t-landingpages">Landing Page</a> <span class="toc-meta">1 rules · 0 links</span></li>
+    <li><a href="#en-t-landingpagesections">Landing Page Section</a> <span class="toc-meta">1 rules · 1 links</span></li>
+    <li><a href="#en-t-landingpageitems">Landing Page Item</a> <span class="toc-meta">1 rules · 1 links</span></li>
+    <li><a href="#en-t-landingpageitemfacts">Landing Page Item Fact</a> <span class="toc-meta">1 rules · 1 links</span></li>
   </ul>
 </nav>
 <section class="entity" id="en-t-sitesettings" data-entity="Site Setting">
@@ -294,6 +324,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-muted">string</span>
       <span class="pill pill-dr">DR-1</span>
     </div>
+    <p class="field-note elem elem-desc">Display alias.</p>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
         <span class="view-label">In RuleSpeak®</span>
@@ -323,17 +354,13 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
         <span class="ref-pill tone-raw">● Site Setting ID <span class="ref-pill-tbl">Site Setting</span></span>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Display alias.</p>
     </article>
   <article class="field tone-raw" id="en-f-sitesettings-contactemail" data-entity="Site Setting" data-field="Contact Email">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Contact Email</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Primary contact email, shown in the Contact section on Home and Work.</p>
     </article>
@@ -341,11 +368,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Contact Phone</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Contact phone number, as it appears on the resume header.</p>
     </article>
@@ -353,11 +377,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Site Domain</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Canonical site domain.</p>
     </article>
@@ -365,11 +386,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Portfolio Company Count</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Standardized portfolio count string, per Content Strategy Section 6 ('100+' everywhere, never 107 or 111).</p>
     </article>
@@ -377,11 +395,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Self Description Line</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">The 'full stack product practitioner' anchor phrase. Per Section 2: say it once, never next to a list.</p>
     </article>
@@ -389,11 +404,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Positioning Statement</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">The core positioning paragraph everything else derives from (Content Strategy Section 2).</p>
     </article>
@@ -401,11 +413,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Hero Headline</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">The large opening line of the Home hero, first person. First sentence of PositioningStatement, curated separately so the hero can style it distinctly from HeroSubheadline.</p>
     </article>
@@ -413,11 +422,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Hero Subheadline</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">The medium-sized second line of the Home hero, directly under HeroHeadline. Second/third sentence of PositioningStatement.</p>
     </article>
@@ -425,14 +431,45 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Banyan Title</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Full Banyan title, used everywhere per Section 6: 'Technical Advisor, Product Strategy and UX'.</p>
     </article>
+  <details class="entity-data elem elem-data" open>
+    <summary>Example data</summary>
+    <div class="sample-scroll">
+    <table class="sample-table">
+      <thead><tr>
+        <th class="sample-derived">Name<span class="sample-fx">ƒ</span></th>
+        <th>Contact Email</th>
+        <th>Contact Phone</th>
+        <th>Site Domain</th>
+        <th>Portfolio Company Count</th>
+        <th>Self Description Line</th>
+        <th>Positioning Statement</th>
+        <th>Hero Headline</th>
+        <th>Hero Subheadline</th>
+        <th>Banyan Title</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sample-derived">default</td>
+          <td>david@davidshadle.com</td>
+          <td>425.417.2339</td>
+          <td>davidshadle.com</td>
+          <td>100+</td>
+          <td>A full stack product practitioner. Not just capable of wearing several hats at once, but confident delivering the outcome in each one.</td>
+          <td>I build the systems that turn strategy into working software. Most advisors stop at the recommendation. I keep going, through the model, the interface, and the handoff, so the thing that gets agreed on is the thing that gets shipped. I work from a rulebook: the rules of a domain written down once in plain language, with the technical pieces derived from that rather than maintained by hand. It is a discipline, not a product. It is what lets me carry a project through delivery instead of stopping at design and project management.</td>
+          <td>I build the systems that turn strategy into working software.</td>
+          <td>Most advisors stop at the recommendation. I keep going, through the model, the interface, and the handoff, so the thing that gets agreed on is the thing that gets shipped.</td>
+          <td>Technical Advisor, Product Strategy and UX</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sample-legend">ƒ marks a computed column.</p>
+  </details>
 </section>
 <section class="entity" id="en-t-currentlyitems" data-entity="Currently Item">
   <header class="entity-head">
@@ -448,6 +485,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-muted">string</span>
       <span class="pill pill-dr">DR-2</span>
     </div>
+    <p class="field-note elem elem-desc">Display alias.</p>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
         <span class="view-label">In RuleSpeak®</span>
@@ -477,35 +515,28 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
         <a class="ref-pill tone-raw" href="#en-f-currentlyitems-title">● Title <span class="ref-pill-tbl">Currently Item</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Display alias.</p>
     </article>
   <article class="field tone-raw" id="en-f-currentlyitems-title" data-entity="Currently Item" data-field="Title">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Title</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
     </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
-    </div>
+    <p class="field-note elem elem-desc">The bullet's title/name, e.g. 'Banyan Software' or 'Lookout Together'.</p>
     <details class="prov prov-consumers elem elem-consumers" open>
       <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
       <div class="prov-pills">
         <a class="ref-pill tone-calc" href="#en-f-currentlyitems-name">ƒ Name <span class="ref-pill-tbl">Currently Item</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">The bullet's title/name, e.g. 'Banyan Software' or 'Lookout Together'.</p>
     </article>
   <article class="field tone-raw" id="en-f-currentlyitems-bodytext" data-entity="Currently Item" data-field="Body Text">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Body Text</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">The bullet's description text, under the title.</p>
     </article>
@@ -513,14 +544,39 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Sort Order</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype integer); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">integer</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Display order.</p>
     </article>
+  <details class="entity-data elem elem-data" open>
+    <summary>Example data</summary>
+    <div class="sample-scroll">
+    <table class="sample-table">
+      <thead><tr>
+        <th class="sample-derived">Name<span class="sample-fx">ƒ</span></th>
+        <th>Title</th>
+        <th>Body Text</th>
+        <th>Sort Order</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sample-derived">Banyan Software</td>
+          <td>Banyan Software</td>
+          <td>Advising on product strategy and UX. Built a self-managed portal providing product management concepts/ frameworks with a focus on delivering strategic articulation, roadmaps and initiative audits to their portfolio of 100+ B2B SaaS operating companies. Delivered contextual executive dashboards to track workshop engagement, cloud spend and technical due diligence deal tracking.</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">Lookout Together</td>
+          <td>Lookout Together</td>
+          <td>A family scam-resilience service I conceived, designed and built on my own. Older adults get current, practical knowledge about how scams actually work and how to proactively protect themselves. Their adult children get a way to help without taking over. No monitoring, no account access, no one acting on anyone's behalf. Strategy, experience design and build, all one person.</td>
+          <td>2</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sample-legend">ƒ marks a computed column.</p>
+  </details>
 </section>
 <section class="entity" id="en-t-biovariants" data-entity="Bio Variant">
   <header class="entity-head">
@@ -536,6 +592,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-muted">string</span>
       <span class="pill pill-dr">DR-3</span>
     </div>
+    <p class="field-note elem elem-desc">Display alias.</p>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
         <span class="view-label">In RuleSpeak®</span>
@@ -565,35 +622,28 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
         <a class="ref-pill tone-raw" href="#en-f-biovariants-label">● Label <span class="ref-pill-tbl">Bio Variant</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Display alias.</p>
     </article>
   <article class="field tone-raw" id="en-f-biovariants-label" data-entity="Bio Variant" data-field="Label">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Label</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
     </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
-    </div>
+    <p class="field-note elem elem-desc">Human label for this bio length/context, e.g. 'Fifty words'.</p>
     <details class="prov prov-consumers elem elem-consumers" open>
       <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
       <div class="prov-pills">
         <a class="ref-pill tone-calc" href="#en-f-biovariants-name">ƒ Name <span class="ref-pill-tbl">Bio Variant</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Human label for this bio length/context, e.g. 'Fifty words'.</p>
     </article>
   <article class="field tone-raw" id="en-f-biovariants-usagecontext" data-entity="Bio Variant" data-field="Usage Context">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Usage Context</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Where this variant gets used, e.g. 'Directory listings, conference programs, deck footers, introductions.'</p>
     </article>
@@ -601,11 +651,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Body Text</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">The bio copy itself. Paragraph breaks encoded as \n\n.</p>
     </article>
@@ -613,14 +660,49 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Sort Order</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype integer); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">integer</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Display order, shortest to longest.</p>
     </article>
+  <details class="entity-data elem elem-data" open>
+    <summary>Example data</summary>
+    <div class="sample-scroll">
+    <table class="sample-table">
+      <thead><tr>
+        <th class="sample-derived">Name<span class="sample-fx">ƒ</span></th>
+        <th>Label</th>
+        <th>Usage Context</th>
+        <th>Body Text</th>
+        <th>Sort Order</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sample-derived">One line</td>
+          <td>One line</td>
+          <td>Email signature, byline, Slack profile.</td>
+          <td>Technical Advisor, Product Strategy and UX at Banyan Software. I build the systems that turn strategy into working software.</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">One line (alternate)</td>
+          <td>One line (alternate)</td>
+          <td>Where Banyan is not the point.</td>
+          <td>Product strategy, design, and the systems that ship them. Full stack product practitioner.</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">Fifty words</td>
+          <td>Fifty words</td>
+          <td>Directory listings, conference programs, deck footers, introductions.</td>
+          <td>David Shadle builds the systems that turn strategy into working software. He is Technical Advisor, Product Strategy and UX at Banyan Software, working across a portfolio of more than 100 B2B SaaS operating companies, where he designed and built the product management platform the program runs on.</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sample-legend">ƒ marks a computed column.</p>
+  </details>
 </section>
 <section class="entity" id="en-t-howiworksections" data-entity="How I Work Section">
   <header class="entity-head">
@@ -636,6 +718,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-muted">string</span>
       <span class="pill pill-dr">DR-4</span>
     </div>
+    <p class="field-note elem elem-desc">Display alias.</p>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
         <span class="view-label">In RuleSpeak®</span>
@@ -665,35 +748,28 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
         <a class="ref-pill tone-raw" href="#en-f-howiworksections-heading">● Heading <span class="ref-pill-tbl">How I Work Section</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Display alias.</p>
     </article>
   <article class="field tone-raw" id="en-f-howiworksections-heading" data-entity="How I Work Section" data-field="Heading">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Heading</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
     </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
-    </div>
+    <p class="field-note elem elem-desc">Section heading as it appears on the page.</p>
     <details class="prov prov-consumers elem elem-consumers" open>
       <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
       <div class="prov-pills">
         <a class="ref-pill tone-calc" href="#en-f-howiworksections-name">ƒ Name <span class="ref-pill-tbl">How I Work Section</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Section heading as it appears on the page.</p>
     </article>
   <article class="field tone-raw" id="en-f-howiworksections-bodytext" data-entity="How I Work Section" data-field="Body Text">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Body Text</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Full-page body copy for this section. Paragraph breaks encoded as \n\n.</p>
     </article>
@@ -701,11 +777,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Short Body Text</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Condensed ~1-paragraph version, used if How I Work becomes a Home section instead of its own page. Null where the short version drops the section entirely.</p>
     </article>
@@ -713,14 +786,59 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Sort Order</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype integer); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">integer</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Display order on the page.</p>
     </article>
+  <details class="entity-data elem elem-data" open>
+    <summary>Example data</summary>
+    <div class="sample-scroll">
+    <table class="sample-table">
+      <thead><tr>
+        <th class="sample-derived">Name<span class="sample-fx">ƒ</span></th>
+        <th>Heading</th>
+        <th>Body Text</th>
+        <th>Short Body Text</th>
+        <th>Sort Order</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sample-derived">The problem comes first, and it gets its own document</td>
+          <td>The problem comes first, and it gets its own document</td>
+          <td>Designing against a problem nobody agreed on is the most expensive mistake available. It is also the easiest one to make, because solutions are more interesting to discuss than problems.
+
+So every engagement starts with a brief that contains no screens, no architecture, and no charts. Only the problem, who has it, what it costs, and how we would know it was solved. It gets reviewed by the people who live with the problem before anything else begins.
+
+Doing this properly means real analysis, and the analysis tends to turn things up. On one engagement it surfaced that staging and production were serving two different dashboards. That was a byproduct, not the goal. The goal was an executive team aligned on the problem, which is what makes the scoping and the specification that follow worth doing.</td>
+          <td>Every engagement starts with a brief containing no screens, no architecture, and no charts. Designing against a problem nobody agreed on is the most expensive mistake available.</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">The model gets written down once</td>
+          <td>The model gets written down once</td>
+          <td>Most drift starts small. A chart computes its own version of a metric. The documentation describes last quarter's schema. Two teams use the same word for different things. Nobody decides to let a system fall out of sync. It happens between decisions.
+
+So I work from a rulebook. The rules of a domain get written down once, in plain language the person who owns the business meaning can read, and the technical pieces are derived from that rather than maintained by hand. Consistency comes from derivation rather than discipline.
+
+What matters here is not the method but what it changed. My responsibility used to end at design and project management, with development handed to someone else. Working this way, I can carry a project from concept through delivery.</td>
+          <td>I work from a rulebook. The rules of a domain get written down in plain language, and the technical pieces are derived from that rather than maintained by hand. Consistency comes from derivation rather than discipline. It is what lets me carry a project through delivery rather than stopping at design.</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">The interface performs no business calculation</td>
+          <td>The interface performs no business calculation</td>
+          <td>Every number on screen traces back to a declared field. A chart that computes its own version of a metric is a defect, not a shortcut.
+
+This sounds like an engineering rule. It is really a trust rule. The moment two surfaces can disagree about the same number, every surface becomes a thing to verify rather than a thing to use.</td>
+          <td>Every number traces back to a declared field. A chart that computes its own version of a metric is a defect.</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sample-legend">ƒ marks a computed column.</p>
+  </details>
 </section>
 <section class="entity" id="en-t-proofpoints" data-entity="Proof Point">
   <header class="entity-head">
@@ -736,6 +854,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-muted">string</span>
       <span class="pill pill-dr">DR-5</span>
     </div>
+    <p class="field-note elem elem-desc">Display alias.</p>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
         <span class="view-label">In RuleSpeak®</span>
@@ -765,35 +884,28 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
         <a class="ref-pill tone-raw" href="#en-f-proofpoints-title">● Title <span class="ref-pill-tbl">Proof Point</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Display alias.</p>
     </article>
   <article class="field tone-raw" id="en-f-proofpoints-title" data-entity="Proof Point" data-field="Title">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Title</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
     </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
-    </div>
+    <p class="field-note elem elem-desc">Short title for this proof point.</p>
     <details class="prov prov-consumers elem elem-consumers" open>
       <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
       <div class="prov-pills">
         <a class="ref-pill tone-calc" href="#en-f-proofpoints-name">ƒ Name <span class="ref-pill-tbl">Proof Point</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Short title for this proof point.</p>
     </article>
   <article class="field tone-raw" id="en-f-proofpoints-problemtext" data-entity="Proof Point" data-field="Problem Text">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Problem Text</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">The problem, as stated in the proof inventory.</p>
     </article>
@@ -801,11 +913,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Action Text</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">The action taken.</p>
     </article>
@@ -813,11 +922,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Outcome Text</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">The outcome.</p>
     </article>
@@ -825,11 +931,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Attribution Note</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Precise attribution language required when describing this work (e.g. 'advised on and implemented,' not 'owned'). See Content Strategy Section 6.</p>
     </article>
@@ -837,11 +940,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Register Note</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Internal guidance on tone/register for this proof point. Not published copy - for whoever writes site/resume text from this row.</p>
     </article>
@@ -849,11 +949,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Client or Category</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Client name where nameable, otherwise a category label (e.g. 'Medical technology'). Shown as the first half of the Projects page meta row.</p>
     </article>
@@ -861,11 +958,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Status Label</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Short status/type word for the Projects page meta row (e.g. 'Live in production', 'Problem brief').</p>
     </article>
@@ -873,11 +967,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Featured on Work Page</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype boolean); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">boolean</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Whether this proof point is one of the 2-3 engagements shown on the Work page (Section 10). First-pass selection - confirm with David before Phase 2.</p>
     </article>
@@ -885,11 +976,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Featured in Resume Selected Work</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype boolean); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">boolean</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Whether this proof point appears in the resume's 'Selected work, 2024 to 2026' block (Variant A).</p>
     </article>
@@ -897,11 +985,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Image URL</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Public URL of this project's single representative image (hosted in Cloudflare R2). Optional — shown on the Work page when set.</p>
     </article>
@@ -909,14 +994,81 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Sort Order</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype integer); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">integer</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Order matching Content Strategy Section 4 numbering.</p>
     </article>
+  <details class="entity-data elem elem-data" open>
+    <summary>Example data</summary>
+    <div class="sample-scroll">
+    <table class="sample-table">
+      <thead><tr>
+        <th class="sample-derived">Name<span class="sample-fx">ƒ</span></th>
+        <th>Title</th>
+        <th>Problem Text</th>
+        <th>Action Text</th>
+        <th>Outcome Text</th>
+        <th>Attribution Note</th>
+        <th>Register Note</th>
+        <th>Client or Category</th>
+        <th>Status Label</th>
+        <th>Featured on Work Page</th>
+        <th>Featured in Resume Selected Work</th>
+        <th>Image URL</th>
+        <th>Sort Order</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sample-derived">The rulebook approach (the through line)</td>
+          <td>The rulebook approach (the through line)</td>
+          <td>Most drift starts small. A chart computes its own version of a metric. The documentation describes last quarter's schema. Two teams use the same word for different things. Nobody decides to let a system fall out of sync, it happens between decisions.</td>
+          <td>Works from a rulebook. The rules of a domain get written down once, in plain language the person who owns the business meaning can read, and the technical pieces are derived from that rather than maintained by hand.</td>
+          <td>It made him materially more productive. Previously the responsibility ended at design and project management, with development handed to someone else. Working this way, a project can be carried from concept through delivery by one person. That is the claim. Not that the method is novel.</td>
+          <td>His working method, not his invention. Described, never sold.</td>
+          <td>Describe, do not sell. Two or three sentences max, never a section. Never name transpilers, toolchains, or vendors. Safe line, use sparingly and never more than once per document: 'Consistency comes from derivation rather than discipline.'</td>
+          <td>—</td>
+          <td>—</td>
+          <td>false</td>
+          <td>false</td>
+          <td>—</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">Product management platform, concept through production</td>
+          <td>Product management platform, concept through production</td>
+          <td>A program serving more than 100 operating companies had no home. Content, coaching, assessment, and deliverables were scattered.</td>
+          <td>Designed and built the platform end to end: personas and access model, corporate SSO, frontend, API, PostgreSQL, content and artifact layer, and containerized infrastructure with automated deployment. Content and navigation are data rather than code, so the product and its specification cannot drift apart.</td>
+          <td>Live in production, serving PMs, operating partners, delivery coordinators, and program leads.</td>
+          <td>Sole responsibility, concept through production. Language to use: 'Designed and built end to end.'</td>
+          <td>The single strongest artifact in the record. Sole responsibility, concept to production.</td>
+          <td>Banyan Software</td>
+          <td>Live in production</td>
+          <td>true</td>
+          <td>true</td>
+          <td>—</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">Training curriculum rebuilt as an execution engagement</td>
+          <td>Training curriculum rebuilt as an execution engagement</td>
+          <td>Inherited a module based program. Companies completed a course and went back to work unchanged.</td>
+          <td>Co-led the redesign with the program team: replaced the module sequence with a concept library surfaced at the point of need, removed hard gates in favor of facilitator judgment, capped CEO time at three to four hours.</td>
+          <td>Companies now finish with four artifacts they own, including a CEO signed strategy, a prioritized and capacity validated roadmap, a customer facing roadmap, and a ledger tracing every decision back to evidence.</td>
+          <td>Co-led with the program team. Language to use: 'Co-led the redesign.'</td>
+          <td>Line worth keeping: 'You don't take the program and then go build your roadmap. You build your roadmap in the program.'</td>
+          <td>Banyan Software</td>
+          <td>Program redesign</td>
+          <td>false</td>
+          <td>true</td>
+          <td>—</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sample-legend">ƒ marks a computed column.</p>
+  </details>
 </section>
 <section class="entity" id="en-t-jobentries" data-entity="Job Entry">
   <header class="entity-head">
@@ -932,6 +1084,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-muted">string</span>
       <span class="pill pill-dr">DR-6</span>
     </div>
+    <p class="field-note elem elem-desc">Display alias.</p>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
         <span class="view-label">In RuleSpeak®</span>
@@ -966,53 +1119,43 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
         <a class="ref-pill tone-raw" href="#en-f-jobentries-jobtitle">● Job Title <span class="ref-pill-tbl">Job Entry</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Display alias.</p>
     </article>
   <article class="field tone-raw" id="en-f-jobentries-company" data-entity="Job Entry" data-field="Company">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Company</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
     </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
-    </div>
+    <p class="field-note elem elem-desc">Employer or entity name.</p>
     <details class="prov prov-consumers elem elem-consumers" open>
       <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
       <div class="prov-pills">
         <a class="ref-pill tone-calc" href="#en-f-jobentries-name">ƒ Name <span class="ref-pill-tbl">Job Entry</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Employer or entity name.</p>
     </article>
   <article class="field tone-raw" id="en-f-jobentries-jobtitle" data-entity="Job Entry" data-field="Job Title">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Job Title</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
     </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
-    </div>
+    <p class="field-note elem elem-desc">Title held. Null on the single synthetic 'earlier roles' compressed row.</p>
     <details class="prov prov-consumers elem elem-consumers" open>
       <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
       <div class="prov-pills">
         <a class="ref-pill tone-calc" href="#en-f-jobentries-name">ƒ Name <span class="ref-pill-tbl">Job Entry</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Title held. Null on the single synthetic 'earlier roles' compressed row.</p>
     </article>
   <article class="field tone-raw" id="en-f-jobentries-startdate" data-entity="Job Entry" data-field="Start Date">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Start Date</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Start, YYYY-MM.</p>
     </article>
@@ -1020,11 +1163,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">End Date</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">End, YYYY-MM. Null if current.</p>
     </article>
@@ -1032,11 +1172,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Is Current</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype boolean); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">boolean</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">True if this role is ongoing.</p>
     </article>
@@ -1044,11 +1181,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Display Group Key</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Rows sharing this key render as one entry in Variant A (which uses the coarser grouping). Null where no grouping applies.</p>
     </article>
@@ -1056,11 +1190,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Summary Text Variant a</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Prose summary as it appears in Resume Variant A. On a grouped pair, only the earliest row in the group carries the merged text; the later row is null and the app renders the group using the earliest row's text with the group's full date range.</p>
     </article>
@@ -1068,11 +1199,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Summary Text Variant B</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Bullet-point summary as it appears in Resume Variant B, bullets joined with \n.</p>
     </article>
@@ -1080,11 +1208,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Compressed Line</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">One-line compressed text, used only on the synthetic 'earlier roles' row for Variant A's single-line pre-2019 summary.</p>
     </article>
@@ -1092,11 +1217,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Include in Variant a</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype boolean); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">boolean</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Whether this row is shown (individually or as part of a group) on Resume Variant A.</p>
     </article>
@@ -1104,11 +1226,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Include in Variant B</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype boolean); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">boolean</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Whether this row is shown on Resume Variant B.</p>
     </article>
@@ -1116,11 +1235,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Is Pre2019</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype boolean); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">boolean</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">True for roles before 2019, compressed in Variant A per Content Strategy Section 7.</p>
     </article>
@@ -1128,14 +1244,93 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Sort Order</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype integer); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">integer</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Reverse chronological display order.</p>
     </article>
+  <details class="entity-data elem elem-data" open>
+    <summary>Example data</summary>
+    <div class="sample-scroll">
+    <table class="sample-table">
+      <thead><tr>
+        <th class="sample-derived">Name<span class="sample-fx">ƒ</span></th>
+        <th>Company</th>
+        <th>Job Title</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Is Current</th>
+        <th>Display Group Key</th>
+        <th>Summary Text Variant a</th>
+        <th>Summary Text Variant B</th>
+        <th>Compressed Line</th>
+        <th>Include in Variant a</th>
+        <th>Include in Variant B</th>
+        <th>Is Pre2019</th>
+        <th>Sort Order</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sample-derived">Banyan Software - Technical Advisor, Product Strategy and UX</td>
+          <td>Banyan Software</td>
+          <td>Technical Advisor, Product Strategy and UX</td>
+          <td>2026-02</td>
+          <td>—</td>
+          <td>true</td>
+          <td>banyan</td>
+          <td>Portfolio of 100+ B2B SaaS operating companies. Supports operating company teams, product management, and technology due diligence. Platform, reporting products, and workshop work described above.</td>
+          <td>Designed and built the product management platform serving the portfolio, concept through production: access model, frontend, API, PostgreSQL, content layer, and deployed infrastructure.
+Advised on and implemented the experience layer across three executive reporting products: PM Workshop covering operating company maturity, participation and performance; Portfolio Operations covering cloud spend, escrow and compliance; and Technical Due Diligence covering deal management, time tracking and assignment.
+Rebuilt the Portfolio Operations dashboard onto a database backed foundation, replacing generated exports with live data and improving performance.
+Co-led the redesign of the AI PM Workshop from training curriculum to execution engagement, with four owned artifacts as the outcome.
+Wrote the project brief for the diligence reporting rebuild, aligning the executive team on the problem before scoping. The supporting analysis surfaced a process breakdown where staging and production served two different dashboards.</td>
+          <td>—</td>
+          <td>true</td>
+          <td>true</td>
+          <td>false</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">m+d2 &amp; Associates - Partner, Strategic Product Advisor and Designer</td>
+          <td>m+d2 &amp; Associates</td>
+          <td>Partner, Strategic Product Advisor and Designer</td>
+          <td>2025-10</td>
+          <td>—</td>
+          <td>true</td>
+          <td>m-plus-d2</td>
+          <td>Founded to take on a medical technology commercialization engagement. Led a pivot from a multi state Series A to a focused single state validation program, shifted the narrative from detection to prevention, and built the seed investor materials for two distinct audiences.</td>
+          <td>Led a medical technology client through a pivot from multi state Series A to focused single state validation.
+Repositioned the narrative from detection to prevention and built seed investor materials for two distinct audiences.
+Used a purpose built domain expert agent to research pilot program design, distribution opportunity, and insurance carrier risk, feeding the strategy the team aligned on before execution.</td>
+          <td>—</td>
+          <td>true</td>
+          <td>true</td>
+          <td>false</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">Vortent Partners - Co-founder, Strategic Product Advisor and Designer</td>
+          <td>Vortent Partners</td>
+          <td>Co-founder, Strategic Product Advisor and Designer</td>
+          <td>2025-06</td>
+          <td>—</td>
+          <td>true</td>
+          <td>vortent</td>
+          <td>Execution partners for late seed and Series A founders in life sciences, deep tech, and cleantech. For an AI driven materials discovery company, translated lab technology into a customer facing platform through facilitation and interactive prototyping, defining an agent interface and dashboard for a multi stage MVP.</td>
+          <td>Translated an AI driven materials discovery company's lab technology into a customer facing platform.
+Facilitated cross functional sessions distilling complex scientific workflows into actionable product requirements.
+Delivered strategy documentation, design concepts, and interactive prototypes guiding a multi stage MVP.</td>
+          <td>—</td>
+          <td>true</td>
+          <td>true</td>
+          <td>false</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sample-legend">ƒ marks a computed column.</p>
+  </details>
 </section>
 <section class="entity" id="en-t-resumevariants" data-entity="Resume Variant">
   <header class="entity-head">
@@ -1151,6 +1346,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-muted">string</span>
       <span class="pill pill-dr">DR-7</span>
     </div>
+    <p class="field-note elem elem-desc">Display alias.</p>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
         <span class="view-label">In RuleSpeak®</span>
@@ -1180,35 +1376,28 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
         <a class="ref-pill tone-raw" href="#en-f-resumevariants-label">● Label <span class="ref-pill-tbl">Resume Variant</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Display alias.</p>
     </article>
   <article class="field tone-raw" id="en-f-resumevariants-label" data-entity="Resume Variant" data-field="Label">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Label</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
     </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
-    </div>
+    <p class="field-note elem elem-desc">Variant label.</p>
     <details class="prov prov-consumers elem elem-consumers" open>
       <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
       <div class="prov-pills">
         <a class="ref-pill tone-calc" href="#en-f-resumevariants-name">ƒ Name <span class="ref-pill-tbl">Resume Variant</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Variant label.</p>
     </article>
   <article class="field tone-raw" id="en-f-resumevariants-audiencedescription" data-entity="Resume Variant" data-field="Audience Description">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Audience Description</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Who this variant targets and how it is distributed.</p>
     </article>
@@ -1216,11 +1405,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Summary Text</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">The opening capability statement ('What I do' / 'Summary'). Paragraph breaks encoded as \n\n.</p>
     </article>
@@ -1228,14 +1414,50 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Published on Site</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype boolean); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">boolean</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>boolean</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Whether this variant is served from the public site (Section 10: only Variant A).</p>
     </article>
+  <details class="entity-data elem elem-data" open>
+    <summary>Example data</summary>
+    <div class="sample-scroll">
+    <table class="sample-table">
+      <thead><tr>
+        <th class="sample-derived">Name<span class="sample-fx">ƒ</span></th>
+        <th>Label</th>
+        <th>Audience Description</th>
+        <th>Summary Text</th>
+        <th>Published on Site</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sample-derived">Variant A — Consulting and Advisory</td>
+          <td>Variant A — Consulting and Advisory</td>
+          <td>Public. Linked from davidshadle.com, offered as a PDF download. Target length: two pages.</td>
+          <td>I build the systems that turn strategy into working software. Most advisors stop at the recommendation. I keep going, through the model, the interface, and the handoff, so the thing that gets agreed on is the thing that gets shipped.
+
+I start with the problem and write it down before anyone proposes a solution. From there I work from a rulebook: the rules of a domain written down once in plain language, with the technical pieces derived from that rather than maintained by hand. It is what lets me deliver complete projects rather than stopping at design and project management.
+
+Twenty five years in product strategy and design make the systems worth building. Full stack product practitioner. Not just capable of wearing several hats at once, but confident delivering the outcome in each.</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">Variant B — Principal and Director Roles</td>
+          <td>Variant B — Principal and Director Roles</td>
+          <td>Sent directly for specific roles. Never published online. Conventional reverse-chronological structure for applicant tracking systems and hiring managers.</td>
+          <td>Product strategy and design leader with twenty five years across enterprise platforms, cloud infrastructure, and early stage companies, including principal roles at Microsoft and Oracle. I define what to build and why, align the people who have to agree, and stay with the work through delivery.
+
+I also build. Over the last two years I have designed and shipped a production platform end to end and implemented the experience layer across three executive reporting products. Working from a written rulebook rather than hand-maintained specs is what extended me from design and project management into complete delivery. That range means no handoff gap between strategy, design, and engineering.
+
+Looking for defined ownership at a small to mid sized organization.</td>
+          <td>false</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sample-legend">ƒ marks a computed column.</p>
+  </details>
 </section>
 <section class="entity" id="en-t-resumelistitems" data-entity="Resume List Item">
   <header class="entity-head">
@@ -1251,6 +1473,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-muted">string</span>
       <span class="pill pill-dr">DR-8</span>
     </div>
+    <p class="field-note elem elem-desc">Display alias.</p>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
         <span class="view-label">In RuleSpeak®</span>
@@ -1280,17 +1503,13 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
         <a class="ref-pill tone-raw" href="#en-f-resumelistitems-label">● Label <span class="ref-pill-tbl">Resume List Item</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Display alias.</p>
     </article>
   <article class="field tone-raw" id="en-f-resumelistitems-category" data-entity="Resume List Item" data-field="Category">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Category</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">'Methods' or 'Technical'.</p>
     </article>
@@ -1298,32 +1517,60 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Label</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
     </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
-    </div>
+    <p class="field-note elem elem-desc">The item text as it appears on the resume.</p>
     <details class="prov prov-consumers elem elem-consumers" open>
       <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
       <div class="prov-pills">
         <a class="ref-pill tone-calc" href="#en-f-resumelistitems-name">ƒ Name <span class="ref-pill-tbl">Resume List Item</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">The item text as it appears on the resume.</p>
     </article>
   <article class="field tone-raw" id="en-f-resumelistitems-sortorder" data-entity="Resume List Item" data-field="Sort Order">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Sort Order</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype integer); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">integer</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Display order within its category.</p>
     </article>
+  <details class="entity-data elem elem-data" open>
+    <summary>Example data</summary>
+    <div class="sample-scroll">
+    <table class="sample-table">
+      <thead><tr>
+        <th class="sample-derived">Name<span class="sample-fx">ƒ</span></th>
+        <th>Category</th>
+        <th>Label</th>
+        <th>Sort Order</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sample-derived">Problem brief first</td>
+          <td>Methods</td>
+          <td>Problem brief first</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">Rulebook driven delivery</td>
+          <td>Methods</td>
+          <td>Rulebook driven delivery</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">Prototype as spec</td>
+          <td>Methods</td>
+          <td>Prototype as spec</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sample-legend">ƒ marks a computed column.</p>
+  </details>
 </section>
 <section class="entity" id="en-t-educationentries" data-entity="Education Entry">
   <header class="entity-head">
@@ -1339,6 +1586,7 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
       <span class="pill pill-muted">string</span>
       <span class="pill pill-dr">DR-9</span>
     </div>
+    <p class="field-note elem elem-desc">Display alias.</p>
     <div class="narr-views">
       <div class="view elem elem-rulespeak">
         <span class="view-label">In RuleSpeak®</span>
@@ -1373,53 +1621,43 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
         <a class="ref-pill tone-raw" href="#en-f-educationentries-degree">● Degree <span class="ref-pill-tbl">Education Entry</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Display alias.</p>
     </article>
   <article class="field tone-raw" id="en-f-educationentries-institution" data-entity="Education Entry" data-field="Institution">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Institution</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
     </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
-    </div>
+    <p class="field-note elem elem-desc">School name.</p>
     <details class="prov prov-consumers elem elem-consumers" open>
       <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
       <div class="prov-pills">
         <a class="ref-pill tone-calc" href="#en-f-educationentries-name">ƒ Name <span class="ref-pill-tbl">Education Entry</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">School name.</p>
     </article>
   <article class="field tone-raw" id="en-f-educationentries-degree" data-entity="Education Entry" data-field="Degree">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Degree</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
     </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
-    </div>
+    <p class="field-note elem elem-desc">Degree earned.</p>
     <details class="prov prov-consumers elem elem-consumers" open>
       <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
       <div class="prov-pills">
         <a class="ref-pill tone-calc" href="#en-f-educationentries-name">ƒ Name <span class="ref-pill-tbl">Education Entry</span></a>
       </div>
     </details>
-    <p class="field-note elem elem-desc">Degree earned.</p>
     </article>
   <article class="field tone-raw" id="en-f-educationentries-fieldofstudy" data-entity="Education Entry" data-field="Field of Study">
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Field of Study</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">string</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>string</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Major/field.</p>
     </article>
@@ -1427,14 +1665,653 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
     <div class="field-head">
       <span class="field-glyph" title="Ground truth">●</span>
       <span class="field-name">Grad Year</span>
-      <span class="pill pill-type">Ground truth</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype integer); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
       <span class="pill pill-muted">integer</span>
-    </div>
-    <div class="gt">
-      <p class="gt-body">Ground truth. Written directly to the database (datatype <code>integer</code>); not computed from anything else. Everything derived ultimately traces back to values like this one.</p>
     </div>
     <p class="field-note elem elem-desc">Graduation year.</p>
     </article>
+  <details class="entity-data elem elem-data" open>
+    <summary>Example data</summary>
+    <div class="sample-scroll">
+    <table class="sample-table">
+      <thead><tr>
+        <th class="sample-derived">Name<span class="sample-fx">ƒ</span></th>
+        <th>Institution</th>
+        <th>Degree</th>
+        <th>Field of Study</th>
+        <th>Grad Year</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sample-derived">University of Oregon - Bachelor of Fine Arts</td>
+          <td>University of Oregon</td>
+          <td>Bachelor of Fine Arts</td>
+          <td>Visual Design</td>
+          <td>1994</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sample-legend">ƒ marks a computed column.</p>
+  </details>
+</section>
+<section class="entity" id="en-t-landingpages" data-entity="Landing Page">
+  <header class="entity-head">
+    <h2 class="entity-title">Landing Page</h2>
+    <p class="entity-synopsis">A landing page is identified by its <a class="ref" href="#en-f-landingpages-name">name</a>.</p>
+  </header>
+  <article class="field tone-calc" id="en-f-landingpages-name" data-entity="Landing Page" data-field="Name">
+    <div class="field-head">
+      <span class="field-glyph" title="Calculated">ƒ</span>
+      <span class="field-name">Name</span>
+      <span class="pill pill-type">Calculated</span>
+      <span class="pill pill-depth">1 hop from ground truth</span>
+      <span class="pill pill-muted">string</span>
+      <span class="pill pill-dr">DR-10</span>
+    </div>
+    <p class="field-note elem elem-desc">Display alias.</p>
+    <div class="narr-views">
+      <div class="view elem elem-rulespeak">
+        <span class="view-label">In RuleSpeak®</span>
+        <p class="view-body">A landing page's <a class="ref" href="#en-f-landingpages-name">name</a> is the same as its <a class="ref" href="#en-f-landingpages-headline">headline</a>.</p>
+      </div>
+      <div class="view elem elem-english">
+        <span class="view-label">In plain words</span>
+        <p class="view-body"><a class="ref" href="#en-f-landingpages-headline">Headline</a>.</p>
+      </div>
+      <div class="view elem elem-formula">
+        <span class="view-label">As a formula</span>
+        <div class="view-body fx"><span class="fx-eq">= </span><a class="fx-chip" href="#en-f-landingpages-headline">Headline</a></div>
+      </div>
+    </div>
+    <details class="prov prov-inputs elem elem-inputs" open>
+      <summary>Inputs <span class="count">1</span> <span class="prov-hint">fields this rule reads</span></summary>
+      <div class="prov-grid">
+        <a class="input tone-raw" href="#en-f-landingpages-headline">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Headline</span><span class="input-table">Landing Page</span></span>
+          <span class="input-en muted">The page h1.</span>
+        </a>
+      </div>
+    </details>
+    <details class="prov prov-leaves elem elem-inputs">
+      <summary>Ground truth at the leaves <span class="count">1</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-raw" href="#en-f-landingpages-headline">● Headline <span class="ref-pill-tbl">Landing Page</span></a>
+      </div>
+    </details>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpages-metatitle" data-entity="Landing Page" data-field="Meta Title">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Meta Title</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Browser title and Open Graph title.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpages-metadescription" data-entity="Landing Page" data-field="Meta Description">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Meta Description</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Meta description and Open Graph description.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpages-eyebrow" data-entity="Landing Page" data-field="Eyebrow">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Eyebrow</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Small label above the headline in the hero.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpages-headline" data-entity="Landing Page" data-field="Headline">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Headline</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">The page h1.</p>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-landingpages-name">ƒ Name <span class="ref-pill-tbl">Landing Page</span></a>
+      </div>
+    </details>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpages-lede" data-entity="Landing Page" data-field="Lede">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Lede</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Opening paragraph under the headline.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpages-videourl" data-entity="Landing Page" data-field="Video URL">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Video URL</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Optional YouTube link. When present, the video is shown in the hero between the eyebrow and the headline.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpages-primaryctalabel" data-entity="Landing Page" data-field="Primary Cta Label">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Primary Cta Label</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Label of the primary call-to-action button.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpages-primaryctahref" data-entity="Landing Page" data-field="Primary Cta Href">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Primary Cta Href</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Target of the primary call-to-action button (mailto: or path).</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpages-secondaryctalabel" data-entity="Landing Page" data-field="Secondary Cta Label">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Secondary Cta Label</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Label of the optional secondary button.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpages-secondaryctahref" data-entity="Landing Page" data-field="Secondary Cta Href">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Secondary Cta Href</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Target of the optional secondary button.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpages-ispublished" data-entity="Landing Page" data-field="Is Published">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Is Published</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype boolean); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">boolean</span>
+    </div>
+    <p class="field-note elem elem-desc">Whether the page is served. Unpublished pages return 404.</p>
+    </article>
+  <details class="entity-data elem elem-data" open>
+    <summary>Example data</summary>
+    <div class="sample-scroll">
+    <table class="sample-table">
+      <thead><tr>
+        <th class="sample-derived">Name<span class="sample-fx">ƒ</span></th>
+        <th>Meta Title</th>
+        <th>Meta Description</th>
+        <th>Eyebrow</th>
+        <th>Headline</th>
+        <th>Lede</th>
+        <th>Video URL</th>
+        <th>Primary Cta Label</th>
+        <th>Primary Cta Href</th>
+        <th>Secondary Cta Label</th>
+        <th>Secondary Cta Href</th>
+        <th>Is Published</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sample-derived">New interaction concepts, prototyped and tested with your customers.</td>
+          <td>Idea to Evidence: David Shadle</td>
+          <td>One product idea, carried to a working prototype your customers have tested, so you decide what to build on evidence. A service for Banyan operating companies.</td>
+          <td>Idea to Evidence</td>
+          <td>New interaction concepts, prototyped and tested with your customers.</td>
+          <td>Idea to Evidence takes one idea for how your product could work and carries it to a working prototype that your customers (or agents) can interact with. You leave with evidence and a decision, not a recommendation.</td>
+          <td>https://www.youtube.com/watch?v=49NfG8CoGJQ</td>
+          <td>Let's get started</td>
+          <td>mailto:david@davidshadle.com?subject=Idea%20to%20Evidence%3A%20Discovery%20conversation</td>
+          <td>Download the capability statement (PDF)</td>
+          <td>/downloads/David-Shadle-Idea-to-Evidence-Capability-Statement.pdf</td>
+          <td>false</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sample-legend">ƒ marks a computed column.</p>
+  </details>
+</section>
+<section class="entity" id="en-t-landingpagesections" data-entity="Landing Page Section">
+  <header class="entity-head">
+    <h2 class="entity-title">Landing Page Section</h2>
+    <p class="entity-synopsis">A landing page section is identified by its <a class="ref" href="#en-f-landingpagesections-name">name</a> and is related to a <a class="ref" href="#en-t-landingpages">landing page</a>.</p>
+  </header>
+  <article class="field tone-calc" id="en-f-landingpagesections-name" data-entity="Landing Page Section" data-field="Name">
+    <div class="field-head">
+      <span class="field-glyph" title="Calculated">ƒ</span>
+      <span class="field-name">Name</span>
+      <span class="pill pill-type">Calculated</span>
+      <span class="pill pill-depth">1 hop from ground truth</span>
+      <span class="pill pill-muted">string</span>
+      <span class="pill pill-dr">DR-11</span>
+    </div>
+    <p class="field-note elem elem-desc">Display alias.</p>
+    <div class="narr-views">
+      <div class="view elem elem-rulespeak">
+        <span class="view-label">In RuleSpeak®</span>
+        <p class="view-body">A landing page section's <a class="ref" href="#en-f-landingpagesections-name">name</a> is the same as its <a class="ref" href="#en-f-landingpagesections-heading">heading</a>.</p>
+      </div>
+      <div class="view elem elem-english">
+        <span class="view-label">In plain words</span>
+        <p class="view-body"><a class="ref" href="#en-f-landingpagesections-heading">Heading</a>.</p>
+      </div>
+      <div class="view elem elem-formula">
+        <span class="view-label">As a formula</span>
+        <div class="view-body fx"><span class="fx-eq">= </span><a class="fx-chip" href="#en-f-landingpagesections-heading">Heading</a></div>
+      </div>
+    </div>
+    <details class="prov prov-inputs elem elem-inputs" open>
+      <summary>Inputs <span class="count">1</span> <span class="prov-hint">fields this rule reads</span></summary>
+      <div class="prov-grid">
+        <a class="input tone-raw" href="#en-f-landingpagesections-heading">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Heading</span><span class="input-table">Landing Page Section</span></span>
+          <span class="input-en muted">Section heading.</span>
+        </a>
+      </div>
+    </details>
+    <details class="prov prov-leaves elem elem-inputs">
+      <summary>Ground truth at the leaves <span class="count">1</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-raw" href="#en-f-landingpagesections-heading">● Heading <span class="ref-pill-tbl">Landing Page Section</span></a>
+      </div>
+    </details>
+    </article>
+  <article class="field tone-rel" id="en-f-landingpagesections-landingpage" data-entity="Landing Page Section" data-field="Landing Page">
+    <div class="field-head">
+      <span class="field-glyph" title="Relationship">⇢</span>
+      <span class="field-name">Landing Page</span>
+      <span class="pill pill-type">Relationship</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">The landing page this section belongs to.</p>
+    <div class="gt">
+      <p class="gt-body">A pointer to <a href="#en-t-landingpages">Landing Page</a>. It is not derived from anything else — it is the link the rest of the DAG hangs off.</p>
+    </div>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpagesections-sortorder" data-entity="Landing Page Section" data-field="Sort Order">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Sort Order</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype integer); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">integer</span>
+    </div>
+    <p class="field-note elem elem-desc">Display order within the page.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpagesections-kind" data-entity="Landing Page Section" data-field="Kind">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Kind</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Renderer: prose, list, steps, cards or callout.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpagesections-anchorid" data-entity="Landing Page Section" data-field="Anchor ID">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Anchor ID</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Optional HTML id for the section, for in-page links.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpagesections-eyebrow" data-entity="Landing Page Section" data-field="Eyebrow">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Eyebrow</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Small label above the section heading.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpagesections-heading" data-entity="Landing Page Section" data-field="Heading">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Heading</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Section heading.</p>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-landingpagesections-name">ƒ Name <span class="ref-pill-tbl">Landing Page Section</span></a>
+      </div>
+    </details>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpagesections-bodytext" data-entity="Landing Page Section" data-field="Body Text">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Body Text</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Section body copy. Paragraph breaks encoded as \n\n.</p>
+    </article>
+  <details class="entity-data elem elem-data" open>
+    <summary>Example data</summary>
+    <div class="sample-scroll">
+    <table class="sample-table">
+      <thead><tr>
+        <th class="sample-derived">Name<span class="sample-fx">ƒ</span></th>
+        <th>Sort Order</th>
+        <th>Kind</th>
+        <th>Anchor ID</th>
+        <th>Eyebrow</th>
+        <th>Heading</th>
+        <th>Body Text</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sample-derived">AI can now do part of the work your customers do by hand.</td>
+          <td>1</td>
+          <td>prose</td>
+          <td>—</td>
+          <td>Why now</td>
+          <td>AI can now do part of the work your customers do by hand.</td>
+          <td>AI can act on a customer's behalf, anticipate a need, and complete a task. Forms, reports, help, and transactions can all work differently. That opens new ways for your product to serve customers, and gives them a reason to renew and buy more.
+
+Most leadership teams already have ideas about where to start. What is hard to find is the time to learn which idea is worth building before committing to build it. This engagement is built to find that out, in a few focused sessions, with the building and testing done outside your leadership team's calendar.</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">Five things you take away.</td>
+          <td>2</td>
+          <td>list</td>
+          <td>—</td>
+          <td>What you get</td>
+          <td>Five things you take away.</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">Choose how far to go.</td>
+          <td>3</td>
+          <td>cards</td>
+          <td>ways-to-engage</td>
+          <td>Ways to engage</td>
+          <td>Choose how far to go.</td>
+          <td>The level is chosen in Discovery and can be extended later.</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sample-legend">ƒ marks a computed column.</p>
+  </details>
+</section>
+<section class="entity" id="en-t-landingpageitems" data-entity="Landing Page Item">
+  <header class="entity-head">
+    <h2 class="entity-title">Landing Page Item</h2>
+    <p class="entity-synopsis">A landing page item is identified by its <a class="ref" href="#en-f-landingpageitems-name">name</a> and is related to a <a class="ref" href="#en-t-landingpagesections">landing page section</a>.</p>
+  </header>
+  <article class="field tone-calc" id="en-f-landingpageitems-name" data-entity="Landing Page Item" data-field="Name">
+    <div class="field-head">
+      <span class="field-glyph" title="Calculated">ƒ</span>
+      <span class="field-name">Name</span>
+      <span class="pill pill-type">Calculated</span>
+      <span class="pill pill-depth">1 hop from ground truth</span>
+      <span class="pill pill-muted">string</span>
+      <span class="pill pill-dr">DR-12</span>
+    </div>
+    <p class="field-note elem elem-desc">Display alias.</p>
+    <div class="narr-views">
+      <div class="view elem elem-rulespeak">
+        <span class="view-label">In RuleSpeak®</span>
+        <p class="view-body">A landing page item's <a class="ref" href="#en-f-landingpageitems-name">name</a> is the same as its <a class="ref" href="#en-f-landingpageitems-heading">heading</a>.</p>
+      </div>
+      <div class="view elem elem-english">
+        <span class="view-label">In plain words</span>
+        <p class="view-body"><a class="ref" href="#en-f-landingpageitems-heading">Heading</a>.</p>
+      </div>
+      <div class="view elem elem-formula">
+        <span class="view-label">As a formula</span>
+        <div class="view-body fx"><span class="fx-eq">= </span><a class="fx-chip" href="#en-f-landingpageitems-heading">Heading</a></div>
+      </div>
+    </div>
+    <details class="prov prov-inputs elem elem-inputs" open>
+      <summary>Inputs <span class="count">1</span> <span class="prov-hint">fields this rule reads</span></summary>
+      <div class="prov-grid">
+        <a class="input tone-raw" href="#en-f-landingpageitems-heading">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Heading</span><span class="input-table">Landing Page Item</span></span>
+          <span class="input-en muted">Item heading.</span>
+        </a>
+      </div>
+    </details>
+    <details class="prov prov-leaves elem elem-inputs">
+      <summary>Ground truth at the leaves <span class="count">1</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-raw" href="#en-f-landingpageitems-heading">● Heading <span class="ref-pill-tbl">Landing Page Item</span></a>
+      </div>
+    </details>
+    </article>
+  <article class="field tone-rel" id="en-f-landingpageitems-landingpagesection" data-entity="Landing Page Item" data-field="Landing Page Section">
+    <div class="field-head">
+      <span class="field-glyph" title="Relationship">⇢</span>
+      <span class="field-name">Landing Page Section</span>
+      <span class="pill pill-type">Relationship</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">The section this item belongs to.</p>
+    <div class="gt">
+      <p class="gt-body">A pointer to <a href="#en-t-landingpagesections">Landing Page Section</a>. It is not derived from anything else — it is the link the rest of the DAG hangs off.</p>
+    </div>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpageitems-sortorder" data-entity="Landing Page Item" data-field="Sort Order">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Sort Order</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype integer); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">integer</span>
+    </div>
+    <p class="field-note elem elem-desc">Display order within the section.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpageitems-label" data-entity="Landing Page Item" data-field="Label">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Label</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Optional short marker, for example a step number.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpageitems-heading" data-entity="Landing Page Item" data-field="Heading">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Heading</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Item heading.</p>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-landingpageitems-name">ƒ Name <span class="ref-pill-tbl">Landing Page Item</span></a>
+      </div>
+    </details>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpageitems-bodytext" data-entity="Landing Page Item" data-field="Body Text">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Body Text</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Item body copy.</p>
+    </article>
+  <details class="entity-data elem elem-data" open>
+    <summary>Example data</summary>
+    <div class="sample-scroll">
+    <table class="sample-table">
+      <thead><tr>
+        <th class="sample-derived">Name<span class="sample-fx">ƒ</span></th>
+        <th>Sort Order</th>
+        <th>Label</th>
+        <th>Heading</th>
+        <th>Body Text</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sample-derived">A decision on evidence.</td>
+          <td>1</td>
+          <td>—</td>
+          <td>A decision on evidence.</td>
+          <td>Your customers use a working prototype before you commit to building it.</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">New thinking on how your product works.</td>
+          <td>2</td>
+          <td>—</td>
+          <td>New thinking on how your product works.</td>
+          <td>That includes where AI and agents can do part of the work while your customer stays in control.</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">A build-ready handoff.</td>
+          <td>3</td>
+          <td>—</td>
+          <td>A build-ready handoff.</td>
+          <td>Working code, the full rulebook behind it, and an engineering scope your team can build from without starting over.</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sample-legend">ƒ marks a computed column.</p>
+  </details>
+</section>
+<section class="entity" id="en-t-landingpageitemfacts" data-entity="Landing Page Item Fact">
+  <header class="entity-head">
+    <h2 class="entity-title">Landing Page Item Fact</h2>
+    <p class="entity-synopsis">A landing page item fact is identified by its <a class="ref" href="#en-f-landingpageitemfacts-name">name</a> and is related to a <a class="ref" href="#en-t-landingpageitems">landing page item</a>.</p>
+  </header>
+  <article class="field tone-calc" id="en-f-landingpageitemfacts-name" data-entity="Landing Page Item Fact" data-field="Name">
+    <div class="field-head">
+      <span class="field-glyph" title="Calculated">ƒ</span>
+      <span class="field-name">Name</span>
+      <span class="pill pill-type">Calculated</span>
+      <span class="pill pill-depth">1 hop from ground truth</span>
+      <span class="pill pill-muted">string</span>
+      <span class="pill pill-dr">DR-13</span>
+    </div>
+    <p class="field-note elem elem-desc">Display alias.</p>
+    <div class="narr-views">
+      <div class="view elem elem-rulespeak">
+        <span class="view-label">In RuleSpeak®</span>
+        <p class="view-body">A landing page item fact's <a class="ref" href="#en-f-landingpageitemfacts-name">name</a> is the same as its <a class="ref" href="#en-f-landingpageitemfacts-label">label</a>.</p>
+      </div>
+      <div class="view elem elem-english">
+        <span class="view-label">In plain words</span>
+        <p class="view-body"><a class="ref" href="#en-f-landingpageitemfacts-label">Label</a>.</p>
+      </div>
+      <div class="view elem elem-formula">
+        <span class="view-label">As a formula</span>
+        <div class="view-body fx"><span class="fx-eq">= </span><a class="fx-chip" href="#en-f-landingpageitemfacts-label">Label</a></div>
+      </div>
+    </div>
+    <details class="prov prov-inputs elem elem-inputs" open>
+      <summary>Inputs <span class="count">1</span> <span class="prov-hint">fields this rule reads</span></summary>
+      <div class="prov-grid">
+        <a class="input tone-raw" href="#en-f-landingpageitemfacts-label">
+          <span class="input-head"><span class="input-glyph">●</span><span class="input-name">Label</span><span class="input-table">Landing Page Item Fact</span></span>
+          <span class="input-en muted">Fact label, for example What happens.</span>
+        </a>
+      </div>
+    </details>
+    <details class="prov prov-leaves elem elem-inputs">
+      <summary>Ground truth at the leaves <span class="count">1</span> <span class="prov-hint">the raw values this ultimately depends on</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-raw" href="#en-f-landingpageitemfacts-label">● Label <span class="ref-pill-tbl">Landing Page Item Fact</span></a>
+      </div>
+    </details>
+    </article>
+  <article class="field tone-rel" id="en-f-landingpageitemfacts-landingpageitem" data-entity="Landing Page Item Fact" data-field="Landing Page Item">
+    <div class="field-head">
+      <span class="field-glyph" title="Relationship">⇢</span>
+      <span class="field-name">Landing Page Item</span>
+      <span class="pill pill-type">Relationship</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">The item this fact belongs to.</p>
+    <div class="gt">
+      <p class="gt-body">A pointer to <a href="#en-t-landingpageitems">Landing Page Item</a>. It is not derived from anything else — it is the link the rest of the DAG hangs off.</p>
+    </div>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpageitemfacts-sortorder" data-entity="Landing Page Item Fact" data-field="Sort Order">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Sort Order</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype integer); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">integer</span>
+    </div>
+    <p class="field-note elem elem-desc">Display order within the item.</p>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpageitemfacts-label" data-entity="Landing Page Item Fact" data-field="Label">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Label</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Fact label, for example What happens.</p>
+    <details class="prov prov-consumers elem elem-consumers" open>
+      <summary>Consumers <span class="count">1 direct</span> <span class="prov-hint">rules that read this one</span></summary>
+      <div class="prov-pills">
+        <a class="ref-pill tone-calc" href="#en-f-landingpageitemfacts-name">ƒ Name <span class="ref-pill-tbl">Landing Page Item Fact</span></a>
+      </div>
+    </details>
+    </article>
+  <article class="field tone-raw" id="en-f-landingpageitemfacts-bodytext" data-entity="Landing Page Item Fact" data-field="Body Text">
+    <div class="field-head">
+      <span class="field-glyph" title="Ground truth">●</span>
+      <span class="field-name">Body Text</span>
+      <span class="pill pill-type" title="Ground truth. Written directly to the database (datatype string); not computed from anything else. Everything derived ultimately traces back to values like this one.">Ground truth</span>
+      <span class="pill pill-muted">string</span>
+    </div>
+    <p class="field-note elem elem-desc">Fact text. One fact per line when it is a list.</p>
+    </article>
+  <details class="entity-data elem elem-data" open>
+    <summary>Example data</summary>
+    <div class="sample-scroll">
+    <table class="sample-table">
+      <thead><tr>
+        <th class="sample-derived">Name<span class="sample-fx">ƒ</span></th>
+        <th>Sort Order</th>
+        <th>Label</th>
+        <th>Body Text</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sample-derived">Includes</td>
+          <td>1</td>
+          <td>Includes</td>
+          <td>Discovery and Audit</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">You take away</td>
+          <td>2</td>
+          <td>You take away</td>
+          <td>An outside, evidence-based view of your product and the opportunity worth pursuing.</td>
+        </tr>
+        <tr>
+          <td class="sample-derived">Includes</td>
+          <td>1</td>
+          <td>Includes</td>
+          <td>Understand, plus Assessment</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sample-legend">ƒ marks a computed column.</p>
+  </details>
 </section>
 <footer class="doc-footer">
   <p>Rendered from the rulebook by the shared <b>RuleSpeak®</b> engine (<code>rulebook-rulespeak-core</code>). The same engine narrates the React Explainer DAG, so every narration mode reads identically across both.</p>
@@ -1445,8 +2322,8 @@ html[data-lang="en"] .lang-doc[data-lang="en"]{display:block}
 
 (function(){
   var LANGS=['en'];
-  var ELEMS=['rulespeak','english','formula','desc','inputs','consumers'];
-  var DEFAULTS={'rulespeak':true,'english':false,'formula':false,'desc':true,'inputs':true,'consumers':false};
+  var ELEMS=['rulespeak','english','formula','desc','inputs','consumers','data'];
+  var DEFAULTS={'rulespeak':false,'english':true,'formula':false,'desc':true,'inputs':false,'consumers':true,'data':true};
   var root=document.documentElement;
 
   // ── Language switching. All .lang-select controls stay in sync; the choice

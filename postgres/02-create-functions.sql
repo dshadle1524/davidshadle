@@ -14,6 +14,42 @@
 SET check_function_bodies = off;
 
 -- ============================================================================
+-- ERB BUILD PARAMETERS (docs/ERB-BUILD-PARAMETERS.md)
+-- erbBlankLogic=coerce, erbDateDiff=calendar, erbDateTimeText=iso8601, erbTimezone=UTC, erbWholeNumber=by-field-type
+-- ============================================================================
+
+CREATE OR REPLACE FUNCTION erb_build_parameters()
+RETURNS JSONB AS $$
+  SELECT '{"erbBlankLogic":"coerce","erbDateDiff":"calendar","erbDateTimeText":"iso8601","erbTimezone":"UTC","erbWholeNumber":"by-field-type"}'::jsonb;
+$$ LANGUAGE sql IMMUTABLE;
+
+-- A timestamp inside text, per erbDateTimeText, in erbTimezone. Blank renders ''.
+CREATE OR REPLACE FUNCTION erb_datetime_text(ts TIMESTAMPTZ)
+RETURNS TEXT AS $$
+  SELECT CASE WHEN ts IS NULL THEN '' ELSE
+    to_char(ts AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS')
+    || CASE WHEN (EXTRACT(MICROSECONDS FROM ts)::bigint % 1000000) <> 0 THEN rtrim(to_char(ts AT TIME ZONE 'UTC', '.US'), '0') ELSE '' END
+    || CASE WHEN o.off < 0 THEN '-' ELSE '+' END || lpad((abs(o.off) / 3600)::text, 2, '0') || ':' || lpad(((abs(o.off) % 3600) / 60)::text, 2, '0')
+  END
+  FROM (SELECT EXTRACT(EPOCH FROM ((ts AT TIME ZONE 'UTC') - (ts AT TIME ZONE 'UTC')))::integer AS off) o;
+$$ LANGUAGE sql STABLE;
+
+-- A date inside text: YYYY-MM-DD. Blank renders ''.
+CREATE OR REPLACE FUNCTION erb_date_text(d DATE)
+RETURNS TEXT AS $$
+  SELECT COALESCE(to_char(d, 'YYYY-MM-DD'), '');
+$$ LANGUAGE sql IMMUTABLE;
+
+-- A number inside text: the shortest exact form, no trailing .0 (2, 2.5). Blank renders ''.
+CREATE OR REPLACE FUNCTION erb_number_text(n NUMERIC)
+RETURNS TEXT AS $$
+  SELECT CASE WHEN n IS NULL THEN ''
+              WHEN n::text LIKE '%.%' THEN rtrim(rtrim(n::text, '0'), '.')
+              ELSE n::text END;
+$$ LANGUAGE sql IMMUTABLE;
+
+
+-- ============================================================================
 -- LOOKUP FUNCTIONS
 -- These functions perform lookups via foreign key relationships
 -- ============================================================================
@@ -106,6 +142,226 @@ $$ LANGUAGE sql STABLE;
 CREATE OR REPLACE FUNCTION calc_education_entries_name(p_education_entry_id TEXT)
 RETURNS TEXT AS $$
   SELECT (CONCAT((SELECT NULLIF(institution, '') FROM education_entries WHERE education_entry_id = p_education_entry_id), ' - ', (SELECT NULLIF(degree, '') FROM education_entries WHERE education_entry_id = p_education_entry_id)))::text;
+$$ LANGUAGE sql STABLE;
+
+-- calc_landing_pages_name
+-- Field: LandingPages.Name
+-- Type: calculated | DataType: string | Returns: TEXT
+
+
+CREATE OR REPLACE FUNCTION calc_landing_pages_name(p_landing_page_id TEXT)
+RETURNS TEXT AS $$
+  SELECT ((SELECT NULLIF(headline, '') FROM landing_pages WHERE landing_page_id = p_landing_page_id))::text;
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_pages_meta_title
+-- Helper function: Get MetaTitle from LandingPages by LandingPageId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_pages_meta_title(p_landing_page_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT meta_title FROM landing_pages WHERE landing_page_id = p_landing_page_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_pages_meta_description
+-- Helper function: Get MetaDescription from LandingPages by LandingPageId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_pages_meta_description(p_landing_page_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT meta_description FROM landing_pages WHERE landing_page_id = p_landing_page_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_pages_eyebrow
+-- Helper function: Get Eyebrow from LandingPages by LandingPageId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_pages_eyebrow(p_landing_page_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT eyebrow FROM landing_pages WHERE landing_page_id = p_landing_page_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_pages_headline
+-- Helper function: Get Headline from LandingPages by LandingPageId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_pages_headline(p_landing_page_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT headline FROM landing_pages WHERE landing_page_id = p_landing_page_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_pages_lede
+-- Helper function: Get Lede from LandingPages by LandingPageId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_pages_lede(p_landing_page_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT lede FROM landing_pages WHERE landing_page_id = p_landing_page_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_pages_video_url
+-- Helper function: Get VideoUrl from LandingPages by LandingPageId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_pages_video_url(p_landing_page_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT video_url FROM landing_pages WHERE landing_page_id = p_landing_page_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_pages_primary_cta_label
+-- Helper function: Get PrimaryCtaLabel from LandingPages by LandingPageId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_pages_primary_cta_label(p_landing_page_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT primary_cta_label FROM landing_pages WHERE landing_page_id = p_landing_page_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_pages_primary_cta_href
+-- Helper function: Get PrimaryCtaHref from LandingPages by LandingPageId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_pages_primary_cta_href(p_landing_page_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT primary_cta_href FROM landing_pages WHERE landing_page_id = p_landing_page_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_pages_secondary_cta_label
+-- Helper function: Get SecondaryCtaLabel from LandingPages by LandingPageId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_pages_secondary_cta_label(p_landing_page_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT secondary_cta_label FROM landing_pages WHERE landing_page_id = p_landing_page_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_pages_secondary_cta_href
+-- Helper function: Get SecondaryCtaHref from LandingPages by LandingPageId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_pages_secondary_cta_href(p_landing_page_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT secondary_cta_href FROM landing_pages WHERE landing_page_id = p_landing_page_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_pages_is_published
+-- Helper function: Get IsPublished from LandingPages by LandingPageId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_pages_is_published(p_landing_page_id TEXT)
+RETURNS BOOLEAN AS $$
+  SELECT (SELECT is_published FROM landing_pages WHERE landing_page_id = p_landing_page_id);
+$$ LANGUAGE sql STABLE;
+
+-- calc_landing_page_sections_name
+-- Field: LandingPageSections.Name
+-- Type: calculated | DataType: string | Returns: TEXT
+
+
+CREATE OR REPLACE FUNCTION calc_landing_page_sections_name(p_landing_page_section_id TEXT)
+RETURNS TEXT AS $$
+  SELECT ((SELECT NULLIF(heading, '') FROM landing_page_sections WHERE landing_page_section_id = p_landing_page_section_id))::text;
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_page_sections_sort_order
+-- Helper function: Get SortOrder from LandingPageSections by LandingPageSectionId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_page_sections_sort_order(p_landing_page_section_id TEXT)
+RETURNS INTEGER AS $$
+  SELECT (SELECT sort_order FROM landing_page_sections WHERE landing_page_section_id = p_landing_page_section_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_page_sections_kind
+-- Helper function: Get Kind from LandingPageSections by LandingPageSectionId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_page_sections_kind(p_landing_page_section_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT kind FROM landing_page_sections WHERE landing_page_section_id = p_landing_page_section_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_page_sections_eyebrow
+-- Helper function: Get Eyebrow from LandingPageSections by LandingPageSectionId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_page_sections_eyebrow(p_landing_page_section_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT eyebrow FROM landing_page_sections WHERE landing_page_section_id = p_landing_page_section_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_page_sections_heading
+-- Helper function: Get Heading from LandingPageSections by LandingPageSectionId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_page_sections_heading(p_landing_page_section_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT heading FROM landing_page_sections WHERE landing_page_section_id = p_landing_page_section_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_page_sections_body_text
+-- Helper function: Get BodyText from LandingPageSections by LandingPageSectionId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_page_sections_body_text(p_landing_page_section_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT body_text FROM landing_page_sections WHERE landing_page_section_id = p_landing_page_section_id);
+$$ LANGUAGE sql STABLE;
+
+-- calc_landing_page_items_name
+-- Field: LandingPageItems.Name
+-- Type: calculated | DataType: string | Returns: TEXT
+
+
+CREATE OR REPLACE FUNCTION calc_landing_page_items_name(p_landing_page_item_id TEXT)
+RETURNS TEXT AS $$
+  SELECT ((SELECT NULLIF(heading, '') FROM landing_page_items WHERE landing_page_item_id = p_landing_page_item_id))::text;
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_page_items_sort_order
+-- Helper function: Get SortOrder from LandingPageItems by LandingPageItemId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_page_items_sort_order(p_landing_page_item_id TEXT)
+RETURNS INTEGER AS $$
+  SELECT (SELECT sort_order FROM landing_page_items WHERE landing_page_item_id = p_landing_page_item_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_page_items_label
+-- Helper function: Get Label from LandingPageItems by LandingPageItemId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_page_items_label(p_landing_page_item_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT label FROM landing_page_items WHERE landing_page_item_id = p_landing_page_item_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_page_items_heading
+-- Helper function: Get Heading from LandingPageItems by LandingPageItemId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_page_items_heading(p_landing_page_item_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT heading FROM landing_page_items WHERE landing_page_item_id = p_landing_page_item_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_page_items_body_text
+-- Helper function: Get BodyText from LandingPageItems by LandingPageItemId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_page_items_body_text(p_landing_page_item_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT body_text FROM landing_page_items WHERE landing_page_item_id = p_landing_page_item_id);
+$$ LANGUAGE sql STABLE;
+
+-- calc_landing_page_item_facts_name
+-- Field: LandingPageItemFacts.Name
+-- Type: calculated | DataType: string | Returns: TEXT
+
+
+CREATE OR REPLACE FUNCTION calc_landing_page_item_facts_name(p_landing_page_item_fact_id TEXT)
+RETURNS TEXT AS $$
+  SELECT ((SELECT NULLIF(label, '') FROM landing_page_item_facts WHERE landing_page_item_fact_id = p_landing_page_item_fact_id))::text;
 $$ LANGUAGE sql STABLE;
 
 -- ============================================================================

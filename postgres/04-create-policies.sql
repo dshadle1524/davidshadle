@@ -16,6 +16,10 @@ ALTER TABLE job_entries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE resume_variants ENABLE ROW LEVEL SECURITY;
 ALTER TABLE resume_list_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE education_entries ENABLE ROW LEVEL SECURITY;
+ALTER TABLE landing_pages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE landing_page_sections ENABLE ROW LEVEL SECURITY;
+ALTER TABLE landing_page_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE landing_page_item_facts ENABLE ROW LEVEL SECURITY;
 
 -- TODO: Add specific RLS policies based on your security requirements
 -- Example:

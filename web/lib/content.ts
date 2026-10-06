@@ -173,3 +173,91 @@ export async function getEducationEntries(): Promise<EducationEntry[]> {
   const { rows } = await pool.query("SELECT * FROM vw_education_entries");
   return rows;
 }
+
+export interface LandingPageFact {
+  landing_page_item_fact_id: string;
+  label: string;
+  body_text: string;
+  sort_order: number;
+}
+
+export interface LandingPageItem {
+  landing_page_item_id: string;
+  label: string | null;
+  heading: string;
+  body_text: string | null;
+  sort_order: number;
+  facts: LandingPageFact[];
+}
+
+export type LandingPageSectionKind = "prose" | "list" | "steps" | "cards" | "callout";
+
+export interface LandingPageSection {
+  landing_page_section_id: string;
+  kind: LandingPageSectionKind;
+  anchor_id: string | null;
+  eyebrow: string | null;
+  heading: string;
+  body_text: string | null;
+  sort_order: number;
+  items: LandingPageItem[];
+}
+
+export interface LandingPage {
+  landing_page_id: string;
+  meta_title: string;
+  meta_description: string;
+  eyebrow: string;
+  headline: string;
+  lede: string;
+  video_url: string | null;
+  primary_cta_label: string;
+  primary_cta_href: string;
+  secondary_cta_label: string | null;
+  secondary_cta_href: string | null;
+  is_published: boolean;
+  sections: LandingPageSection[];
+}
+
+/** A published landing page with sections, items and facts in order, or null. */
+export async function getLandingPage(slug: string): Promise<LandingPage | null> {
+  const { rows: pages } = await pool.query(
+    "SELECT * FROM vw_landing_pages WHERE landing_page_id = $1 AND is_published = TRUE",
+    [slug],
+  );
+  if (pages.length === 0) return null;
+
+  const { rows: sections } = await pool.query(
+    "SELECT * FROM vw_landing_page_sections WHERE landing_page = $1 ORDER BY sort_order",
+    [slug],
+  );
+  const { rows: items } = await pool.query(
+    "SELECT * FROM vw_landing_page_items WHERE landing_page_section = ANY($1) ORDER BY sort_order",
+    [sections.map((s) => s.landing_page_section_id)],
+  );
+  const { rows: facts } = await pool.query(
+    "SELECT * FROM vw_landing_page_item_facts WHERE landing_page_item = ANY($1) ORDER BY sort_order",
+    [items.map((i) => i.landing_page_item_id)],
+  );
+
+  const factsByItem = new Map<string, LandingPageFact[]>();
+  for (const f of facts) {
+    const list = factsByItem.get(f.landing_page_item) ?? [];
+    list.push(f);
+    factsByItem.set(f.landing_page_item, list);
+  }
+  const itemsBySection = new Map<string, LandingPageItem[]>();
+  for (const i of items) {
+    const list = itemsBySection.get(i.landing_page_section) ?? [];
+    list.push({ ...i, facts: factsByItem.get(i.landing_page_item_id) ?? [] });
+    itemsBySection.set(i.landing_page_section, list);
+  }
+
+  return {
+    ...pages[0],
+    sections: sections.map((s) => ({
+      ...s,
+      items: itemsBySection.get(s.landing_page_section_id) ?? [],
+    })),
+  };
+}

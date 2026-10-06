@@ -1,6 +1,6 @@
 {
   "_comment": "Stable DR-number ledger for rulebook-to-rulespeak. Auto-maintained; feed this file back in on the next build to keep rule numbers stable. Numbers in 'Retired' are tombstones and are never reissued. Hand-edit an Assignments number only to deliberately re-pin a rule.",
-  "NextId": 10,
+  "NextId": 14,
   "Assignments": {
     "SiteSettings.Name": 1,
     "CurrentlyItems.Name": 2,
@@ -10,7 +10,11 @@
     "JobEntries.Name": 6,
     "ResumeVariants.Name": 7,
     "ResumeListItems.Name": 8,
-    "EducationEntries.Name": 9
+    "EducationEntries.Name": 9,
+    "LandingPages.Name": 10,
+    "LandingPageSections.Name": 11,
+    "LandingPageItems.Name": 12,
+    "LandingPageItemFacts.Name": 13
   },
   "Retired": []
 }
