@@ -10,3 +10,4 @@ effortless.env
 # Per-run output, not source
 postgres/.applied-manifest.json
 
+/.effortless/**/*.zfs
