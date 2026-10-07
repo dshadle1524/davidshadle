@@ -199,6 +199,8 @@ export interface LandingPageSection {
   eyebrow: string | null;
   heading: string;
   body_text: string | null;
+  link_label: string | null;
+  link_href: string | null;
   sort_order: number;
   items: LandingPageItem[];
 }
@@ -253,11 +255,29 @@ export async function getLandingPage(slug: string): Promise<LandingPage | null> 
     itemsBySection.set(i.landing_page_section, list);
   }
 
+  // A section link to another landing page shows only while that page is published.
+  const { rows: allPages } = await pool.query(
+    "SELECT landing_page_id, is_published FROM vw_landing_pages",
+  );
+  const published = new Map<string, boolean>(
+    allPages.map((p) => [p.landing_page_id, p.is_published]),
+  );
+  const linkIsLive = (href: string | null) => {
+    if (!href) return false;
+    const target = href.match(/^\/([^/#?]+)\/?$/);
+    return !target || !published.has(target[1]) || published.get(target[1]) === true;
+  };
+
   return {
     ...pages[0],
-    sections: sections.map((s) => ({
-      ...s,
-      items: itemsBySection.get(s.landing_page_section_id) ?? [],
-    })),
+    sections: sections.map((s) => {
+      const live = s.link_label && linkIsLive(s.link_href);
+      return {
+        ...s,
+        link_label: live ? s.link_label : null,
+        link_href: live ? s.link_href : null,
+        items: itemsBySection.get(s.landing_page_section_id) ?? [],
+      };
+    }),
   };
 }

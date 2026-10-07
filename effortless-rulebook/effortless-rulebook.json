@@ -1309,6 +1309,20 @@
         "SecondaryCtaLabel": "Download the capability statement (PDF)",
         "SecondaryCtaHref": "/downloads/David-Shadle-Idea-to-Evidence-Capability-Statement.pdf",
         "IsPublished": false
+      },
+      {
+        "LandingPageId": "designing-for-people-and-agents",
+        "MetaTitle": "Designing for People and Agents: Guild Sessions by David Shadle",
+        "MetaDescription": "Five 40-minute Guild Sessions for Banyan operating companies on how AI agents change forms, reports, help, and the service behind the screen. Each one leaves you something to try the following week.",
+        "Eyebrow": "Guild Sessions",
+        "Headline": "Designing for People and Agents",
+        "Lede": "Software was built for a person at a screen. More and more, the user is an agent acting for that person, with no screen at all, and most analytics cannot see it. Five 40-minute Guild Sessions, each on one place the shift shows up in a product.",
+        "VideoUrl": null,
+        "PrimaryCtaLabel": "Ask about the next session",
+        "PrimaryCtaHref": "mailto:david@davidshadle.com?subject=Guild%20Sessions%3A%20Designing%20for%20People%20and%20Agents",
+        "SecondaryCtaLabel": "See the five sessions",
+        "SecondaryCtaHref": "#the-five-sessions",
+        "IsPublished": false
       }
     ]
   },
@@ -1379,6 +1393,20 @@
         "type": "raw",
         "nullable": true,
         "Description": "Section body copy. Paragraph breaks encoded as \\n\\n."
+      },
+      {
+        "name": "LinkLabel",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Optional link text shown under the section."
+      },
+      {
+        "name": "LinkHref",
+        "datatype": "string",
+        "type": "raw",
+        "nullable": true,
+        "Description": "Optional link target. A link to another landing page is shown only while that page is published."
       }
     ],
     "data": [
@@ -1390,7 +1418,9 @@
         "AnchorId": null,
         "Eyebrow": "Why now",
         "Heading": "AI can now do part of the work your customers do by hand.",
-        "BodyText": "AI can act on a customer's behalf, anticipate a need, and complete a task. Forms, reports, help, and transactions can all work differently. That opens new ways for your product to serve customers, and gives them a reason to renew and buy more.\n\nMost leadership teams already have ideas about where to start. What is hard to find is the time to learn which idea is worth building before committing to build it. This engagement is built to find that out, in a few focused sessions, with the building and testing done outside your leadership team's calendar."
+        "BodyText": "AI can act on a customer's behalf, anticipate a need, and complete a task. Forms, reports, help, and transactions can all work differently. That opens new ways for your product to serve customers, and gives them a reason to renew and buy more.\n\nMost leadership teams already have ideas about where to start. What is hard to find is the time to learn which idea is worth building before committing to build it. This engagement is built to find that out, in a few focused sessions, with the building and testing done outside your leadership team's calendar.",
+        "LinkLabel": null,
+        "LinkHref": null
       },
       {
         "LandingPageSectionId": "idea-to-evidence-what-you-get",
@@ -1400,7 +1430,9 @@
         "AnchorId": null,
         "Eyebrow": "What you get",
         "Heading": "Five things you take away.",
-        "BodyText": null
+        "BodyText": null,
+        "LinkLabel": null,
+        "LinkHref": null
       },
       {
         "LandingPageSectionId": "idea-to-evidence-ways-to-engage",
@@ -1410,7 +1442,9 @@
         "AnchorId": "ways-to-engage",
         "Eyebrow": "Ways to engage",
         "Heading": "Choose how far to go.",
-        "BodyText": "The level is chosen in Discovery and can be extended later."
+        "BodyText": "The level is chosen in Discovery and can be extended later.",
+        "LinkLabel": null,
+        "LinkHref": null
       },
       {
         "LandingPageSectionId": "idea-to-evidence-commitments",
@@ -1420,7 +1454,9 @@
         "AnchorId": null,
         "Eyebrow": "Commitments",
         "Heading": "Five commitments.",
-        "BodyText": null
+        "BodyText": null,
+        "LinkLabel": null,
+        "LinkHref": null
       },
       {
         "LandingPageSectionId": "idea-to-evidence-who-it-is-for",
@@ -1430,7 +1466,9 @@
         "AnchorId": null,
         "Eyebrow": "Who it is for",
         "Heading": "Operating company leadership.",
-        "BodyText": "Leadership of a Banyan operating company, usually the CEO or the person who holds product direction, working with the Operating Partner who owns the Value Creation Plan. OpCos arrive by referral from an Operating Partner or Banyan leadership, or after a Guild Session on an interaction pattern. Both routes begin with a free Discovery conversation."
+        "BodyText": "Leadership of a Banyan operating company, usually the CEO or the person who holds product direction, working with the Operating Partner who owns the Value Creation Plan. OpCos arrive by referral from an Operating Partner or Banyan leadership, or after a Guild Session on an interaction pattern. Both routes begin with a free Discovery conversation.",
+        "LinkLabel": null,
+        "LinkHref": null
       },
       {
         "LandingPageSectionId": "idea-to-evidence-what-we-ask",
@@ -1440,7 +1478,9 @@
         "AnchorId": null,
         "Eyebrow": "What we ask of you",
         "Heading": "What the engagement needs from your side.",
-        "BodyText": null
+        "BodyText": null,
+        "LinkLabel": null,
+        "LinkHref": null
       },
       {
         "LandingPageSectionId": "idea-to-evidence-your-data",
@@ -1450,7 +1490,9 @@
         "AnchorId": null,
         "Eyebrow": "Your data",
         "Heading": "Your data stays yours.",
-        "BodyText": "Your data is used only for your engagement. Testing participants give consent and are not named. Everything produced, including testing records, transfers to you, and the provider keeps no copy. Nothing is shared with another company."
+        "BodyText": "Your data is used only for your engagement. Testing participants give consent and are not named. Everything produced, including testing records, transfers to you, and the provider keeps no copy. Nothing is shared with another company.",
+        "LinkLabel": null,
+        "LinkHref": null
       },
       {
         "LandingPageSectionId": "idea-to-evidence-about",
@@ -1460,7 +1502,9 @@
         "AnchorId": null,
         "Eyebrow": "About",
         "Heading": "David Shadle.",
-        "BodyText": "Twenty years leading product, design, and engineering teams. I work where experience design and product strategy meet, and I build what I design. AI tools do the volume work of research, drafting, and building. My judgment decides what matters."
+        "BodyText": "Twenty years leading product, design, and engineering teams. I work where experience design and product strategy meet, and I build what I design. AI tools do the volume work of research, drafting, and building. My judgment decides what matters.",
+        "LinkLabel": null,
+        "LinkHref": null
       },
       {
         "LandingPageSectionId": "idea-to-evidence-to-start",
@@ -1470,7 +1514,81 @@
         "AnchorId": "to-start",
         "Eyebrow": "To start",
         "Heading": "Request a free Discovery conversation.",
-        "BodyText": "One conversation to confirm fit, name the metric, and agree where to start."
+        "BodyText": "One conversation to confirm fit, name the metric, and agree where to start.",
+        "LinkLabel": null,
+        "LinkHref": null
+      },
+      {
+        "LandingPageSectionId": "designing-for-people-and-agents-the-series",
+        "LandingPage": "designing-for-people-and-agents",
+        "SortOrder": 1,
+        "Kind": "prose",
+        "AnchorId": null,
+        "Eyebrow": "The series",
+        "Heading": "One shift, five places it shows up.",
+        "BodyText": "Designing for People and Agents is a series of five 40-minute Guild Sessions, held monthly, live and online, presented by David Shadle. Each one covers one place the shift shows up in a product. Every session leaves attendees with something to try the following week.\n\nThe sessions build on one another. The series starts with seeing who uses the product, moves through what the product exposes and what its terms mean, and ends with how the service runs and how people interact with it. Each session also stands on its own.\n\nAny role at an OpCo can attend: leadership, product, engineering, design, and customer-facing teams. Technical topics stay at a high level, leaning technical where they apply to the business and the reasons to integrate.",
+        "LinkLabel": null,
+        "LinkHref": null
+      },
+      {
+        "LandingPageSectionId": "designing-for-people-and-agents-why-now",
+        "LandingPage": "designing-for-people-and-agents",
+        "SortOrder": 2,
+        "Kind": "prose",
+        "AnchorId": null,
+        "Eyebrow": "Why now",
+        "Heading": "The shift is already in the traffic.",
+        "BodyText": "Fastly reported in June 2026 that AI traffic grew about 6.5 times faster than human traffic in the first five months of the year. Cloudflare reported in July 2026 that more than half of internet traffic is now non-human. DataDome counted 17.7 billion AI agent requests in a single quarter, up 45 percent on the quarter before.\n\nSome of that traffic collects content and sends nothing back. Some of it is an agent acting for a real customer: checking availability, comparing options, completing a task. Most products were not designed for that customer, and most measurement does not count it. Forms, reports, and help, the patterns that shaped business software, are changing at the same time.\n\nMuch of what OpCos need to respond is not new. The principles behind it have been in use for decades. What is new is how much they now matter, and how quickly. The series connects the two.",
+        "LinkLabel": null,
+        "LinkHref": null
+      },
+      {
+        "LandingPageSectionId": "designing-for-people-and-agents-the-five-sessions",
+        "LandingPage": "designing-for-people-and-agents",
+        "SortOrder": 3,
+        "Kind": "cards",
+        "AnchorId": "the-five-sessions",
+        "Eyebrow": "The five sessions",
+        "Heading": "One session a month.",
+        "BodyText": "After each session, attendees receive a one-page takeaway with the self-check and the action to try.",
+        "LinkLabel": null,
+        "LinkHref": null
+      },
+      {
+        "LandingPageSectionId": "designing-for-people-and-agents-after-the-session",
+        "LandingPage": "designing-for-people-and-agents",
+        "SortOrder": 4,
+        "Kind": "cards",
+        "AnchorId": null,
+        "Eyebrow": "After the session",
+        "Heading": "Two ways to use what you learn.",
+        "BodyText": null,
+        "LinkLabel": "How an Idea to Evidence engagement works",
+        "LinkHref": "/idea-to-evidence"
+      },
+      {
+        "LandingPageSectionId": "designing-for-people-and-agents-who-presents",
+        "LandingPage": "designing-for-people-and-agents",
+        "SortOrder": 5,
+        "Kind": "prose",
+        "AnchorId": null,
+        "Eyebrow": "Who presents",
+        "Heading": "David Shadle.",
+        "BodyText": "Content for every session is written and presented by David Shadle, who has spent twenty years leading product, design, and engineering teams. Examples drawn from the portfolio are named only with the OpCo's agreement. The series informs. It does not assess any OpCo, roadmap, or team.",
+        "LinkLabel": null,
+        "LinkHref": null
+      },
+      {
+        "LandingPageSectionId": "designing-for-people-and-agents-next-session",
+        "LandingPage": "designing-for-people-and-agents",
+        "SortOrder": 6,
+        "Kind": "callout",
+        "AnchorId": null,
+        "Eyebrow": "Next session",
+        "Heading": "Ask about the next session.",
+        "BodyText": "Dates will be announced to Banyan operating companies. To be told first, or to ask about bringing a pattern into your own product, get in touch.",
+        "LinkLabel": null,
+        "LinkHref": null
       }
     ]
   },
@@ -1657,6 +1775,62 @@
         "Label": null,
         "Heading": "Access and help.",
         "BodyText": "The product, the data, and the people who know it best, plus help recruiting three to five customers for testing and engineering time at Handoff."
+      },
+      {
+        "LandingPageItemId": "designing-for-people-and-agents-the-five-sessions-the-user-you-cannot-see",
+        "LandingPageSection": "designing-for-people-and-agents-the-five-sessions",
+        "SortOrder": 1,
+        "Label": "Month 1",
+        "Heading": "The user you cannot see",
+        "BodyText": "Agents now use products directly. Most analytics are built for a browser and cannot count them."
+      },
+      {
+        "LandingPageItemId": "designing-for-people-and-agents-the-five-sessions-every-product-is-a-platform",
+        "LandingPageSection": "designing-for-people-and-agents-the-five-sessions",
+        "SortOrder": 2,
+        "Label": "Month 2",
+        "Heading": "Every product is a platform",
+        "BodyText": "When an agent uses the product, the interface is what lies under the screen: field names, tool descriptions, and error messages."
+      },
+      {
+        "LandingPageItemId": "designing-for-people-and-agents-the-five-sessions-one-definition-served-everywhere",
+        "LandingPageSection": "designing-for-people-and-agents-the-five-sessions",
+        "SortOrder": 3,
+        "Label": "Month 3",
+        "Heading": "One definition, served everywhere",
+        "BodyText": "People and agents need the same answer to the same question. Most companies hold several answers."
+      },
+      {
+        "LandingPageItemId": "designing-for-people-and-agents-the-five-sessions-design-the-service-not-the-screen",
+        "LandingPageSection": "designing-for-people-and-agents-the-five-sessions",
+        "SortOrder": 4,
+        "Label": "Month 4",
+        "Heading": "Design the service, not the screen",
+        "BodyText": "Steps in a customer's journey now happen where nobody sees them, carried out by software acting for someone."
+      },
+      {
+        "LandingPageItemId": "designing-for-people-and-agents-the-five-sessions-beyond-the-form",
+        "LandingPageSection": "designing-for-people-and-agents-the-five-sessions",
+        "SortOrder": 5,
+        "Label": "Month 5",
+        "Heading": "Beyond the form",
+        "BodyText": "Forms, reports, and help shaped business software. AI is turning them into intent, answers, and action."
+      },
+      {
+        "LandingPageItemId": "designing-for-people-and-agents-after-the-session-on-your-own",
+        "LandingPageSection": "designing-for-people-and-agents-after-the-session",
+        "SortOrder": 1,
+        "Label": null,
+        "Heading": "On your own",
+        "BodyText": null
+      },
+      {
+        "LandingPageItemId": "designing-for-people-and-agents-after-the-session-in-an-engagement",
+        "LandingPageSection": "designing-for-people-and-agents-after-the-session",
+        "SortOrder": 2,
+        "Label": null,
+        "Heading": "In an engagement",
+        "BodyText": null
       }
     ]
   },
@@ -1750,6 +1924,174 @@
         "SortOrder": 2,
         "Label": "You take away",
         "BodyText": "A tested prototype, a decision, a build-ready handoff, and the Value Review."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-the-user-you-cannot-see-fact-1",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-the-user-you-cannot-see",
+        "SortOrder": 1,
+        "Label": "Participants learn",
+        "BodyText": "How agent traffic differs from human traffic, and from crawlers that only collect content.\nHow to read server logs as a journey map: retries, dead ends, and paths nobody documented.\nWhy task completion is a better measure than page views when the user is an agent.\nHow to decide which agents get in, before a vendor default decides it."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-the-user-you-cannot-see-fact-2",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-the-user-you-cannot-see",
+        "SortOrder": 2,
+        "Label": "Try it on your own",
+        "BodyText": "Pull 30 days of logs. Separate browser traffic, your own clients, and everything else. Rebuild one agent session in order and note where it stopped."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-the-user-you-cannot-see-fact-3",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-the-user-you-cannot-see",
+        "SortOrder": 3,
+        "Label": "Take it into an engagement",
+        "BodyText": "Agent traffic read-out. The team leaves with an agent journey map, a first definition of a good agent session, and a draft access policy."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-the-user-you-cannot-see-fact-4",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-the-user-you-cannot-see",
+        "SortOrder": 4,
+        "Label": "Reports against",
+        "BodyText": "Gross and net retention, where agents act for existing customers."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-every-product-is-a-platform-fact-1",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-every-product-is-a-platform",
+        "SortOrder": 1,
+        "Label": "Participants learn",
+        "BodyText": "How to map every way into the product, including the ones nobody designed.\nWhich rules the screens enforced that an agent calling the product never sees.\nWhat MCP solves, and what it leaves for the product team.\nHow to write error messages an agent can recover from."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-every-product-is-a-platform-fact-2",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-every-product-is-a-platform",
+        "SortOrder": 2,
+        "Label": "Try it on your own",
+        "BodyText": "List every way into the product and who owns each. Give an AI assistant one tool description and a real task. Watch where it goes wrong."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-every-product-is-a-platform-fact-3",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-every-product-is-a-platform",
+        "SortOrder": 3,
+        "Label": "Take it into an engagement",
+        "BodyText": "Door map and agent test. The team leaves with an inventory of every way in, with owners, and one core task an agent can complete without a person stepping in."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-every-product-is-a-platform-fact-4",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-every-product-is-a-platform",
+        "SortOrder": 4,
+        "Label": "Reports against",
+        "BodyText": "Time from idea to release."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-one-definition-served-everywhere-fact-1",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-one-definition-served-everywhere",
+        "SortOrder": 1,
+        "Label": "Participants learn",
+        "BodyText": "Why competitors are agreeing on shared definitions for metrics.\nWhat context engineering is, and why support tickets and call recordings are now product assets.\nHow content written in structured pieces serves every channel and every agent."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-one-definition-served-everywhere-fact-2",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-one-definition-served-everywhere",
+        "SortOrder": 2,
+        "Label": "Try it on your own",
+        "BodyText": "Ask five leaders to write down, separately, what an active customer is. Compare the answers."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-one-definition-served-everywhere-fact-3",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-one-definition-served-everywhere",
+        "SortOrder": 3,
+        "Label": "Take it into an engagement",
+        "BodyText": "Define once. The team leaves with agreed definitions, an owner for each, and a plan to structure one knowledge source."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-one-definition-served-everywhere-fact-4",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-one-definition-served-everywhere",
+        "SortOrder": 4,
+        "Label": "Reports against",
+        "BodyText": "The Value Creation Plan metrics themselves."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-design-the-service-not-the-screen-fact-1",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-design-the-service-not-the-screen",
+        "SortOrder": 1,
+        "Label": "Participants learn",
+        "BodyText": "How a service blueprint shows what the customer sees and everything behind it.\nWhere an agent sits in the blueprint, and what changes when it acts unattended.\nHow a demo works as a storyboard: one picture of the future service for every department."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-design-the-service-not-the-screen-fact-2",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-design-the-service-not-the-screen",
+        "SortOrder": 2,
+        "Label": "Try it on your own",
+        "BodyText": "Pick one journey, such as onboarding or renewal. Mark each step where an agent acts or could act, and whether the customer can see it."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-design-the-service-not-the-screen-fact-3",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-design-the-service-not-the-screen",
+        "SortOrder": 3,
+        "Label": "Take it into an engagement",
+        "BodyText": "Blueprint with agents. The team leaves with a current and future blueprint, a demo of the future service, and a candidate opportunity."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-design-the-service-not-the-screen-fact-4",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-design-the-service-not-the-screen",
+        "SortOrder": 4,
+        "Label": "Reports against",
+        "BodyText": "Gross and net retention."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-beyond-the-form-fact-1",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-beyond-the-form",
+        "SortOrder": 1,
+        "Label": "Participants learn",
+        "BodyText": "Where a form can accept what a person means, in place of what a field requires.\nWhen software should decide, when it should ask, and how it shows what it assumed.\nHow work changes when people supervise agents in place of doing the task."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-beyond-the-form-fact-2",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-beyond-the-form",
+        "SortOrder": 2,
+        "Label": "Try it on your own",
+        "BodyText": "Pick one form. At each field, decide whether the software should ask, decide, or act."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-beyond-the-form-fact-3",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-beyond-the-form",
+        "SortOrder": 3,
+        "Label": "Take it into an engagement",
+        "BodyText": "Paradigm ideation. The team leaves with a demo of a new way of working and a plan for a prototype to test with customers."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-the-five-sessions-beyond-the-form-fact-4",
+        "LandingPageItem": "designing-for-people-and-agents-the-five-sessions-beyond-the-form",
+        "SortOrder": 4,
+        "Label": "Reports against",
+        "BodyText": "Upsell, good-better-best packaging, and net retention."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-after-the-session-on-your-own-fact-1",
+        "LandingPageItem": "designing-for-people-and-agents-after-the-session-on-your-own",
+        "SortOrder": 1,
+        "Label": "What it involves",
+        "BodyText": "The self-check during the session and the action in the takeaway. No outside help and no cost."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-after-the-session-on-your-own-fact-2",
+        "LandingPageItem": "designing-for-people-and-agents-after-the-session-on-your-own",
+        "SortOrder": 2,
+        "Label": "What you have at the end",
+        "BodyText": "A first view of the pattern in your own product, and a decision on whether to go further."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-after-the-session-in-an-engagement-fact-1",
+        "LandingPageItem": "designing-for-people-and-agents-after-the-session-in-an-engagement",
+        "SortOrder": 1,
+        "Label": "What it involves",
+        "BodyText": "A free Discovery conversation, then the Idea to Evidence Assessment, targeted at the pattern. The working session for that pattern runs inside the Assessment."
+      },
+      {
+        "LandingPageItemFactId": "designing-for-people-and-agents-after-the-session-in-an-engagement-fact-2",
+        "LandingPageItem": "designing-for-people-and-agents-after-the-session-in-an-engagement",
+        "SortOrder": 2,
+        "Label": "What you have at the end",
+        "BodyText": "A demo that aligns leadership on the idea, and, if you continue, a prototype tested with your own customers and a Value Review at 90 and 180 days."
       }
     ]
   },

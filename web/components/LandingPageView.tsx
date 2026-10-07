@@ -55,6 +55,30 @@ function Paragraphs({ text }: { text: string | null }) {
   );
 }
 
+function Sources({ items }: { items: LandingPageItem[] }) {
+  if (items.length === 0) return null;
+  return (
+    <div className="lp-sources">
+      <span className="lp-fact-label">Sources</span>
+      <ul>
+        {items.map((item) => (
+          <li key={item.landing_page_item_id}>
+            {item.label}
+            {item.label ? ", " : ""}
+            {item.body_text ? (
+              <a href={item.body_text} target="_blank" rel="noopener noreferrer">
+                {item.heading}
+              </a>
+            ) : (
+              item.heading
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function SectionBody({
   section,
   page,
@@ -68,9 +92,7 @@ function SectionBody({
         <ol className="stage-list lp-steps">
             {section.items.map((item) => (
               <li key={item.landing_page_item_id} className="stage-item">
-                <span className="stage-marker" aria-hidden="true">
-                  {item.label}
-                </span>
+                <span className="stage-marker">{item.label}</span>
                 <div className="lp-item">
                   <h3 className="lp-item-heading">{item.heading}</h3>
                   <Paragraphs text={item.body_text} />
@@ -82,9 +104,12 @@ function SectionBody({
       );
     case "cards":
       return (
-        <ul className="lp-cards">
+        <ul
+          className={`lp-cards${section.items.some((i) => i.facts.length > 2) ? " lp-cards-wide" : ""}`}
+        >
           {section.items.map((item) => (
             <li key={item.landing_page_item_id} className="lp-card">
+              {item.label && <span className="lp-card-label">{item.label}</span>}
               <h3 className="lp-item-heading">{item.heading}</h3>
               <Paragraphs text={item.body_text} />
               <Facts item={item} />
@@ -189,6 +214,7 @@ export function LandingPageView({ page }: { page: LandingPage }) {
                 {section.kind === "prose" ? (
                   <div className="lp-prose">
                     <Paragraphs text={section.body_text} />
+                    <Sources items={section.items} />
                   </div>
                 ) : (
                   <>
@@ -199,6 +225,11 @@ export function LandingPageView({ page }: { page: LandingPage }) {
                     )}
                     <SectionBody section={section} page={page} />
                   </>
+                )}
+                {section.link_label && section.link_href && (
+                  <a href={section.link_href} className="lp-section-link">
+                    {section.link_label} <span aria-hidden="true">&rarr;</span>
+                  </a>
                 )}
               </>
             )}

@@ -243,6 +243,7 @@ _ƒ marks a computed column._
 | Name ƒ | Meta Title | Meta Description | Eyebrow | Headline | Lede | Video URL | Primary Cta Label | Primary Cta Href | Secondary Cta Label | Secondary Cta Href | Is Published |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | New interaction concepts, prototyped and tested with your customers. | Idea to Evidence: David Shadle | One product idea, carried to a working prototype your customers have tested, so you decide what to build on evidence. A service for Banyan operating companies. | Idea to Evidence | New interaction concepts, prototyped and tested with your customers. | Idea to Evidence takes one idea for how your product could work and carries it to a working prototype that your customers (or agents) can interact with. You leave with evidence and a decision, not a recommendation. | https://www.youtube.com/watch?v=49NfG8CoGJQ | Let's get started | mailto:david@davidshadle.com?subject=Idea%20to%20Evidence%3A%20Discovery%20conversation | Download the capability statement (PDF) | /downloads/David-Shadle-Idea-to-Evidence-Capability-Statement.pdf | false |
+| Designing for People and Agents | Designing for People and Agents: Guild Sessions by David Shadle | Five 40-minute Guild Sessions for Banyan operating companies on how AI agents change forms, reports, help, and the service behind the screen. Each one leaves you something to try the following week. | Guild Sessions | Designing for People and Agents | Software was built for a person at a screen. More and more, the user is an agent acting for that person, with no screen at all, and most analytics cannot see it. Five 40-minute Guild Sessions, each on one place the shift shows up in a product. | — | Ask about the next session | mailto:david@davidshadle.com?subject=Guild%20Sessions%3A%20Designing%20for%20People%20and%20Agents | See the five sessions | #the-five-sessions | false |
 
 _ƒ marks a computed column._
 
@@ -259,15 +260,17 @@ _ƒ marks a computed column._
 | Eyebrow | A defined attribute. | _Small label above the section heading._ |
 | Heading | A defined attribute. | _Section heading._ |
 | Body Text | A defined attribute. | _Section body copy. Paragraph breaks encoded as \n\n._ |
+| Link Label | A defined attribute. | _Optional link text shown under the section._ |
+| Link Href | A defined attribute. | _Optional link target. A link to another landing page is shown only while that page is published._ |
 
 <details open>
 <summary>Example data</summary>
 
-| Name ƒ | Sort Order | Kind | Anchor ID | Eyebrow | Heading | Body Text |
-|---|---|---|---|---|---|---|
-| AI can now do part of the work your customers do by hand. | 1 | prose | — | Why now | AI can now do part of the work your customers do by hand. | AI can act on a customer's behalf, anticipate a need, and complete a task. Forms, reports, help, and transactions can all work differently. That opens new ways for your product to serve customers, and gives them a reason to renew and buy more.<br><br>Most leadership teams already have ideas about where to start. What is hard to find is the time to learn which idea is worth building before committing to build it. This engagement is built to find that out, in a few focused sessions, with the building and testing done outside your leadership team's calendar. |
-| Five things you take away. | 2 | list | — | What you get | Five things you take away. | — |
-| Choose how far to go. | 3 | cards | ways-to-engage | Ways to engage | Choose how far to go. | The level is chosen in Discovery and can be extended later. |
+| Name ƒ | Sort Order | Kind | Anchor ID | Eyebrow | Heading | Body Text | Link Label | Link Href |
+|---|---|---|---|---|---|---|---|---|
+| AI can now do part of the work your customers do by hand. | 1 | prose | — | Why now | AI can now do part of the work your customers do by hand. | AI can act on a customer's behalf, anticipate a need, and complete a task. Forms, reports, help, and transactions can all work differently. That opens new ways for your product to serve customers, and gives them a reason to renew and buy more.<br><br>Most leadership teams already have ideas about where to start. What is hard to find is the time to learn which idea is worth building before committing to build it. This engagement is built to find that out, in a few focused sessions, with the building and testing done outside your leadership team's calendar. | — | — |
+| Five things you take away. | 2 | list | — | What you get | Five things you take away. | — | — | — |
+| Choose how far to go. | 3 | cards | ways-to-engage | Ways to engage | Choose how far to go. | The level is chosen in Discovery and can be extended later. | — | — |
 
 _ƒ marks a computed column._
 

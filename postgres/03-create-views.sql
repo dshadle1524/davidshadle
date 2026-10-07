@@ -216,7 +216,9 @@ SELECT
   t.anchor_id,                                                                  -- Optional HTML id for the section, for in-page links.
   t.eyebrow,                                                                    -- Small label above the section heading.
   t.heading,                                                                    -- Section heading.
-  t.body_text                                                                   -- Section body copy. Paragraph breaks encoded as \n\n.
+  t.body_text,                                                                  -- Section body copy. Paragraph breaks encoded as \n\n.
+  t.link_label,                                                                 -- Optional link text shown under the section.
+  t.link_href                                                                   -- Optional link target. A link to another landing page is shown only while that page is published.
 FROM landing_page_sections t;
 
 -- ----------------------------------------------------------------------------

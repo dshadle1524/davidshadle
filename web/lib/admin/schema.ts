@@ -118,6 +118,8 @@ export const ADMIN_TABLES: AdminTableConfig[] = [
       { name: "eyebrow", label: "Eyebrow", type: "text" },
       { name: "heading", label: "Heading", type: "text", required: true },
       { name: "body_text", label: "Body Text", type: "textarea", helpText: "Paragraph breaks are two newlines." },
+      { name: "link_label", label: "Link Text", type: "text", helpText: "Optional link shown under the section." },
+      { name: "link_href", label: "Link Target", type: "text", helpText: "A path or URL. A link to another landing page shows only while that page is published." },
     ],
   },
   {

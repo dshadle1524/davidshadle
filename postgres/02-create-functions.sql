@@ -308,6 +308,24 @@ RETURNS TEXT AS $$
   SELECT (SELECT body_text FROM landing_page_sections WHERE landing_page_section_id = p_landing_page_section_id);
 $$ LANGUAGE sql STABLE;
 
+-- get_landing_page_sections_link_label
+-- Helper function: Get LinkLabel from LandingPageSections by LandingPageSectionId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_page_sections_link_label(p_landing_page_section_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT link_label FROM landing_page_sections WHERE landing_page_section_id = p_landing_page_section_id);
+$$ LANGUAGE sql STABLE;
+
+-- get_landing_page_sections_link_href
+-- Helper function: Get LinkHref from LandingPageSections by LandingPageSectionId
+-- Used for join-free cross-table references in aggregations
+
+CREATE OR REPLACE FUNCTION get_landing_page_sections_link_href(p_landing_page_section_id TEXT)
+RETURNS TEXT AS $$
+  SELECT (SELECT link_href FROM landing_page_sections WHERE landing_page_section_id = p_landing_page_section_id);
+$$ LANGUAGE sql STABLE;
+
 -- calc_landing_page_items_name
 -- Field: LandingPageItems.Name
 -- Type: calculated | DataType: string | Returns: TEXT

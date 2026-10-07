@@ -922,12 +922,14 @@ a:hover {
 }
 
 .lp-steps .stage-item {
-  grid-template-columns: 36px 1fr;
+  grid-template-columns: 72px 1fr;
 }
 
 .lp-steps .stage-marker {
-  font-size: 22px;
-  line-height: 1.2;
+  font-size: 18px;
+  line-height: 1.35;
+  white-space: nowrap;
+  color: var(--accent-label);
 }
 
 .lp-cards,
@@ -951,6 +953,18 @@ a:hover {
   border: 1px solid var(--rule-on-alt);
   border-top: 3px solid var(--accent);
   background: var(--surface-alt);
+}
+
+.lp-cards-wide {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+}
+
+.lp-card-label {
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-label);
 }
 
 .band-alt .lp-card {
@@ -1005,6 +1019,47 @@ a:hover {
 .lp-fact-list {
   margin: 0;
   padding-left: 20px;
+  list-style: disc;
+}
+
+.lp-fact-list li + li {
+  margin-top: 4px;
+}
+
+.lp-sources {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule-on-alt);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--body);
+}
+
+.lp-sources ul {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+
+.lp-sources a {
+  font-size: inherit;
+  color: var(--accent-button-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.lp-section-link {
+  display: inline-block;
+  margin-top: 32px;
+  font-size: 15.5px;
+  font-weight: 500;
+  color: var(--accent-button-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.lp-section-link:hover {
+  color: var(--ink);
 }
 
 .lp-callout-actions {
